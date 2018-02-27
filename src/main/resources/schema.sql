@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS Offices (
 
 CREATE TABLE IF NOT EXISTS Users (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
-    login      VARCHAR(50) NOT NULL,
-    password   VARCHAR(50) NOT NULL,
+    login      VARCHAR(50),
+    password   VARCHAR(50),
     firstName  VARCHAR(50) NOT NULL,
     secondName VARCHAR(50) NOT NULL,
     middleName VARCHAR(50),
