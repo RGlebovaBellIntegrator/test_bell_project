@@ -9,13 +9,13 @@ import java.util.List;
 public interface CatalogController {
 
     /**
-     * Add person
+     * Add docs
      * @param docs
 
     void docs(@RequestBody DocsView docs);*/
 
     /**
-     * Add person
+     * Add countries
      * @param countries
 
     void countries(@RequestBody CountriesView countries);*/
