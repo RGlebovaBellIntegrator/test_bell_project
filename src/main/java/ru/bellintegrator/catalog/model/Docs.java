@@ -1,16 +1,10 @@
 package ru.bellintegrator.catalog.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import ru.bellintegrator.users.model.Users;
+
+import javax.persistence.*;
 import javax.print.Doc;
+import java.util.List;
 
 /*
 * Спарвочник документов
@@ -35,6 +29,9 @@ public class Docs {
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Users> users;
 
     public Docs(){
 
