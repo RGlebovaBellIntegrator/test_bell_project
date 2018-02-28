@@ -21,13 +21,13 @@ public interface CatalogController {
     void countries(@RequestBody CountriesView countries);*/
 
     /**
-     * Get all persons
+     * Get all docs
      * @return JSON docs value
      */
     List<DocsView> docs();
 
     /**
-     * Get all persons
+     * Get all countries
      * @return JSON docs value
      */
     List<CountriesView> countries();
