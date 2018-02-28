@@ -95,4 +95,38 @@ public class Users {
     @JoinColumn(name = "citizenshipCode")
     private Countries countries;
 
+    public Users(){
+
+    }
+
+    public Users(String firstname, String secondtname, String middleName, String login, String password, String statement, String phone,
+                 byte isIdentified) {
+        this.firstname=firstname;
+        this.secondtname=secondtname;
+        this.middleName=middleName;
+        this.login=login;
+        this.password=password;
+        this.statement = statement;
+        this.phone = phone;
+        this.isIdentified = isIdentified;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return String.format("Имя: %s Фамилия: %s Отчество: %s", firstname, secondtname, middleName);
+    }
+
+    public String getFirstName() {
+        return firstname;
+    }
+    public String getSecondName() {
+        return secondtname;
+    }
+    public String getMiddleName() {
+        return middleName;
+    }
+
 }

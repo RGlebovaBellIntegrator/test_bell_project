@@ -17,7 +17,7 @@ public class UsersView {
     public String secondName;
 
     public String middleName;
-    public String position_statement;
+    public String statement;
 
 
     public String phone;
@@ -30,14 +30,14 @@ public class UsersView {
 
     }
 
-    public UsersView(String login, String password, String firstName, String secondName, String middleName, String position_statement,
+    public UsersView(String login, String password, String firstName, String secondName, String middleName, String statement,
                      String phone, String docNumber, Date docDate, byte isIdentified) {
         this.login=login;
         this.password=password;
         this.firstName=firstName;
         this.secondName=secondName;
         this.middleName=middleName;
-        this.position_statement=position_statement;
+        this.statement=statement;
         this.phone = phone;
         this.docNumber=docNumber;
         this.docDate = docDate;

@@ -9,14 +9,14 @@ import java.util.List;
 public interface CatalogService {
 
     /**
-     * Dummy service method
+     * Catalog service method
      * @return {@Docs}
      */
     List<DocsView> docs();
 
 
     /**
-     * Dummy service method
+     * Catalog service method
      * @return {@Countries}
      */
     List<CountriesView> countries();
