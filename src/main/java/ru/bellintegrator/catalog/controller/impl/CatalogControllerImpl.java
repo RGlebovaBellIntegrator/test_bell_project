@@ -32,23 +32,23 @@ public class CatalogControllerImpl implements CatalogController {
 
 
    @Override
-    @ApiOperation(value = "addPerson", nickname = "addPerson", httpMethod = "POST")
+    @ApiOperation(value = "addCountries", nickname = "addCountries", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @RequestMapping(value = "/person", method = {POST})
+    @RequestMapping(value = "/countries", method = {POST})
     public void countries(@RequestBody CountriesView countries) {
         catalogService.add(countries);
     }
 
     @Override
-    @ApiOperation(value = "addPerson", nickname = "addPerson", httpMethod = "POST")
+    @ApiOperation(value = "addDocs", nickname = "addDocs", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @RequestMapping(value = "/person", method = {POST})
+    @RequestMapping(value = "/docs", method = {POST})
     public void docs(@RequestBody DocsView docs) {
         catalogService.add(docs);
     }/* */

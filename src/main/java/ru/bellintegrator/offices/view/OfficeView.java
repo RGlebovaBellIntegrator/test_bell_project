@@ -11,13 +11,13 @@ public class OfficeView {
     public String address;
     public String phone;
 
-    public byte isActive;
+    public boolean isActive;
 
     public OfficeView() {
 
     }
 
-    public OfficeView(String name, String address, String phone, byte isActive) {
+    public OfficeView(String name, String address, String phone, boolean isActive) {
         this.name=name;
         this.address=address;
         this.phone = phone;

@@ -21,7 +21,7 @@ public class DocsDAOImpl implements DocsDAO{
 
     @Override
     public List<Docs> all(){
-        TypedQuery<Docs> query = em.createQuery("SELECT d FROM Docs d", Docs.class);
+        TypedQuery<Docs> query = em.createQuery("SELECT o FROM Docs o", Docs.class);
         return query.getResultList();
     }
 

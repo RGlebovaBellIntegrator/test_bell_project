@@ -14,6 +14,18 @@ import ru.bellintegrator.catalog.dao.DocsDAO;
 import ru.bellintegrator.catalog.dao.impl.CountriesDAOImpl;
 import ru.bellintegrator.catalog.dao.impl.DocsDAOImpl;
 import ru.bellintegrator.catalog.service.impl.CatalogServiceImpl;
+import ru.bellintegrator.offices.controller.impl.OfficesControllerImpl;
+import ru.bellintegrator.offices.dao.impl.OfficesDAOImpl;
+import ru.bellintegrator.offices.model.Offices;
+import ru.bellintegrator.offices.service.impl.OfficeServiceImpl;
+import ru.bellintegrator.organizations.controller.OrganizationsController;
+import ru.bellintegrator.organizations.controller.impl.OrganizationsControllerImpl;
+import ru.bellintegrator.organizations.dao.impl.OrganizationsDAOImpl;
+import ru.bellintegrator.organizations.service.OrganizationService;
+import ru.bellintegrator.organizations.service.impl.OrganizationServiceImpl;
+import ru.bellintegrator.users.controller.impl.UsersControllerImpl;
+import ru.bellintegrator.users.dao.impl.UsersDAOImpl;
+import ru.bellintegrator.users.service.impl.UsersServiceImpl;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
@@ -28,7 +40,10 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @ImportResource("spring_mvc_config.xml")
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {
-   CatalogControllerImpl.class, CatalogServiceImpl.class, CountriesDAOImpl.class, DocsDAOImpl.class})
+        CatalogControllerImpl.class, CatalogServiceImpl.class, CountriesDAOImpl.class, DocsDAOImpl.class,
+        UsersControllerImpl.class, UsersServiceImpl.class, UsersDAOImpl.class,
+        OfficesControllerImpl.class, OfficeServiceImpl.class, OfficesDAOImpl.class,
+        OrganizationsControllerImpl.class, OrganizationServiceImpl.class, OrganizationsDAOImpl.class})
 
 public class ApplicationCatalog {
 

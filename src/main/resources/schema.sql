@@ -21,11 +21,13 @@ ALTER TABLE Person ADD FOREIGN KEY (house_id) REFERENCES House(id);
 CREATE TABLE IF NOT EXISTS Docs (
     code     INTEGER PRIMARY KEY,
     name     VARCHAR(50) NOT NULL,
+    version  INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS Countries (
     code     INTEGER PRIMARY KEY,
     name     VARCHAR(50) NOT NULL,
+    version  INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS Organizations (
@@ -36,37 +38,41 @@ CREATE TABLE IF NOT EXISTS Organizations (
     kpp        VARCHAR(9) NOT NULL,
     address    VARCHAR(250) NOT NULL,
     phone      VARCHAR(20),
-    isActive   BIT NOT NULL DEFAULT 1
+    is_active   BIT NOT NULL DEFAULT 1,
+    version  INTEGER NOT NULL  DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS Offices (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
-    ordId      INTEGER NOT NULL,
+    org_id      INTEGER NOT NULL,
     name       VARCHAR(50) NOT NULL,
     phone      VARCHAR(20),
     address    VARCHAR(250) NOT NULL,
-    isActive   BIT NOT NULL DEFAULT 1,
-    FOREIGN KEY (ordId) REFERENCES Organizations(id)
+    is_active   BIT NOT NULL DEFAULT 1,
+    version  INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (org_id) REFERENCES Organizations(id)
 );
 
 CREATE TABLE IF NOT EXISTS Users (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
     login      VARCHAR(50),
     password   VARCHAR(50),
-    firstName  VARCHAR(50) NOT NULL,
-    secondName VARCHAR(50) NOT NULL,
-    middleName VARCHAR(50),
+    firstname  VARCHAR(50) NOT NULL,
+    secondname VARCHAR(50) NOT NULL,
+    middlename VARCHAR(50),
     position_statement  VARCHAR(50) NOT NULL,
     phone      VARCHAR(20),
-    officeId   INTEGER NOT NULL,
-    docCode    INTEGER NOT NULL,
-    docNumber  VARCHAR(150) NOT NULL,
-    docDate    DATE NOT NULL,
-    citizenshipCode  INTEGER NOT NULL,
-    isIdentified    BIT NOT NULL DEFAULT 1,
-    FOREIGN KEY (officeId) REFERENCES Offices(id),
-    FOREIGN KEY (docCode) REFERENCES Docs(code),
-    FOREIGN KEY (citizenshipCode) REFERENCES Countries(code)
+    office_id   INTEGER NOT NULL,
+    doc_code    INTEGER NOT NULL,
+    doc_number  VARCHAR(150) NOT NULL,
+    doc_date    DATE NOT NULL,
+    countries_code INTEGER NOT NULL,
+    version  INTEGER NOT NULL DEFAULT 0,
+    is_identified    BIT NOT NULL DEFAULT 1,
+    FOREIGN KEY (office_id) REFERENCES Offices(id),
+    FOREIGN KEY (doc_code) REFERENCES Docs(code),
+    FOREIGN KEY (countries_code) REFERENCES Countries(code)
 );
+
 
 

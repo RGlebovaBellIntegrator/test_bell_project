@@ -13,5 +13,5 @@
 
     <mvc:resources mapping="/**/*.*" location="/"/>
 
-    <mvc:view-controller path="/" view-name="index.html"/>
+    <mvc:view-controller path="/" view-name="start.html"/>
 </beans>

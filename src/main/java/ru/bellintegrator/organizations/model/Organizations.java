@@ -62,7 +62,7 @@ public class Organizations {
     private String phone;
 
     @Basic(optional = false)
-    //@Column(name = "isActive")
+    @Column(name = "is_active")
     private byte isActive;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organizations", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

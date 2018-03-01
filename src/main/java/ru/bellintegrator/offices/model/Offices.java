@@ -2,6 +2,7 @@ package ru.bellintegrator.offices.model;
 
 import ru.bellintegrator.organizations.model.Organizations;
 import ru.bellintegrator.users.model.Users;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -42,15 +43,14 @@ public class Offices {
     private String phone;
 
     @Basic(optional = false)
-    //@Column(name = "isActive")
-    private byte isActive;
+    @Column(name = "is_active")
+    private boolean isActive;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ordId")
+    @JoinColumn(name = "org_id")
     private Organizations organizations;
 
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "offices", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-   //@OneToMany(mappedBy = "offices")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "offices", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Users> users;
 
 
@@ -58,7 +58,7 @@ public class Offices {
 
     }
 
-    public Offices(String name, String address, String phone, byte isActive) {
+    public Offices(String name, String address, String phone, boolean isActive) {
         this.name=name;
         this.address=address;
         this.phone = phone;
@@ -77,6 +77,22 @@ public class Offices {
         this.name = name;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {return phone;}
+
+    public void  setPhone(String phone){this.phone=phone;}
+
+    public boolean getIsActive() {return isActive;}
+
+    public void  setIsActive(boolean isActive){this.isActive=isActive;}
+
     public Organizations getOrganization() { return organizations; }
 
     public void setOrganization(Organizations organizations) {
@@ -86,6 +102,7 @@ public class Offices {
     public List<Users> getUsers() {
         return users;
     }
+
     public void setUsers(List<Users> users) {
         this.users = users;
     }
