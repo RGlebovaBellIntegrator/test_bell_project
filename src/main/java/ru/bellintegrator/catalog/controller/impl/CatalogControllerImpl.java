@@ -31,7 +31,7 @@ public class CatalogControllerImpl implements CatalogController {
     }
 
 
-   /* @Override
+   @Override
     @ApiOperation(value = "addPerson", nickname = "addPerson", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
@@ -39,7 +39,7 @@ public class CatalogControllerImpl implements CatalogController {
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/person", method = {POST})
     public void countries(@RequestBody CountriesView countries) {
-        //catalogService.add(countries);
+        catalogService.add(countries);
     }
 
     @Override
@@ -50,8 +50,8 @@ public class CatalogControllerImpl implements CatalogController {
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/person", method = {POST})
     public void docs(@RequestBody DocsView docs) {
-        //catalogService.add(docs);
-    }*/
+        catalogService.add(docs);
+    }/* */
 
     @Override
     @ApiOperation(value = "getDocs", nickname = "getDocs", httpMethod = "GET")
@@ -62,7 +62,7 @@ public class CatalogControllerImpl implements CatalogController {
 
     @Override
     @ApiOperation(value = "getCountries", nickname = "getCountries", httpMethod = "GET")
-    @RequestMapping(value = "/docs", method = {GET})
+    @RequestMapping(value = "/countries", method = {GET})
     public List<CountriesView> countries() {
         return catalogService.countries();
     }

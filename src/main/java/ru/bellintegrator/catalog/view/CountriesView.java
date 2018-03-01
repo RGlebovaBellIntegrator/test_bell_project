@@ -6,7 +6,7 @@ import javax.print.Doc;
 
 public class CountriesView {
     @ApiModelProperty(hidden = true)
-    public String code;
+    public int code;
 
     public String name;
 
@@ -14,7 +14,7 @@ public class CountriesView {
 
     }
 
-    public CountriesView(String code, String name) {
+    public CountriesView(int code, String name) {
         this.code = code;
         this.name = name;
     }

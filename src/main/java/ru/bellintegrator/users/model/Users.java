@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "Users")
 public class Users {
 
     @Id
@@ -127,6 +129,13 @@ public class Users {
     }
     public String getMiddleName() {
         return middleName;
+    }
+
+    public Offices getOffice() {
+        return offices;
+    }
+    public void setOffice(Offices offices) {
+        this.offices = offices;
     }
 
 }

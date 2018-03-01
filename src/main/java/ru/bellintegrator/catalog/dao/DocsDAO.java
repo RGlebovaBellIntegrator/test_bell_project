@@ -22,4 +22,10 @@ public interface DocsDAO {
      * @return
      */
     Docs loadByCode(Integer code);
+    /**
+     * Сохранить Docs
+     *
+     * @param docs
+     */
+    void save(Docs docs);
 }

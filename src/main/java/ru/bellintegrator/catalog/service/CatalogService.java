@@ -9,6 +9,16 @@ import java.util.List;
 public interface CatalogService {
 
     /**
+     *
+     * @param docs
+     */
+    void add(DocsView docs);
+    /**
+     *
+     * @param countries
+     */
+    void add(CountriesView countries);
+    /**
      * Catalog service method
      * @return {@Docs}
      */

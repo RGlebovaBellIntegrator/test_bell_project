@@ -65,7 +65,7 @@ public class Organizations {
     //@Column(name = "isActive")
     private byte isActive;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "offices", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organizations", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Offices> offices;
 
     public Organizations(){

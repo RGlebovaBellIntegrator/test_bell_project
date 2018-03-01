@@ -35,13 +35,27 @@ public class CatalogServiceImpl implements CatalogService{
     }
 
     @Override
+    @Transactional
+    public void add(CountriesView view) {
+        Countries countries = new Countries(view.code, view.name);
+        countriesDAO.save(countries);
+    }
+
+    @Override
+    @Transactional
+    public void add(DocsView view) {
+        Docs docs = new Docs(view.code, view.name);
+        docsDAO.save(docs);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<CountriesView> countries() {
         List<Countries> all = countriesDAO.all();
 
         Function<Countries, CountriesView> mapContries = p -> {
             CountriesView view = new CountriesView();
-            view.code = String.valueOf(p.getCode());
+            view.code = p.getCode();
             view.name = p.getName();
             return view;
         };
@@ -58,7 +72,7 @@ public class CatalogServiceImpl implements CatalogService{
 
         Function<Docs, DocsView> mapDocs = p -> {
             DocsView view = new DocsView();
-            view.code = String.valueOf(p.getCode());
+            view.code = p.getCode();
             view.name = p.getName();
             return view;
         };

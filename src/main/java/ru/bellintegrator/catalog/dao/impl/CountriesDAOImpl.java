@@ -29,4 +29,9 @@ public class CountriesDAOImpl implements CountriesDAO{
     public Countries loadByCode(Integer code) {
         return em.find(Countries.class, code);
     }
+
+    @Override
+    public void save(Countries countries) {
+        em.persist(countries);
+    }
 }

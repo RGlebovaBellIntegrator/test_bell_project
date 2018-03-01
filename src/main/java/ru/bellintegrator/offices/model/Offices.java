@@ -49,7 +49,8 @@ public class Offices {
     @JoinColumn(name = "ordId")
     private Organizations organizations;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "offices", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+   //@OneToMany(mappedBy = "offices")
     private List<Users> users;
 
 
@@ -80,5 +81,12 @@ public class Offices {
 
     public void setOrganization(Organizations organizations) {
         this.organizations = organizations;
+    }
+
+    public List<Users> getUsers() {
+        return users;
+    }
+    public void setUsers(List<Users> users) {
+        this.users = users;
     }
 }

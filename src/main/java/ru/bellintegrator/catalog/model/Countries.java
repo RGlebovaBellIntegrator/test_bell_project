@@ -30,7 +30,7 @@ public class Countries {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "countries", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Users> users;
 
     public Countries(){
@@ -48,4 +48,5 @@ public class Countries {
     public Integer getCode() {
         return code;
     }
+
 }

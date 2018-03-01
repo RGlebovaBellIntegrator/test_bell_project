@@ -6,7 +6,7 @@ import javax.print.Doc;
 
 public class DocsView {
     @ApiModelProperty(hidden = true)
-    public String code;
+    public int code;
 
     public String name;
 
@@ -14,7 +14,7 @@ public class DocsView {
 
     }
 
-    public DocsView(String code, String name) {
+    public DocsView(int code, String name) {
         this.code = code;
         this.name = name;
     }

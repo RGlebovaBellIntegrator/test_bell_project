@@ -30,4 +30,8 @@ public class DocsDAOImpl implements DocsDAO{
         return em.find(Docs.class, code);
     }
 
+    @Override
+    public void save(Docs docs) {
+        em.persist(docs);
+    }
 }

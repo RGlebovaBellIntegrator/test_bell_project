@@ -11,14 +11,14 @@ public interface CatalogController {
     /**
      * Add docs
      * @param docs
-
-    void docs(@RequestBody DocsView docs);*/
+     */
+    void docs(@RequestBody DocsView docs);
 
     /**
      * Add countries
      * @param countries
-
-    void countries(@RequestBody CountriesView countries);*/
+     */
+    void countries(@RequestBody CountriesView countries);
 
     /**
      * Get all docs

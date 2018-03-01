@@ -30,7 +30,7 @@ public class Docs {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "docs", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Users> users;
 
     public Docs(){

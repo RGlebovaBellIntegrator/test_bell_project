@@ -22,4 +22,11 @@ public interface CountriesDAO {
      * @return
      */
     Countries loadByCode(Integer code);
+
+    /**
+     * Сохранить Countries
+     *
+     * @param countries
+     */
+    void save(Countries countries);
 }
