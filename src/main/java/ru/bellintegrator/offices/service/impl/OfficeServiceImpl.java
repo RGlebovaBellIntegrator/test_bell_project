@@ -44,6 +44,9 @@ public class OfficeServiceImpl implements OfficeService{
             OfficeView view = new OfficeView();
             view.id = String.valueOf(p.getId());
             view.name = p.getName();
+            view.phone = p.getPhone();
+            view.address = p.getAddress();
+            view.isActive = p.getIsActive();
 
             log.info(view.toString());
 
