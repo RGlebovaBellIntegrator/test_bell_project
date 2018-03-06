@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS Office (
     FOREIGN KEY (org_id) REFERENCES Organization(id)
 );
 
-CREATE TABLE IF NOT EXISTS User (
+CREATE TABLE IF NOT EXISTS Users (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
     login      VARCHAR(50) NOT NULL,
     password   VARCHAR(50) NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS Employe (
     countrie_id INTEGER NOT NULL,
     version  INTEGER NOT NULL DEFAULT 0,
     is_identified    BIT NOT NULL DEFAULT 1,
-    FOREIGN KEY (user_id) REFERENCES User(id),
+    FOREIGN KEY (user_id) REFERENCES Users(id),
     FOREIGN KEY (office_id) REFERENCES Office(id),
     FOREIGN KEY (doc_id) REFERENCES Doc(id),
     FOREIGN KEY (countrie_id) REFERENCES Countrie(id)

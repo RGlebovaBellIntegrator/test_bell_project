@@ -30,11 +30,11 @@ INSERT INTO Office (org_id, name, phone, address) VALUES (1, 'Офис 30', '44-
 INSERT INTO Office (org_id, name, phone, address) VALUES (2, 'Офис 3', '77-13-50', 'ул.Савушкина, д.112, 3 этаж');
 INSERT INTO Office (org_id, name, phone, address) VALUES (2, 'Офис 4', NULL, 'ул.Савушкина, д.112, 3 этаж');
 
-INSERT INTO User (login, password) VALUES ('John', 'Constantine');
-INSERT INTO User (login, password) VALUES ('Anna', 'qwerty123');
-INSERT INTO User (login, password) VALUES ('Anna_123', 'qwerty123');
-INSERT INTO User (login, password) VALUES ('John_1', 'Constantine_1');
-INSERT INTO User (login, password) VALUES ('John_2', 'Constantine_1');
+INSERT INTO Users (login, password) VALUES ('John', 'Constantine');
+INSERT INTO Users (login, password) VALUES ('Anna', 'qwerty123');
+INSERT INTO Users (login, password) VALUES ('Anna_123', 'qwerty123');
+INSERT INTO Users (login, password) VALUES ('John_1', 'Constantine_1');
+INSERT INTO Users (login, password) VALUES ('John_2', 'Constantine_1');
 
 
 INSERT INTO Employe (user_id, firstName, secondName, middleName, position_statement, phone, office_id, doc_id,
