@@ -10,22 +10,18 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ru.bellintegrator.catalog.controller.impl.CatalogControllerImpl;
-import ru.bellintegrator.catalog.dao.DocsDAO;
-import ru.bellintegrator.catalog.dao.impl.CountriesDAOImpl;
-import ru.bellintegrator.catalog.dao.impl.DocsDAOImpl;
+import ru.bellintegrator.catalog.dao.impl.CountrieDAOImpl;
+import ru.bellintegrator.catalog.dao.impl.DocDAOImpl;
 import ru.bellintegrator.catalog.service.impl.CatalogServiceImpl;
-import ru.bellintegrator.offices.controller.impl.OfficesControllerImpl;
-import ru.bellintegrator.offices.dao.impl.OfficesDAOImpl;
-import ru.bellintegrator.offices.model.Offices;
+import ru.bellintegrator.offices.controller.impl.OfficeControllerImpl;
+import ru.bellintegrator.offices.dao.impl.OfficeDAOImpl;
 import ru.bellintegrator.offices.service.impl.OfficeServiceImpl;
-import ru.bellintegrator.organizations.controller.OrganizationsController;
-import ru.bellintegrator.organizations.controller.impl.OrganizationsControllerImpl;
-import ru.bellintegrator.organizations.dao.impl.OrganizationsDAOImpl;
-import ru.bellintegrator.organizations.service.OrganizationService;
-import ru.bellintegrator.organizations.service.impl.OrganizationServiceImpl;
-import ru.bellintegrator.users.controller.impl.UsersControllerImpl;
-import ru.bellintegrator.users.dao.impl.UsersDAOImpl;
-import ru.bellintegrator.users.service.impl.UsersServiceImpl;
+import ru.bellintegrator.organization.controller.impl.OrganizationControllerImpl;
+import ru.bellintegrator.organization.dao.impl.OrganizationDAOImpl;
+import ru.bellintegrator.organization.service.impl.OrganizationServiceImpl;
+import ru.bellintegrator.user.controller.impl.UserControllerImpl;
+import ru.bellintegrator.user.dao.impl.UserDAOImpl;
+import ru.bellintegrator.user.service.impl.UserServiceImpl;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
@@ -40,10 +36,10 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @ImportResource("spring_mvc_config.xml")
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {
-        CatalogControllerImpl.class, CatalogServiceImpl.class, CountriesDAOImpl.class, DocsDAOImpl.class,
-        UsersControllerImpl.class, UsersServiceImpl.class, UsersDAOImpl.class,
-        OfficesControllerImpl.class, OfficeServiceImpl.class, OfficesDAOImpl.class,
-        OrganizationsControllerImpl.class, OrganizationServiceImpl.class, OrganizationsDAOImpl.class})
+        CatalogControllerImpl.class, CatalogServiceImpl.class, CountrieDAOImpl.class, DocDAOImpl.class,
+        UserControllerImpl.class, UserServiceImpl.class, UserDAOImpl.class,
+        OfficeControllerImpl.class, OfficeServiceImpl.class, OfficeDAOImpl.class,
+        OrganizationControllerImpl.class, OrganizationServiceImpl.class, OrganizationDAOImpl.class})
 
 public class ApplicationCatalog {
 
@@ -69,8 +65,8 @@ public class ApplicationCatalog {
 
     @Bean
     public Docket postApi() {
-       return new Docket(DocumentationType.SWAGGER_2).groupName("docs").apiInfo(apiInfo()).
-                select().paths(regex("/docs.*")).build();
+       return new Docket(DocumentationType.SWAGGER_2).groupName("doc").apiInfo(apiInfo()).
+                select().paths(regex("/doc.*")).build();
     }
 
     private ApiInfo apiInfo() {

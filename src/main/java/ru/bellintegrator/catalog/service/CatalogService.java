@@ -1,8 +1,7 @@
 package ru.bellintegrator.catalog.service;
 
-import ru.bellintegrator.catalog.view.CountriesView;
-import ru.bellintegrator.catalog.view.DocsView;
-import ru.bellintegrator.practice.view.PersonView;
+import ru.bellintegrator.catalog.view.CountrieView;
+import ru.bellintegrator.catalog.view.DocView;
 
 import java.util.List;
 
@@ -12,22 +11,22 @@ public interface CatalogService {
      *
      * @param docs
      */
-    void add(DocsView docs);
+    void add(DocView docs);
     /**
      *
      * @param countries
      */
-    void add(CountriesView countries);
+    void add(CountrieView countries);
     /**
      * Catalog service method
      * @return {@Docs}
      */
-    List<DocsView> docs();
+    List<DocView> docs();
 
 
     /**
      * Catalog service method
      * @return {@Countries}
      */
-    List<CountriesView> countries();
+    List<CountrieView> countrie();
 }

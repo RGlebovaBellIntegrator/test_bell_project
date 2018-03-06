@@ -18,21 +18,21 @@ ALTER TABLE Person ADD FOREIGN KEY (house_id) REFERENCES House(id);
 
 --Таблицы для домашнего задания
 
-CREATE TABLE IF NOT EXISTS Docs (
+CREATE TABLE IF NOT EXISTS Doc (
+    id       INTEGER PRIMARY KEY AUTO_INCREMENT,
+    code     INTEGER NOT NULL,
+    name     VARCHAR(50) NOT NULL,
+    version  INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS Countrie (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
     code     INTEGER NOT NULL,
     name     VARCHAR(50) NOT NULL,
     version  INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS Countries (
-    id         INTEGER PRIMARY KEY AUTO_INCREMENT,
-    code     INTEGER NOT NULL,
-    name     VARCHAR(50) NOT NULL,
-    version  INTEGER NOT NULL DEFAULT 0
-);
-
-CREATE TABLE IF NOT EXISTS Organizations (
+CREATE TABLE IF NOT EXISTS Organization (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
     name       VARCHAR(100) NOT NULL,
     fullname   VARCHAR(250) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS Organizations (
     version  INTEGER NOT NULL  DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS Offices (
+CREATE TABLE IF NOT EXISTS Office (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
     org_id      INTEGER NOT NULL,
     name       VARCHAR(50) NOT NULL,
@@ -52,17 +52,17 @@ CREATE TABLE IF NOT EXISTS Offices (
     address    VARCHAR(250) NOT NULL,
     is_active   BIT NOT NULL DEFAULT 1,
     version  INTEGER NOT NULL DEFAULT 0,
-    FOREIGN KEY (org_id) REFERENCES Organizations(id)
+    FOREIGN KEY (org_id) REFERENCES Organization(id)
 );
 
-CREATE TABLE IF NOT EXISTS Users (
+CREATE TABLE IF NOT EXISTS User (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
     login      VARCHAR(50) NOT NULL,
     password   VARCHAR(50) NOT NULL,
     version  INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS Employees (
+CREATE TABLE IF NOT EXISTS Employe (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
     user_id    INTEGER NOT NULL,
     firstname  VARCHAR(50) NOT NULL,
@@ -71,16 +71,16 @@ CREATE TABLE IF NOT EXISTS Employees (
     position_statement  VARCHAR(50) NOT NULL,
     phone      VARCHAR(20),
     office_id   INTEGER NOT NULL,
-    doc_code    INTEGER NOT NULL,
+    doc_id    INTEGER NOT NULL,
     doc_number  VARCHAR(150) NOT NULL,
     doc_date    DATE NOT NULL,
-    countries_code INTEGER NOT NULL,
+    countrie_id INTEGER NOT NULL,
     version  INTEGER NOT NULL DEFAULT 0,
     is_identified    BIT NOT NULL DEFAULT 1,
-    FOREIGN KEY (user_id) REFERENCES Users(id),
-    FOREIGN KEY (office_id) REFERENCES Offices(id),
-    FOREIGN KEY (doc_code) REFERENCES Docs(code),
-    FOREIGN KEY (countries_code) REFERENCES Countries(code)
+    FOREIGN KEY (user_id) REFERENCES User(id),
+    FOREIGN KEY (office_id) REFERENCES Office(id),
+    FOREIGN KEY (doc_id) REFERENCES Doc(id),
+    FOREIGN KEY (countrie_id) REFERENCES Countrie(id)
 );
 
 

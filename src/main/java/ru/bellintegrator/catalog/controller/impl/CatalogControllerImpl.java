@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.catalog.controller.CatalogController;
 import ru.bellintegrator.catalog.service.CatalogService;
-import ru.bellintegrator.catalog.view.DocsView;
-import ru.bellintegrator.catalog.view.CountriesView;
-import ru.bellintegrator.practice.view.PersonView;
+import ru.bellintegrator.catalog.view.DocView;
+import ru.bellintegrator.catalog.view.CountrieView;
 
 import java.util.List;
 
@@ -32,38 +31,38 @@ public class CatalogControllerImpl implements CatalogController {
 
 
    @Override
-    @ApiOperation(value = "addCountries", nickname = "addCountries", httpMethod = "POST")
+    @ApiOperation(value = "addCountrie", nickname = "addCountrie", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @RequestMapping(value = "/countries", method = {POST})
-    public void countries(@RequestBody CountriesView countries) {
-        catalogService.add(countries);
+    @RequestMapping(value = "/countrie", method = {POST})
+    public void countrie(@RequestBody CountrieView countrie) {
+        catalogService.add(countrie);
     }
 
     @Override
-    @ApiOperation(value = "addDocs", nickname = "addDocs", httpMethod = "POST")
+    @ApiOperation(value = "addDoc", nickname = "addDoc", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @RequestMapping(value = "/docs", method = {POST})
-    public void docs(@RequestBody DocsView docs) {
-        catalogService.add(docs);
+    @RequestMapping(value = "/doc", method = {POST})
+    public void doc(@RequestBody DocView doc) {
+        catalogService.add(doc);
     }/* */
 
     @Override
-    @ApiOperation(value = "getDocs", nickname = "getDocs", httpMethod = "GET")
-    @RequestMapping(value = "/docs", method = {GET})
-    public List<DocsView> docs() {
+    @ApiOperation(value = "getDoc", nickname = "getDoc", httpMethod = "GET")
+    @RequestMapping(value = "/doc", method = {GET})
+    public List<DocView> doc() {
         return catalogService.docs();
     }
 
     @Override
-    @ApiOperation(value = "getCountries", nickname = "getCountries", httpMethod = "GET")
-    @RequestMapping(value = "/countries", method = {GET})
-    public List<CountriesView> countries() {
-        return catalogService.countries();
+    @ApiOperation(value = "getCountrie", nickname = "getCountrie", httpMethod = "GET")
+    @RequestMapping(value = "/countrie", method = {GET})
+    public List<CountrieView> countrie() {
+        return catalogService.countrie();
     }
 }

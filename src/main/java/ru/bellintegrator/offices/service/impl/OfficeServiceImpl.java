@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.bellintegrator.offices.dao.OfficesDAO;
-import ru.bellintegrator.offices.model.Offices;
+import ru.bellintegrator.offices.dao.OfficeDAO;
+import ru.bellintegrator.offices.model.Office;
 import ru.bellintegrator.offices.service.OfficeService;
 import ru.bellintegrator.offices.view.OfficeView;
 
@@ -21,26 +21,26 @@ import java.util.stream.Collectors;
 public class OfficeServiceImpl implements OfficeService{
     private final Logger log = LoggerFactory.getLogger(OfficeServiceImpl.class);
 
-    private final OfficesDAO dao;
+    private final OfficeDAO dao;
 
     @Autowired
-    public OfficeServiceImpl(OfficesDAO dao) {
+    public OfficeServiceImpl(OfficeDAO dao) {
         this.dao = dao;
     }
 
     @Override
     @Transactional
     public void add(OfficeView view) {
-        Offices offices = new Offices(view.name, view.address, view.phone, view.isActive);
-        dao.save(offices);
+        Office office = new Office(view.name, view.address, view.phone, view.isActive);
+        dao.save(office);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<OfficeView> offices() {
-        List<Offices> all = dao.all();
+    public List<OfficeView> office() {
+        List<Office> all = dao.all();
 
-        Function<Offices, OfficeView> mapOffices = p -> {
+        Function<Office, OfficeView> mapOffices = p -> {
             OfficeView view = new OfficeView();
             view.id = String.valueOf(p.getId());
             view.name = p.getName();

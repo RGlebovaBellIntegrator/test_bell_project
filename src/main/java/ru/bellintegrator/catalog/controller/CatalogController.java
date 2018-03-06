@@ -1,34 +1,34 @@
 package ru.bellintegrator.catalog.controller;
 
 import org.springframework.web.bind.annotation.RequestBody;
-import ru.bellintegrator.catalog.view.CountriesView;
-import ru.bellintegrator.catalog.view.DocsView;
+import ru.bellintegrator.catalog.view.CountrieView;
+import ru.bellintegrator.catalog.view.DocView;
 
 import java.util.List;
 
 public interface CatalogController {
 
     /**
-     * Add docs
-     * @param docs
+     * Add doc
+     * @param doc
      */
-    void docs(@RequestBody DocsView docs);
+    void doc(@RequestBody DocView doc);
 
     /**
-     * Add countries
-     * @param countries
+     * Add countrie
+     * @param countrie
      */
-    void countries(@RequestBody CountriesView countries);
+    void countrie(@RequestBody CountrieView countrie);
 
     /**
-     * Get all docs
-     * @return JSON docs value
+     * Get all doc
+     * @return JSON doc value
      */
-    List<DocsView> docs();
+    List<DocView> doc();
 
     /**
-     * Get all countries
-     * @return JSON docs value
+     * Get all countrie
+     * @return JSON doc value
      */
-    List<CountriesView> countries();
+    List<CountrieView> countrie();
 }

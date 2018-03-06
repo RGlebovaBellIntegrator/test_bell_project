@@ -8,13 +8,13 @@ public interface OfficeService {
 
     /**
      *
-     * @param offices
+     * @param office
      */
-    void add(OfficeView offices);
+    void add(OfficeView office);
 
     /**
      * Office service method
-     * @return {@Offices}
+     * @return {@Office}
      */
-    List<OfficeView> offices();
+    List<OfficeView> office();
 }

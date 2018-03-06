@@ -9,14 +9,6 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import ru.bellintegrator.catalog.controller.impl.CatalogControllerImpl;
-import ru.bellintegrator.catalog.dao.DocsDAO;
-import ru.bellintegrator.catalog.dao.impl.CountriesDAOImpl;
-import ru.bellintegrator.catalog.dao.impl.DocsDAOImpl;
-import ru.bellintegrator.catalog.service.impl.CatalogServiceImpl;
-import ru.bellintegrator.offices.controller.impl.OfficesControllerImpl;
-import ru.bellintegrator.offices.dao.impl.OfficesDAOImpl;
-import ru.bellintegrator.offices.service.impl.OfficeServiceImpl;
 import ru.bellintegrator.practice.controller.impl.DummyControllerImpl;
 import ru.bellintegrator.practice.dao.impl.PersonDAOImpl;
 import ru.bellintegrator.practice.service.impl.DummyServiceImpl;
@@ -36,8 +28,8 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {DummyControllerImpl.class, DummyServiceImpl.class, PersonDAOImpl.class})
 /*
-,  OfficesControllerImpl.class, OfficeServiceImpl.class, OfficesDAOImpl.class,
-   CatalogControllerImpl.class, CatalogServiceImpl.class, CountriesDAOImpl.class, DocsDAOImpl.class*/
+,  OfficeControllerImpl.class, OfficeServiceImpl.class, OfficeDAOImpl.class,
+   CatalogControllerImpl.class, CatalogServiceImpl.class, CountrieDAOImpl.class, DocDAOImpl.class*/
 public class Application {
 
     public static void main(String[] args) {
