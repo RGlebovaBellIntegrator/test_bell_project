@@ -55,7 +55,7 @@ public class Employe {
 
     @Basic(optional = false)
     @Column(name = "is_identified")
-    private byte isIdentified;
+    private Boolean isIdentified;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "office_id")
@@ -94,7 +94,7 @@ public class Employe {
     }
 
     public Employe(String firstname, String secondname, String middleName, String statement, String phone,
-                   byte isIdentified) {
+                   Boolean isIdentified) {
         this.firstname=firstname;
         this.secondname = secondname;
         this.middleName=middleName;
@@ -132,9 +132,9 @@ public class Employe {
     public String getPhone() {return phone;}
     public void  setPhone(String phone){this.phone=phone;}
 
-    public byte getIsIdentified() {return isIdentified;}
+    public Boolean getIsIdentified() {return isIdentified;}
 
-    public void  setIsIdentified(byte isIdentified){this.isIdentified=isIdentified;}
+    public void  setIsIdentified(Boolean isIdentified){this.isIdentified=isIdentified;}
 
     public Office getOffice() {
         return office;

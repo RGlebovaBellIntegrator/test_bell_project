@@ -20,14 +20,14 @@ public class EmployeView {
     public String docNumber;
     public Date docDate;
 
-    public byte isIdentified;
+    public Boolean isIdentified;
 
     public EmployeView() {
 
     }
 
     public EmployeView(String firstName, String secondName, String middleName, String statement,
-                       String phone, String docNumber, Date docDate, byte isIdentified) {
+                       String phone, String docNumber, Date docDate, Boolean isIdentified) {
         this.firstName=firstName;
         this.secondName=secondName;
         this.middleName=middleName;

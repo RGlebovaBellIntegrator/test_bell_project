@@ -16,13 +16,13 @@ public class OrganizationView {
     public String address;
     public String phone;
 
-    public byte isActive;
+    public Boolean isActive;
 
     public OrganizationView() {
 
     }
 
-    public OrganizationView(String name, String fullname, String inn, String kpp, String address, String phone, byte isActive) {
+    public OrganizationView(String name, String fullname, String inn, String kpp, String address, String phone, Boolean isActive) {
         this.name=name;
         this.fullname=fullname;
         this.inn=inn;

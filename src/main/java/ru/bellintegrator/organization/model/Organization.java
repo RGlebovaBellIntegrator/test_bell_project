@@ -63,7 +63,7 @@ public class Organization {
 
     @Basic(optional = false)
     @Column(name = "is_active")
-    private byte isActive;
+    private Boolean isActive;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Office> offices;
@@ -72,7 +72,7 @@ public class Organization {
 
     }
 
-    public Organization(String name, String fullname, String inn, String kpp, String address, String phone, byte isActive) {
+    public Organization(String name, String fullname, String inn, String kpp, String address, String phone, Boolean isActive) {
         this.name=name;
         this.fullname=fullname;
         this.inn=inn;
