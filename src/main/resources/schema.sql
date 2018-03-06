@@ -19,18 +19,20 @@ ALTER TABLE Person ADD FOREIGN KEY (house_id) REFERENCES House(id);
 --Таблицы для домашнего задания
 
 CREATE TABLE IF NOT EXISTS Docs (
-    code     INTEGER PRIMARY KEY,
+    id         INTEGER PRIMARY KEY AUTO_INCREMENT,
+    code     INTEGER NOT NULL,
     name     VARCHAR(50) NOT NULL,
     version  INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS Countries (
-    code     INTEGER PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS Countrie (
+    id         INTEGER PRIMARY KEY AUTO_INCREMENT,
+    code     INTEGER NOT NULL,
     name     VARCHAR(50) NOT NULL,
     version  INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS Organizations (
+CREATE TABLE IF NOT EXISTS Organization (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
     name       VARCHAR(100) NOT NULL,
     fullname   VARCHAR(250) NOT NULL,
@@ -42,7 +44,7 @@ CREATE TABLE IF NOT EXISTS Organizations (
     version  INTEGER NOT NULL  DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS Offices (
+CREATE TABLE IF NOT EXISTS Office (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
     org_id      INTEGER NOT NULL,
     name       VARCHAR(50) NOT NULL,
@@ -53,10 +55,15 @@ CREATE TABLE IF NOT EXISTS Offices (
     FOREIGN KEY (org_id) REFERENCES Organizations(id)
 );
 
-CREATE TABLE IF NOT EXISTS Users (
+CREATE TABLE IF NOT EXISTS User (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
-    login      VARCHAR(50),
-    password   VARCHAR(50),
+    login      VARCHAR(50) NOT NULL,
+    password   VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Employe (
+    id         INTEGER PRIMARY KEY AUTO_INCREMENT,
+    user_id    INTEGER NOT NULL,
     firstname  VARCHAR(50) NOT NULL,
     secondname VARCHAR(50) NOT NULL,
     middlename VARCHAR(50),
@@ -69,6 +76,7 @@ CREATE TABLE IF NOT EXISTS Users (
     countries_code INTEGER NOT NULL,
     version  INTEGER NOT NULL DEFAULT 0,
     is_identified    BIT NOT NULL DEFAULT 1,
+    FOREIGN KEY (user_id) REFERENCES Users(id),
     FOREIGN KEY (office_id) REFERENCES Offices(id),
     FOREIGN KEY (doc_code) REFERENCES Docs(code),
     FOREIGN KEY (countries_code) REFERENCES Countries(code)
