@@ -24,4 +24,6 @@ public interface EmployeService {
     void update(Long id, String firstname, String secondname, String middlename,
                 String position, String phine, String doc_name, String doc_number,
                 String doc_date, String country_name, String country_code, Boolean isIdentified);
+
+    void delete(Long id);
 }

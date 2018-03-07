@@ -27,7 +27,7 @@ public interface EmployeController {
 
     List<EmployeView> employe(Map<String,String> body);
 
-
-
     void update(@RequestBody Map<String,String> body);
+
+    void delete(@RequestBody Map<String,String> body);
 }

@@ -161,7 +161,7 @@ public class EmployeDAOImpl implements EmployeDAO {
                 if (doc_temp!=null) {
                     employe.setDoc(doc_temp);
                 }
-                else System.out.println("Нет документа");;
+                else System.out.println("Нет документа");
             }
 
             if (doc_number != null) {
@@ -203,7 +203,7 @@ public class EmployeDAOImpl implements EmployeDAO {
                 if (country_temp!=null) {
                     employe.setCountry(country_temp);
                 }
-                else System.out.println("Нет документа");;
+                else System.out.println("Нет страны");;
             }
 
             if (isIdentified != null) {
@@ -224,5 +224,15 @@ public class EmployeDAOImpl implements EmployeDAO {
             TypedQuery<Employe> query = em.createQuery(criteria);*/
 
         };
+    }
+
+    @Override
+    public void delete(Long id) {
+        Employe employe = em.find(Employe.class, id);
+        if (employe!=null){
+            em.remove(employe);
+        }
+        else
+        System.out.println("Нет такого id");;
     }
 }

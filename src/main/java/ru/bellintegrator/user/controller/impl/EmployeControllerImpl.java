@@ -38,13 +38,13 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @RequestMapping(value = "/employe", method = {POST})
+    @RequestMapping(value = "/save", method = {POST})
     public void employe(@RequestBody EmployeView employe) {
         employeService.add(employe);
     }
 
     @Override
-    @ApiOperation(value = "getUser", nickname = "getUser", httpMethod = "GET")
+    @ApiOperation(value = "getEmploye", nickname = "getEmploye", httpMethod = "GET")
     @RequestMapping(value = "/employe", method = {GET})
     public List<EmployeView> employe() {
         return employeService.employe();
@@ -83,5 +83,16 @@ public class EmployeControllerImpl implements EmployeController {
                 body.get("country_name"),
                 body.get("country_code"),
                 Boolean.parseBoolean(body.get("isIdentified")));
+    }
+
+    @Override
+    @ApiOperation(value = "deleteEmploye", nickname = "deleteEmployeEmploye", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @RequestMapping(value = "/delete", method = {POST})
+    public void delete(@RequestBody Map<String,String> body) {
+        employeService.delete( Long.parseLong(body.get("id")));
     }
 }

@@ -95,4 +95,10 @@ public class EmployeServiceImpl implements EmployeService {
                        String doc_date, String country_name, String country_code, Boolean isIdentified) {
         dao.update(id, firstname,secondname,middlename,position, phone, doc_name, doc_number,doc_date,country_name,country_code,isIdentified);
     }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        dao.delete(id);
+    }
 }
