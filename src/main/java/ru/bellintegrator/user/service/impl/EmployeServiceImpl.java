@@ -46,6 +46,12 @@ public class EmployeServiceImpl implements EmployeService {
             EmployeView view = new EmployeView();
             view.id = String.valueOf(p.getId());
             view.firstName = p.getFirstName();
+            view.secondName = p.getSecondName();
+            view.middleName = p.getMiddlename();
+            view.statement = p.getStatement();
+            view.phone = p.getPhone();
+            view.docCode = p.getDoc().getCode();
+            view.countryCode = p.getCountry().getCode();
 
             log.info(view.toString());
 
@@ -80,5 +86,13 @@ public class EmployeServiceImpl implements EmployeService {
         return all.stream()
                 .map(mapEmploye)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void update(Long id, String firstname, String secondname, String middlename,
+                       String position, String phone, String doc_name, String doc_number,
+                       String doc_date, String country_name, String country_code, Boolean isIdentified) {
+        dao.update(id, firstname,secondname,middlename,position, phone, doc_name, doc_number,doc_date,country_name,country_code,isIdentified);
     }
 }

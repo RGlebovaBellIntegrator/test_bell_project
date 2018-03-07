@@ -18,5 +18,16 @@ public interface EmployeController {
      * Get all employe
      * @return JSON employe value
      */
+    List<EmployeView> employe();
+
+    /**
+     * Get all employe
+     * @return JSON employe value
+     */
+
     List<EmployeView> employe(Map<String,String> body);
+
+
+
+    void update(@RequestBody Map<String,String> body);
 }

@@ -20,4 +20,8 @@ public interface EmployeService {
 
     List<EmployeView> employeFilter(String firstname, String secondname, String middlename,
                                     String position, String doc_code, String office_id, String country_code);
+
+    void update(Long id, String firstname, String secondname, String middlename,
+                String position, String phine, String doc_name, String doc_number,
+                String doc_date, String country_name, String country_code, Boolean isIdentified);
 }

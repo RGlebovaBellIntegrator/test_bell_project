@@ -44,6 +44,14 @@ public class EmployeControllerImpl implements EmployeController {
     }
 
     @Override
+    @ApiOperation(value = "getUser", nickname = "getUser", httpMethod = "GET")
+    @RequestMapping(value = "/employe", method = {GET})
+    public List<EmployeView> employe() {
+        return employeService.employe();
+    }
+
+
+    @Override
     @ApiOperation(value = "getList", nickname = "getList", httpMethod = "GET")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
@@ -53,5 +61,27 @@ public class EmployeControllerImpl implements EmployeController {
     public List<EmployeView> employe(@RequestBody Map<String,String> body) {
         return employeService.employeFilter(body.get("firstname"), body.get("secondname"), body.get("middlename"),
                 body.get("position"), body.get("doc_code"), body.get("office_id"), body.get("country_code")) ;
+    }
+
+    @Override
+    @ApiOperation(value = "updateEmploye", nickname = "updateEmploye", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @RequestMapping(value = "/update", method = {POST})
+    public void update(@RequestBody Map<String,String> body) {
+        employeService.update( Long.parseLong(body.get("id")),
+                body.get("firstname"),
+                body.get("secondname"),
+                body.get("middlename"),
+                body.get("position"),
+                body.get("phone"),
+                body.get("doc_name"),
+                body.get("doc_number"),
+                body.get("doc_date"),
+                body.get("country_name"),
+                body.get("country_code"),
+                Boolean.parseBoolean(body.get("isIdentified")));
     }
 }

@@ -116,4 +116,113 @@ public class EmployeDAOImpl implements EmployeDAO {
     public void save(Employe employe) {
         em.persist(employe);
     }
+
+    @Override
+    public void update(Long id, String firstname, String secondname, String middlename,
+                       String position, String phone, String doc_name, String doc_number,
+                       String doc_date, String country_name, String country_code, Boolean isIdentified) {
+        Employe employe = loadById(id);
+        if (employe==null) {
+            save(employe);
+        }
+        else {
+            if (firstname != null) {
+                employe.setFirstname(firstname);
+            }
+
+            if (secondname != null) {
+                employe.setSecondname(secondname);
+            }
+
+            if (middlename != null) {
+                employe.setMiddlename(middlename);
+            }
+
+            if (position != null) {
+                employe.setStatement(position);
+            }
+
+            if (phone != null) {
+                employe.setPhone(phone);
+            }
+
+
+            if (doc_name != null) {
+                CriteriaBuilder builder = em.getCriteriaBuilder();
+                CriteriaQuery<Doc> criteria = builder.createQuery(Doc.class);
+
+                Root<Doc> person = criteria.from(Doc.class);
+                criteria.where(builder.equal(person.get("name"), doc_name));
+
+                TypedQuery<Doc> query = em.createQuery(criteria);
+
+                Doc doc_temp = query.getSingleResult();
+
+                if (doc_temp!=null) {
+                    employe.setDoc(doc_temp);
+                }
+                else System.out.println("Нет документа");;
+            }
+
+            if (doc_number != null) {
+                employe.setStatement(doc_number);
+            }
+
+            if (doc_date != null) {
+                employe.setPhone(doc_date);
+            }
+
+            if (country_name != null) {
+                CriteriaBuilder builder = em.getCriteriaBuilder();
+                CriteriaQuery<Country> criteria = builder.createQuery(Country.class);
+
+                Root<Country> person = criteria.from(Country.class);
+                criteria.where(builder.equal(person.get("name"), country_name));
+
+                TypedQuery<Country> query = em.createQuery(criteria);
+
+                Country country_temp = query.getSingleResult();
+
+                if (country_temp!=null) {
+                    employe.setCountry(country_temp);
+                }
+                else System.out.println("Нет документа");;
+            }
+
+            if (country_code != null) {
+                CriteriaBuilder builder = em.getCriteriaBuilder();
+                CriteriaQuery<Country> criteria = builder.createQuery(Country.class);
+
+                Root<Country> person = criteria.from(Country.class);
+                criteria.where(builder.equal(person.get("code"), country_code));
+
+                TypedQuery<Country> query = em.createQuery(criteria);
+
+                Country country_temp = query.getSingleResult();
+
+                if (country_temp!=null) {
+                    employe.setCountry(country_temp);
+                }
+                else System.out.println("Нет документа");;
+            }
+
+            if (isIdentified != null) {
+                employe.setIsIdentified(isIdentified);
+            }
+            /*CriteriaBuilder builder = em.getCriteriaBuilder();
+            CriteriaQuery<Employe> criteria = builder.createQuery(Employe.class);
+
+            Root<Employe> r = criteria.from(Employe.class);
+
+            Predicate predicate = builder.conjunction();
+            if (employe.getFirstName() != null) {
+                Predicate p = builder.equal(r.get("firstname"), employe.getFirstName());
+                predicate = builder.and(predicate, p);
+            }
+
+            criteria.where(predicate);
+            TypedQuery<Employe> query = em.createQuery(criteria);*/
+
+        };
+    }
 }

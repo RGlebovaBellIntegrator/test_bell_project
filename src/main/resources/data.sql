@@ -55,5 +55,5 @@ INSERT INTO Employe (user_id, firstName, secondName, position_statement, phone, 
                     '4444 777777', '2015-12-03', 3, 0);
 INSERT INTO Employe (user_id, firstName, secondName, middleName, position_statement, phone, office_id, doc_id,
                     doc_number, doc_date, countrie_id)
-            VALUES (5, 'Джон', 'Константин', 'Александрович', 'Экзорцист', '666-1', 2, 1,
+            VALUES (5, 'Джон', 'Константин', 'Александрович', 'Экзорцист2', '666-1', 2, 1,
                     '4444 777777', '2015-07-23', 4);

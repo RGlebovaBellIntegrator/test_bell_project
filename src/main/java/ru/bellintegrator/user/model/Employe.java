@@ -142,6 +142,20 @@ public class Employe {
         this.office = office;
     }
 
+    public Country getCountry() {
+        return country;
+    }
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public Doc getDoc() {
+        return doc;
+    }
+    public void setDoc(Doc doc) {
+        this.doc = doc;
+    }
+
     public User getUser() {
         return user;
     }

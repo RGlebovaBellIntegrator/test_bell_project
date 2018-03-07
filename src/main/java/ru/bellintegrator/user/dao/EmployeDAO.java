@@ -38,4 +38,8 @@ public interface EmployeDAO {
      * @param employe
      */
     void save(Employe employe);
+
+    void update(Long id, String firstname, String secondname, String middlename,
+                String position, String phone, String doc_name, String doc_number,
+                String doc_date, String country_name, String country_code, Boolean isIdentified);
 }

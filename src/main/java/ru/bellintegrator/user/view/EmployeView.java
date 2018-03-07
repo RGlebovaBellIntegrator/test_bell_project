@@ -17,9 +17,10 @@ public class EmployeView {
 
 
     public String phone;
+    public int docCode;
     public String docNumber;
     public Date docDate;
-
+    public int countryCode;
     public Boolean isIdentified;
 
     public EmployeView() {
@@ -37,4 +38,6 @@ public class EmployeView {
         this.docDate = docDate;
         this.isIdentified = isIdentified;
     }
+
+
 }
