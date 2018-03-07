@@ -2,15 +2,15 @@ package ru.bellintegrator.catalog.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.bellintegrator.catalog.dao.CountrieDAO;
-import ru.bellintegrator.catalog.model.Countrie;
+import ru.bellintegrator.catalog.dao.CountryDAO;
+import ru.bellintegrator.catalog.model.Country;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class CountrieDAOImpl implements CountrieDAO {
+public class CountrieDAOImpl implements CountryDAO {
     private final EntityManager em;
 
     @Autowired
@@ -20,18 +20,18 @@ public class CountrieDAOImpl implements CountrieDAO {
 
 
     @Override
-    public List<Countrie> all() {
-        TypedQuery<Countrie> query = em.createQuery("SELECT c FROM Countrie c", Countrie.class);
+    public List<Country> all() {
+        TypedQuery<Country> query = em.createQuery("SELECT c FROM Country c", Country.class);
         return query.getResultList();
     }
 
     @Override
-    public Countrie loadByCode(Integer code) {
-        return em.find(Countrie.class, code);
+    public Country loadByCode(Integer code) {
+        return em.find(Country.class, code);
     }
 
     @Override
-    public void save(Countrie countrie) {
-        em.persist(countrie);
+    public void save(Country country) {
+        em.persist(country);
     }
 }

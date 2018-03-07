@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.catalog.controller.CatalogController;
 import ru.bellintegrator.catalog.service.CatalogService;
 import ru.bellintegrator.catalog.view.DocView;
-import ru.bellintegrator.catalog.view.CountrieView;
+import ru.bellintegrator.catalog.view.CountryView;
 
 import java.util.List;
 
@@ -31,14 +31,14 @@ public class CatalogControllerImpl implements CatalogController {
 
 
    @Override
-    @ApiOperation(value = "addCountrie", nickname = "addCountrie", httpMethod = "POST")
+    @ApiOperation(value = "addCountry", nickname = "addCountry", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @RequestMapping(value = "/countrie", method = {POST})
-    public void countrie(@RequestBody CountrieView countrie) {
-        catalogService.add(countrie);
+    @RequestMapping(value = "/countries", method = {POST})
+    public void country(@RequestBody CountryView country) {
+        catalogService.add(country);
     }
 
     @Override
@@ -47,22 +47,22 @@ public class CatalogControllerImpl implements CatalogController {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @RequestMapping(value = "/doc", method = {POST})
+    @RequestMapping(value = "/docs", method = {POST})
     public void doc(@RequestBody DocView doc) {
         catalogService.add(doc);
     }/* */
 
     @Override
     @ApiOperation(value = "getDoc", nickname = "getDoc", httpMethod = "GET")
-    @RequestMapping(value = "/doc", method = {GET})
+    @RequestMapping(value = "/docs", method = {GET})
     public List<DocView> doc() {
         return catalogService.docs();
     }
 
     @Override
-    @ApiOperation(value = "getCountrie", nickname = "getCountrie", httpMethod = "GET")
-    @RequestMapping(value = "/countrie", method = {GET})
-    public List<CountrieView> countrie() {
-        return catalogService.countrie();
+    @ApiOperation(value = "getCountry", nickname = "getCountry", httpMethod = "GET")
+    @RequestMapping(value = "/countries", method = {GET})
+    public List<CountryView> country() {
+        return catalogService.country();
     }
 }

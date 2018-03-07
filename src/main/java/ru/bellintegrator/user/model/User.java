@@ -1,11 +1,6 @@
 package ru.bellintegrator.user.model;
 
-import ru.bellintegrator.catalog.model.Countrie;
-import ru.bellintegrator.catalog.model.Doc;
-import ru.bellintegrator.offices.model.Office;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "User")
@@ -34,6 +29,9 @@ public class User {
     @Basic
     private String password;
 
+    @Basic
+    private String name;
+
     @OneToOne(
             mappedBy="user",
             fetch = FetchType.LAZY,
@@ -46,9 +44,10 @@ public class User {
 
     }
 
-    public User(String login, String password) {
+    public User(String login, String password, String name) {
         this.login=login;
         this.password=password;
+        this.name=name;
     }
 
     public Long getId() {
@@ -63,6 +62,11 @@ public class User {
         return password;
     }
     public void  setPassword(String password) {this.password = password;}
+
+    public String getName() {
+        return name;
+    }
+    public void  setName(String name) {this.name = name;}
 
 
     public Employe getEmploye() {

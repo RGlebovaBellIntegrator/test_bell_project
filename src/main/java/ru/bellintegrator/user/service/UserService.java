@@ -17,4 +17,6 @@ public interface UserService {
      * @return {@User}
      */
     List<UserView> user();
+
+    boolean login(String login, String password);
 }

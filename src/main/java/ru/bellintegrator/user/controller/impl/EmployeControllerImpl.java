@@ -15,13 +15,14 @@ import ru.bellintegrator.user.view.EmployeView;
 import ru.bellintegrator.user.view.UserView;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
-@RequestMapping(value = "/", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/user", produces = APPLICATION_JSON_VALUE)
 public class EmployeControllerImpl implements EmployeController {
     private final EmployeService employeService;
 
@@ -43,9 +44,14 @@ public class EmployeControllerImpl implements EmployeController {
     }
 
     @Override
-    @ApiOperation(value = "getEmploye", nickname = "getEmploye", httpMethod = "GET")
-    @RequestMapping(value = "/employe", method = {GET})
-    public List<EmployeView> employe() {
-        return employeService.employe();
+    @ApiOperation(value = "getList", nickname = "getList", httpMethod = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @RequestMapping(value = "/list", method = {POST})
+    public List<EmployeView> employe(@RequestBody Map<String,String> body) {
+        return employeService.employeFilter(body.get("firstname"), body.get("secondname"), body.get("middlename"),
+                body.get("position"), body.get("doc_code"), body.get("office_id"), body.get("country_code")) ;
     }
 }

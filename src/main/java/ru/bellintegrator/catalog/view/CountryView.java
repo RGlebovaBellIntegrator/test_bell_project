@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.print.Doc;
 
-public class CountrieView {
+public class CountryView {
     @ApiModelProperty(hidden = true)
     public int id;
 
@@ -12,11 +12,11 @@ public class CountrieView {
 
     public String name;
 
-    public CountrieView() {
+    public CountryView() {
 
     }
 
-    public CountrieView(int code, String name) {
+    public CountryView(int code, String name) {
         this.code = code;
         this.name = name;
     }

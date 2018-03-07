@@ -10,8 +10,8 @@ import java.util.List;
 * Спарвочник документов
 */
 @Entity
-@Table(name = "Countrie")
-public class Countrie {
+@Table(name = "Country")
+public class Country {
 
     @Id
     @GeneratedValue
@@ -34,14 +34,14 @@ public class Countrie {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "countrie", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "country", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Employe> employe;
 
-    public Countrie(){
+    public Country(){
 
     }
 
-    public Countrie(Integer code, String name){
+    public Country(Integer code, String name){
         this.code=code;
         this.name=name;
     }

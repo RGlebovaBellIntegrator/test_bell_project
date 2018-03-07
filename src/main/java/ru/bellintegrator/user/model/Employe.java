@@ -1,10 +1,9 @@
 package ru.bellintegrator.user.model;
 
-import ru.bellintegrator.catalog.model.Countrie;
+import ru.bellintegrator.catalog.model.Country;
 import ru.bellintegrator.catalog.model.Doc;
 import ru.bellintegrator.offices.model.Office;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import java.util.Date;
 
@@ -36,7 +35,7 @@ public class Employe {
 
     @Basic
     @Column(name = "middlename")
-    private String middleName;
+    private String middlename;
 
 
     /**
@@ -83,7 +82,7 @@ public class Employe {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "countrie_id")
-    private Countrie countrie;
+    private Country country;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -93,11 +92,11 @@ public class Employe {
 
     }
 
-    public Employe(String firstname, String secondname, String middleName, String statement, String phone,
+    public Employe(String firstname, String secondname, String middlename, String statement, String phone,
                    Boolean isIdentified) {
         this.firstname=firstname;
         this.secondname = secondname;
-        this.middleName=middleName;
+        this.middlename = middlename;
         this.statement = statement;
         this.phone = phone;
         this.isIdentified = isIdentified;
@@ -108,7 +107,7 @@ public class Employe {
     }
 
     public String getName() {
-        return String.format("Имя: %s Фамилия: %s Отчество: %s", firstname, secondname, middleName);
+        return String.format("Имя: %s Фамилия: %s Отчество: %s", firstname, secondname, middlename);
     }
 
     public String getFirstName() {
@@ -119,10 +118,10 @@ public class Employe {
         return secondname;
     }
     public void setSecondname(String secondname) {this.secondname = secondname;}
-    public String getMiddleName() {
-        return middleName;
+    public String getMiddlename() {
+        return middlename;
     }
-    public void  setMiddleName(String middleName) {this.middleName = middleName;}
+    public void setMiddlename(String middlename) {this.middlename = middlename;}
 
     public String getStatement() {
         return statement;

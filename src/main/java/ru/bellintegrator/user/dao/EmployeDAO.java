@@ -13,6 +13,9 @@ public interface EmployeDAO {
      */
     List<Employe> all();
 
+    List<Employe> filter(String firstname, String secondname, String middlename,
+                         String position, String doc_code, String office_id, String country_code);
+
     /**
      * Получить Employe по идентификатору
      *

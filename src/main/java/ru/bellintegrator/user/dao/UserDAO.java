@@ -29,6 +29,14 @@ public interface UserDAO {
     User loadByName(String name);
 
     /**
+     * Получить User по логину
+     *
+     * @param login
+     * @return
+     */
+    User loadByLogin(String login, String password);
+
+    /**
      * Сохранить User
      *
      * @param user

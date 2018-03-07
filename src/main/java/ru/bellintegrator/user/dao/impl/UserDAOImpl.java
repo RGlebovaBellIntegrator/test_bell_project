@@ -55,6 +55,18 @@ public class UserDAOImpl implements UserDAO {
         return query.getSingleResult();
     }
 
+    @Override
+    public User loadByLogin(String login, String password) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+
+        Root<User> users = criteria.from(User.class);
+        criteria.where(builder.equal(users.get("login"), login), builder.equal(users.get("password"), password));
+
+        TypedQuery<User> query = em.createQuery(criteria);
+        return query.getSingleResult();
+    }
+
     /**
      * {@inheritDoc}
      */

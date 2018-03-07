@@ -11,11 +11,11 @@ INSERT INTO Doc (code, name) VALUES (7, 'Военный билет');
 INSERT INTO Doc (code, name) VALUES (3, 'Свидетельство о рождении');
 INSERT INTO Doc (code, name) VALUES (10, 'Паспорт иностранного гражданина');
 
-INSERT INTO Countrie (code, name) VALUES (643, 'Российская Федерация');
-INSERT INTO Countrie (code, name) VALUES (031, 'Республика Азербайджан');
-INSERT INTO Countrie (code, name) VALUES (208, 'Королевство Дания');
-INSERT INTO Countrie (code, name) VALUES (178, 'Республика Конго');
-INSERT INTO Countrie (code, name) VALUES (434, 'Ливия');
+INSERT INTO Country (code, name) VALUES (643, 'Российская Федерация');
+INSERT INTO Country (code, name) VALUES (031, 'Республика Азербайджан');
+INSERT INTO Country (code, name) VALUES (208, 'Королевство Дания');
+INSERT INTO Country (code, name) VALUES (178, 'Республика Конго');
+INSERT INTO Country (code, name) VALUES (434, 'Ливия');
 
 INSERT INTO Organization (name, fullname, inn, kpp, address, phone)
 VALUES ('Bell Integrator', 'АКЦИОНЕРНОЕ ОБЩЕСТВО "БЭЛЛ ИНТЕГРАТОР"', '7733180847', '502401001', 'Россия, Пенза, Московская улица, 27' , '+7 (495) 980-61-85');
@@ -30,11 +30,11 @@ INSERT INTO Office (org_id, name, phone, address) VALUES (1, 'Офис 30', '44-
 INSERT INTO Office (org_id, name, phone, address) VALUES (2, 'Офис 3', '77-13-50', 'ул.Савушкина, д.112, 3 этаж');
 INSERT INTO Office (org_id, name, phone, address) VALUES (2, 'Офис 4', NULL, 'ул.Савушкина, д.112, 3 этаж');
 
-INSERT INTO User (login, password) VALUES ('John', 'Constantine');
-INSERT INTO User (login, password) VALUES ('Anna', 'qwerty123');
-INSERT INTO User (login, password) VALUES ('Anna_123', 'qwerty123');
-INSERT INTO User (login, password) VALUES ('John_1', 'Constantine_1');
-INSERT INTO User (login, password) VALUES ('John_2', 'Constantine_1');
+INSERT INTO User (login, password, name) VALUES ('John', 'Constantine', 'Константин');
+INSERT INTO User (login, password, name) VALUES ('Anna', 'qwerty123', 'Анна1');
+INSERT INTO User (login, password, name) VALUES ('Anna_123', 'qwerty123', 'Анна');
+INSERT INTO User (login, password, name) VALUES ('John_1', 'Constantine_1', 'Константин1');
+INSERT INTO User (login, password, name) VALUES ('John_2', 'Constantine_1', 'Константин2');
 
 
 INSERT INTO Employe (user_id, firstName, secondName, middleName, position_statement, phone, office_id, doc_id,

@@ -1,6 +1,6 @@
 package ru.bellintegrator.catalog.service;
 
-import ru.bellintegrator.catalog.view.CountrieView;
+import ru.bellintegrator.catalog.view.CountryView;
 import ru.bellintegrator.catalog.view.DocView;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public interface CatalogService {
      *
      * @param countries
      */
-    void add(CountrieView countries);
+    void add(CountryView countries);
     /**
      * Catalog service method
      * @return {@Docs}
@@ -28,5 +28,5 @@ public interface CatalogService {
      * Catalog service method
      * @return {@Countries}
      */
-    List<CountrieView> countrie();
+    List<CountryView> country();
 }

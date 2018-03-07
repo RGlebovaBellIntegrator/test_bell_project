@@ -1,7 +1,7 @@
 package ru.bellintegrator.catalog.controller;
 
 import org.springframework.web.bind.annotation.RequestBody;
-import ru.bellintegrator.catalog.view.CountrieView;
+import ru.bellintegrator.catalog.view.CountryView;
 import ru.bellintegrator.catalog.view.DocView;
 
 import java.util.List;
@@ -15,10 +15,10 @@ public interface CatalogController {
     void doc(@RequestBody DocView doc);
 
     /**
-     * Add countrie
-     * @param countrie
+     * Add country
+     * @param country
      */
-    void countrie(@RequestBody CountrieView countrie);
+    void country(@RequestBody CountryView country);
 
     /**
      * Get all doc
@@ -27,8 +27,8 @@ public interface CatalogController {
     List<DocView> doc();
 
     /**
-     * Get all countrie
-     * @return JSON doc value
+     * Get all country
+     * @return JSON country value
      */
-    List<CountrieView> countrie();
+    List<CountryView> country();
 }

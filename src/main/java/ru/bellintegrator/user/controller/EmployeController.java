@@ -5,6 +5,7 @@ import ru.bellintegrator.user.view.EmployeView;
 import ru.bellintegrator.user.view.UserView;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EmployeController {
     /**
@@ -17,5 +18,5 @@ public interface EmployeController {
      * Get all employe
      * @return JSON employe value
      */
-    List<EmployeView> employe();
+    List<EmployeView> employe(Map<String,String> body);
 }

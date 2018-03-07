@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Doc (
     version  INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS Countrie (
+CREATE TABLE IF NOT EXISTS Country (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
     code     INTEGER NOT NULL,
     name     VARCHAR(50) NOT NULL,
@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS User (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
     login      VARCHAR(50) NOT NULL,
     password   VARCHAR(50) NOT NULL,
+    name      VARCHAR(50) NOT NULL,
     version  INTEGER NOT NULL DEFAULT 0
 );
 
@@ -80,7 +81,7 @@ CREATE TABLE IF NOT EXISTS Employe (
     FOREIGN KEY (user_id) REFERENCES User(id),
     FOREIGN KEY (office_id) REFERENCES Office(id),
     FOREIGN KEY (doc_id) REFERENCES Doc(id),
-    FOREIGN KEY (countrie_id) REFERENCES Countrie(id)
+    FOREIGN KEY (countrie_id) REFERENCES Country(id)
 );
 
 
