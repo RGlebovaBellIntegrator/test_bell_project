@@ -1,5 +1,8 @@
 package ru.bellintegrator.user.dao;
 
+import ru.bellintegrator.catalog.model.Country;
+import ru.bellintegrator.catalog.model.Doc;
+import ru.bellintegrator.offices.model.Office;
 import ru.bellintegrator.user.model.Employe;
 import ru.bellintegrator.user.model.User;
 
@@ -44,4 +47,9 @@ public interface EmployeDAO {
                 String doc_date, String country_name, String country_code, Boolean isIdentified);
 
     void delete(Long id);
+
+    Doc findDocId(Integer code);
+    Country findCountryId(Integer code);
+
+    Office findOfficeById(Long id);
 }

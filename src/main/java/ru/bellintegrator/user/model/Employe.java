@@ -84,10 +84,6 @@ public class Employe {
     @JoinColumn(name = "countrie_id")
     private Country country;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     public Employe(){
 
     }
@@ -156,11 +152,10 @@ public class Employe {
         this.doc = doc;
     }
 
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public String getDocNumber() {return docNumber;}
+    public void  setDocNumber(String docNumber){this.docNumber=docNumber;}
 
+
+    public Date getDocDate() {return docDate;}
+    public void  setDocDate(Date docDate){this.docDate=docDate;}
 }

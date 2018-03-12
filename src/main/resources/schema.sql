@@ -65,20 +65,18 @@ CREATE TABLE IF NOT EXISTS User (
 
 CREATE TABLE IF NOT EXISTS Employe (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
-    user_id    INTEGER NOT NULL,
     firstname  VARCHAR(50) NOT NULL,
     secondname VARCHAR(50) NOT NULL,
     middlename VARCHAR(50),
     position_statement  VARCHAR(50) NOT NULL,
     phone      VARCHAR(20),
-    office_id   INTEGER NOT NULL,
+    office_id   INTEGER,
     doc_id    INTEGER NOT NULL,
     doc_number  VARCHAR(150) NOT NULL,
     doc_date    DATE NOT NULL,
     countrie_id INTEGER NOT NULL,
     version  INTEGER NOT NULL DEFAULT 0,
     is_identified    BIT NOT NULL DEFAULT 1,
-    FOREIGN KEY (user_id) REFERENCES User(id),
     FOREIGN KEY (office_id) REFERENCES Office(id),
     FOREIGN KEY (doc_id) REFERENCES Doc(id),
     FOREIGN KEY (countrie_id) REFERENCES Country(id)

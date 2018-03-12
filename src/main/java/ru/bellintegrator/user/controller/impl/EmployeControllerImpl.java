@@ -3,16 +3,16 @@ package ru.bellintegrator.user.controller.impl;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
 import ru.bellintegrator.user.controller.EmployeController;
-import ru.bellintegrator.user.controller.UserController;
 import ru.bellintegrator.user.service.EmployeService;
-import ru.bellintegrator.user.service.UserService;
 import ru.bellintegrator.user.view.EmployeView;
-import ru.bellintegrator.user.view.UserView;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +20,7 @@ import java.util.Map;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 
 @RestController
 @RequestMapping(value = "/user", produces = APPLICATION_JSON_VALUE)
@@ -46,7 +47,7 @@ public class EmployeControllerImpl implements EmployeController {
     @Override
     @ApiOperation(value = "getEmploye", nickname = "getEmploye", httpMethod = "GET")
     @RequestMapping(value = "/employe", method = {GET})
-    public List<EmployeView> employe() {
+    public  @ResponseBody List<EmployeView> employe() {
         return employeService.employe();
     }
 

@@ -21,6 +21,9 @@ public class EmployeView {
     public String docNumber;
     public Date docDate;
     public int countryCode;
+
+    public Long officeId;
+
     public Boolean isIdentified;
 
     public EmployeView() {
@@ -28,7 +31,7 @@ public class EmployeView {
     }
 
     public EmployeView(String firstName, String secondName, String middleName, String statement,
-                       String phone, String docNumber, Date docDate, Boolean isIdentified) {
+                       String phone, String docNumber, Date docDate, Long officeId, Boolean isIdentified) {
         this.firstName=firstName;
         this.secondName=secondName;
         this.middleName=middleName;
@@ -36,6 +39,7 @@ public class EmployeView {
         this.phone = phone;
         this.docNumber=docNumber;
         this.docDate = docDate;
+        this.officeId = officeId;
         this.isIdentified = isIdentified;
     }
 

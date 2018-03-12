@@ -37,23 +37,23 @@ INSERT INTO User (login, password, name) VALUES ('John_1', 'Constantine_1', 'К�
 INSERT INTO User (login, password, name) VALUES ('John_2', 'Constantine_1', 'Константин2');
 
 
-INSERT INTO Employe (user_id, firstName, secondName, middleName, position_statement, phone, office_id, doc_id,
+INSERT INTO Employe (firstName, secondName, middleName, position_statement, phone, office_id, doc_id,
                     doc_number, doc_date, countrie_id)
-            VALUES (1,'Джон', 'Константин', 'Александрович', 'Экзорцист', '666', 4, 1,
+            VALUES ('Джон', 'Константин', 'Александрович', 'Экзорцист', '666', 4, 1,
                     '4444 777777', '2015-12-03', 5);
-INSERT INTO Employe (user_id, firstName, secondName, middleName, position_statement, phone, office_id, doc_id,
+INSERT INTO Employe (firstName, secondName, middleName, position_statement, phone, office_id, doc_id,
                     doc_number, doc_date, countrie_id)
-            VALUES (2, 'Иван', 'Иванов', 'Иванович', 'Директор', '001', 2, 3,
+            VALUES ('Иван', 'Иванов', 'Иванович', 'Директор', '001', 2, 3,
                     '1234 567890', '2006-01-01', 1);
-INSERT INTO Employe (user_id, firstName, secondName, position_statement, office_id, doc_id,
+INSERT INTO Employe (firstName, secondName, position_statement, office_id, doc_id,
                     doc_number, doc_date, countrie_id)
-            VALUES (3, 'Анна', 'Иванова', 'Учительница', 4, 2,
+            VALUES ('Анна', 'Иванова', 'Учительница', 4, 2,
                     '5555 777777', '2014-04-04', 2);
-INSERT INTO Employe (user_id, firstName, secondName, position_statement, phone, office_id, doc_id,
+INSERT INTO Employe (firstName, secondName, position_statement, phone, office_id, doc_id,
                     doc_number, doc_date, countrie_id, is_identified)
-            VALUES (4, 'Анна', 'Иванова', 'Художник', '123-123', 1, 4,
+            VALUES ('Анна', 'Иванова', 'Художник', '123-123', 1, 4,
                     '4444 777777', '2015-12-03', 3, 0);
-INSERT INTO Employe (user_id, firstName, secondName, middleName, position_statement, phone, office_id, doc_id,
+INSERT INTO Employe (firstName, secondName, middleName, position_statement, phone, office_id, doc_id,
                     doc_number, doc_date, countrie_id)
-            VALUES (5, 'Джон', 'Константин', 'Александрович', 'Экзорцист2', '666-1', 2, 1,
+            VALUES ('Джон', 'Константин', 'Александрович', 'Экзорцист2', '666-1', 2, 1,
                     '4444 777777', '2015-07-23', 4);

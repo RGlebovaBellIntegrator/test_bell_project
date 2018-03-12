@@ -1,9 +1,17 @@
 package ru.bellintegrator.user.dao.impl;
 
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.bellintegrator.catalog.dao.CountryDAO;
+import ru.bellintegrator.catalog.dao.DocDAO;
+import ru.bellintegrator.catalog.dao.impl.CountrieDAOImpl;
+import ru.bellintegrator.catalog.dao.impl.DocDAOImpl;
 import ru.bellintegrator.catalog.model.Country;
 import ru.bellintegrator.catalog.model.Doc;
+import ru.bellintegrator.offices.dao.OfficeDAO;
+import ru.bellintegrator.offices.dao.impl.OfficeDAOImpl;
+import ru.bellintegrator.offices.model.Office;
 import ru.bellintegrator.user.dao.EmployeDAO;
 import ru.bellintegrator.user.dao.UserDAO;
 import ru.bellintegrator.user.model.Employe;
@@ -234,5 +242,27 @@ public class EmployeDAOImpl implements EmployeDAO {
         }
         else
         System.out.println("Нет такого id");;
+    }
+
+    @Override
+    public Doc findDocId(Integer code) {
+        DocDAO d = new DocDAOImpl(em);
+        Doc doc = d.loadByCode(code);
+        return doc;
+    }
+
+
+    @Override
+    public Country findCountryId(Integer code) {
+        CountryDAO d = new CountrieDAOImpl(em);
+        Country c = d.loadByCode(code);
+        return c;
+    }
+
+    @Override
+    public Office findOfficeById(Long id) {
+        OfficeDAO d = new OfficeDAOImpl(em);
+        Office o = d.loadById(id);
+        return o;
     }
 }

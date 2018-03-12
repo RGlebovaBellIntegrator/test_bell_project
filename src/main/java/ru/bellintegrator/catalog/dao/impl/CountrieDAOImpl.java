@@ -7,6 +7,9 @@ import ru.bellintegrator.catalog.model.Country;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
@@ -27,7 +30,14 @@ public class CountrieDAOImpl implements CountryDAO {
 
     @Override
     public Country loadByCode(Integer code) {
-        return em.find(Country.class, code);
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Country> criteria = builder.createQuery(Country.class);
+
+        Root<Country> countryRoot = criteria.from(Country.class);
+        criteria.where(builder.equal(countryRoot.get("code"), code));
+
+        TypedQuery<Country> query = em.createQuery(criteria);
+        return query.getSingleResult();
     }
 
     @Override

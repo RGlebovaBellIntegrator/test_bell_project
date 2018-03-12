@@ -32,13 +32,6 @@ public class User {
     @Basic
     private String name;
 
-    @OneToOne(
-            mappedBy="user",
-            fetch = FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            optional=false
-    )
-    private Employe employe;
 
     public User(){
 
@@ -67,13 +60,5 @@ public class User {
         return name;
     }
     public void  setName(String name) {this.name = name;}
-
-
-    public Employe getEmploye() {
-        return employe;
-    }
-    public void setEmploye(Employe employe) {
-        this.employe = employe;
-    }
 
 }

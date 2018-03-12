@@ -7,12 +7,16 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bellintegrator.catalog.dao.DocDAO;
+import ru.bellintegrator.catalog.dao.impl.DocDAOImpl;
+import ru.bellintegrator.catalog.model.Doc;
 import ru.bellintegrator.user.dao.EmployeDAO;
 
 import ru.bellintegrator.user.model.Employe;
 import ru.bellintegrator.user.service.EmployeService;
 import ru.bellintegrator.user.view.EmployeView;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -34,6 +38,11 @@ public class EmployeServiceImpl implements EmployeService {
     public void add(EmployeView view) {
         Employe employe = new Employe(view.firstName, view.secondName, view.middleName, view.statement, view.phone,
                 view.isIdentified);
+        employe.setDoc(dao.findDocId(view.docCode));
+        employe.setDocDate(view.docDate);
+        employe.setDocNumber(view.docNumber);
+        employe.setCountry(dao.findCountryId(view.countryCode));
+        employe.setOffice(dao.findOfficeById(view.officeId));
         dao.save(employe);
     }
 

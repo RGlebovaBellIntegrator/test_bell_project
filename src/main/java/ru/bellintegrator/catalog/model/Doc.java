@@ -55,4 +55,8 @@ public class Doc {
     public Integer getCode() {
         return code;
     }
+
+    public void setCode() {
+        this.code=code;
+    }
 }
