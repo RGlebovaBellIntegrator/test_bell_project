@@ -68,7 +68,7 @@ public class EmployeDAOImpl implements EmployeDAO {
         }
 
         if (position != null) {
-            Predicate p = builder.equal(employe.get("statement"), position);
+            Predicate p = builder.equal(employe.get("position"), position);
             predicate = builder.and(predicate, p);
         }
 
@@ -241,7 +241,7 @@ public class EmployeDAOImpl implements EmployeDAO {
             em.remove(employe);
         }
         else
-        System.out.println("Нет такого id");;
+            throw new NullPointerException("Нет такого id");
     }
 
     @Override

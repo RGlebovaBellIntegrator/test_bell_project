@@ -3,15 +3,18 @@ package ru.bellintegrator.user.controller.impl;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseEntity;
+import ru.bellintegrator.optional.Data;
+import ru.bellintegrator.optional.Error;
+import ru.bellintegrator.optional.ResultResponse;
 import ru.bellintegrator.user.controller.EmployeController;
 import ru.bellintegrator.user.service.EmployeService;
+import ru.bellintegrator.user.view.EmployeListView;
 import ru.bellintegrator.user.view.EmployeView;
 
 import java.util.List;
@@ -36,19 +39,33 @@ public class EmployeControllerImpl implements EmployeController {
     @Override
     @ApiOperation(value = "addEmploye", nickname = "addEmploye", httpMethod = "POST")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 200, message = "Success"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/save", method = {POST})
-    public void employe(@RequestBody EmployeView employe) {
-        employeService.add(employe);
+    public ResponseEntity<?> save(@RequestBody EmployeView employe) {
+        try{
+            employeService.add(employe);
+            return new ResponseEntity<>(new Data((Object) new ResultResponse("success")), HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity<>(new Error((Object)ex), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @Override
     @ApiOperation(value = "getEmploye", nickname = "getEmploye", httpMethod = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/employe", method = {GET})
-    public  @ResponseBody List<EmployeView> employe() {
-        return employeService.employe();
+    public ResponseEntity<?> employe() {
+        try{
+            return new ResponseEntity<>(new Data((Object)employeService.employe()), HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity<>(new Error((Object)ex), HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -59,7 +76,7 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/list", method = {POST})
-    public List<EmployeView> employe(@RequestBody Map<String,String> body) {
+    public List<EmployeListView> employe(@RequestBody Map<String,String> body) {
         return employeService.employeFilter(body.get("firstname"), body.get("secondname"), body.get("middlename"),
                 body.get("position"), body.get("doc_code"), body.get("office_id"), body.get("country_code")) ;
     }
@@ -87,7 +104,7 @@ public class EmployeControllerImpl implements EmployeController {
     }
 
     @Override
-    @ApiOperation(value = "deleteEmploye", nickname = "deleteEmployeEmploye", httpMethod = "POST")
+    @ApiOperation(value = "deleteEmploye", nickname = "deleteEmploye", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),

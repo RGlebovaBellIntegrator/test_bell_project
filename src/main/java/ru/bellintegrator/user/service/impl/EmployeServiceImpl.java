@@ -14,6 +14,7 @@ import ru.bellintegrator.user.dao.EmployeDAO;
 
 import ru.bellintegrator.user.model.Employe;
 import ru.bellintegrator.user.service.EmployeService;
+import ru.bellintegrator.user.view.EmployeListView;
 import ru.bellintegrator.user.view.EmployeView;
 
 import javax.persistence.EntityManager;
@@ -74,18 +75,18 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EmployeView> employeFilter(String firstname, String secondname, String middlename,
-                                           String position, String doc_code, String office_id, String country_code) {
+    public List<EmployeListView> employeFilter(String firstname, String secondname, String middlename,
+                                               String position, String doc_code, String office_id, String country_code) {
 
         List<Employe> all = dao.filter(firstname,secondname,middlename,position,doc_code,office_id,country_code);
 
-        Function<Employe, EmployeView> mapEmploye = p -> {
-            EmployeView view = new EmployeView();
+        Function<Employe, EmployeListView> mapEmploye = p -> {
+            EmployeListView view = new EmployeListView();
             view.id = String.valueOf(p.getId());
             view.firstName = p.getFirstName();
             view.secondName = p.getSecondName();
             view.middleName = p.getMiddlename();
-            view.statement = p.getStatement();
+            view.position = p.getStatement();
 
             log.info(view.toString());
 

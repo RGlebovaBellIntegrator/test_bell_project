@@ -12,6 +12,8 @@ public interface OrganizationDAO {
      */
     List<Organization> all();
 
+    List<Organization> filter(String name,String inn, Boolean isActive);
+
     /**
      * Получить Organization по идентификатору
      *
@@ -34,4 +36,9 @@ public interface OrganizationDAO {
      * @param organization
      */
     void save(Organization organization);
+
+    void update(Long id, String name, String fullName, String inn,
+                String kpp, String address, String phone, Boolean isActive);
+
+    void delete(Long id);
 }

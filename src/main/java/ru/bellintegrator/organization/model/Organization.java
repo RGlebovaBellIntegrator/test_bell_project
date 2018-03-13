@@ -74,7 +74,7 @@ public class Organization {
 
     public Organization(String name, String fullname, String inn, String kpp, String address, String phone, Boolean isActive) {
         this.name=name;
-        this.fullname=fullname;
+        this.fullname = fullname;
         this.inn=inn;
         this.kpp=kpp;
         this.address=address;
@@ -102,4 +102,51 @@ public class Organization {
         this.offices = offices;
     }
 
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname){
+        this.fullname = fullname;
+    }
+
+    public String getInn() {
+        return inn;
+    }
+
+    public void setInn(String inn){
+        this.inn= inn;
+    }
+
+    public String getKpp() {
+        return kpp;
+    }
+
+    public void setKpp(String kpp){
+        this.kpp= kpp;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address){
+        this.address= address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone){
+        this.phone= phone;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive){
+        this.isActive= isActive;
+    }
 }

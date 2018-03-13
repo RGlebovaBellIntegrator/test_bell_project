@@ -54,4 +54,39 @@ public class OrganizationServiceImpl implements OrganizationService{
                 .map(mapOrganizations)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrganizationView> list(String name,String inn, Boolean isActive) {
+
+        List<Organization> all = dao.filter(name,inn,isActive);
+
+        Function<Organization, OrganizationView> mapEmploye = p -> {
+            OrganizationView view = new OrganizationView();
+            view.id = String.valueOf(p.getId());
+            view.name = p.getName();
+            view.isActive = p.getIsActive();
+
+            log.info(view.toString());
+
+            return view;
+        };
+
+        return all.stream()
+                .map(mapEmploye)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void update(Long id, String name, String fullName, String inn,
+                       String kpp, String address, String phone, Boolean isActive) {
+        dao.update(id, name, fullName, inn, kpp, address, phone, isActive);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        dao.delete(id);
+    }
 }

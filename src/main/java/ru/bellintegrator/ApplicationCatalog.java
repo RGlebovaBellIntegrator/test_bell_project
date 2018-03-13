@@ -63,17 +63,11 @@ public class ApplicationCatalog {
         return sessionLocaleResolver;
     }
 
-    @Bean
-    public Docket postApi() {
-       return new Docket(DocumentationType.SWAGGER_2).groupName("doc").apiInfo(apiInfo()).
-                select().paths(regex("/doc.*")).build();
-    }
-
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Spring REST Sample with Swagger")
-                .description("Spring REST Sample with Swagger")
-                .contact("https://github.com/azEsm/empty_project")
+                .title("Spring REST Sample")
+                .description("Spring REST Sample")
+                .contact("https://github.com/RGlebovaBellIntegrator/test_bell_project")
                 .version("1.0")
                 .build();
     }

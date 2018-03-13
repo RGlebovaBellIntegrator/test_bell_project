@@ -16,4 +16,12 @@ public interface OrganizationService {
      * @return {@Organizations}
      */
     List<OrganizationView> organization();
+
+    List<OrganizationView> list(String name,String inn, Boolean isActive);
+
+
+    void update(Long id, String name, String fullName, String inn,
+                String kpp, String address, String phone, Boolean isActive);
+
+    void delete(Long id);
 }
