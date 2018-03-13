@@ -17,4 +17,10 @@ public interface OfficeService {
      * @return {@Office}
      */
     List<OfficeView> office();
+
+    List<OfficeView> list(Long orgId, String name,String phone, Boolean isActive);
+
+    void update(Long id, String name, String address, String phone, Boolean isActive);
+
+    void delete(Long id);
 }

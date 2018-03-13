@@ -57,4 +57,40 @@ public class OfficeServiceImpl implements OfficeService{
                 .map(mapOffices)
                 .collect(Collectors.toList());
     }
+
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OfficeView> list(Long orgId, String name,String phone, Boolean isActive) {
+
+        List<Office> all = dao.filter(orgId, name, phone,isActive);
+
+        Function<Office, OfficeView> mapEmploye = p -> {
+            OfficeView view = new OfficeView();
+            view.id = String.valueOf(p.getId());
+            view.name = p.getName();
+            view.isActive = p.getIsActive();
+
+            log.info(view.toString());
+
+            return view;
+        };
+
+        return all.stream()
+                .map(mapEmploye)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void update(Long id, String name, String address, String phone, Boolean isActive) {
+        dao.update(id, name, address, phone, isActive);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        dao.delete(id);
+    }
 }

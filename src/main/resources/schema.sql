@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Organization (
 
 CREATE TABLE IF NOT EXISTS Office (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
-    org_id      INTEGER NOT NULL,
+    org_id      INTEGER,
     name       VARCHAR(50) NOT NULL,
     phone      VARCHAR(20),
     address    VARCHAR(250) NOT NULL,

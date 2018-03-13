@@ -28,10 +28,16 @@ public interface OfficeDAO {
      */
     Office loadByName(String name);
 
+    List<Office> filter(Long orgId, String name,String phone, Boolean isActive);
+
     /**
      * Сохранить Office
      *
      * @param office
      */
     void save(Office office);
+
+    void update(Long id, String name, String address, String phone, Boolean isActive);
+
+    void delete(Long id);
 }

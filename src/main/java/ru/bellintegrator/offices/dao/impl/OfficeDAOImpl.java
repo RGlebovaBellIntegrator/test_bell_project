@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -54,11 +55,84 @@ public class OfficeDAOImpl implements OfficeDAO {
         return query.getSingleResult();
     }
 
+    @Override
+    public List<Office> filter(Long orgId, String name,String phone, Boolean isActive) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Office> criteria = builder.createQuery(Office.class);
+
+        Root<Office> officeRoot = criteria.from(Office.class);
+
+        Predicate predicate = builder.conjunction();
+
+        if (orgId != null) {
+            Predicate p = builder.equal(officeRoot.get("organization").get("id"), orgId);
+            predicate = builder.and(predicate, p);
+        }
+        else throw new NullPointerException("orgId не инициализирован");
+
+        if (name != null) {
+            Predicate p = builder.equal(officeRoot.get("name"), name);
+            predicate = builder.and(predicate, p);
+        }
+        else throw new NullPointerException("name не инициализирован");
+
+        if (phone != null) {
+            Predicate p = builder.equal(officeRoot.get("phone"), phone);
+            predicate = builder.and(predicate, p);
+        }
+
+        if (isActive != null) {
+            Predicate p = builder.equal(officeRoot.get("isActive"), isActive);
+            predicate = builder.and(predicate, p);
+        }
+
+        criteria.where(predicate);
+
+        TypedQuery<Office> query = em.createQuery(criteria);
+        return query.getResultList();
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void save(Office office) {
         em.persist(office);
+    }
+
+
+    @Override
+    public void update(Long id, String name, String address, String phone, Boolean isActive) {
+        Office office = loadById(id);
+        if (office==null) {
+            save(office);
+        }
+        else {
+            if (name != null) {
+                office.setName(name);
+            }
+
+            if (address != null) {
+                office.setAddress(address);
+            }
+
+            if (phone != null) {
+                office.setPhone(phone);
+            }
+
+            if (isActive != null) {
+                office.setIsActive(isActive);
+            }
+        };
+    }
+
+    @Override
+    public void delete(Long id) {
+        Office office = em.find(Office.class, id);
+        if (office!=null){
+            em.remove(office);
+        }
+        else
+            throw new NullPointerException("Нет такого id");
     }
 }
