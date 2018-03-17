@@ -7,17 +7,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.bellintegrator.catalog.dao.DocDAO;
-import ru.bellintegrator.catalog.dao.impl.DocDAOImpl;
-import ru.bellintegrator.catalog.model.Doc;
 import ru.bellintegrator.user.dao.EmployeDAO;
 
 import ru.bellintegrator.user.model.Employe;
 import ru.bellintegrator.user.service.EmployeService;
-import ru.bellintegrator.user.view.EmployeListView;
 import ru.bellintegrator.user.view.EmployeView;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -37,7 +32,7 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     @Transactional
     public void add(EmployeView view) {
-        Employe employe = new Employe(view.firstName, view.secondName, view.middleName, view.statement, view.phone,
+        Employe employe = new Employe(view.firstName, view.secondName, view.middleName, view.position, view.phone,
                 view.isIdentified);
         employe.setDoc(dao.findDocId(view.docCode));
         employe.setDocDate(view.docDate);
@@ -58,7 +53,7 @@ public class EmployeServiceImpl implements EmployeService {
             view.firstName = p.getFirstName();
             view.secondName = p.getSecondName();
             view.middleName = p.getMiddlename();
-            view.statement = p.getStatement();
+            view.position = p.getStatement();
             view.phone = p.getPhone();
             view.docCode = p.getDoc().getCode();
             view.countryCode = p.getCountry().getCode();
@@ -75,13 +70,13 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EmployeListView> employeFilter(String firstname, String secondname, String middlename,
+    public List<EmployeView> employeFilter(String firstname, String secondname, String middlename,
                                                String position, String doc_code, String office_id, String country_code) {
 
         List<Employe> all = dao.filter(firstname,secondname,middlename,position,doc_code,office_id,country_code);
 
-        Function<Employe, EmployeListView> mapEmploye = p -> {
-            EmployeListView view = new EmployeListView();
+        Function<Employe, EmployeView> mapEmploye = p -> {
+            EmployeView view = new EmployeView();
             view.id = String.valueOf(p.getId());
             view.firstName = p.getFirstName();
             view.secondName = p.getSecondName();

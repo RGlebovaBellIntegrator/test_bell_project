@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.optional.Data;
-import ru.bellintegrator.optional.Error;
 import ru.bellintegrator.optional.ResultResponse;
 import ru.bellintegrator.user.controller.EmployeController;
 import ru.bellintegrator.user.service.EmployeService;
-import ru.bellintegrator.user.view.EmployeListView;
 import ru.bellintegrator.user.view.EmployeView;
 
 import java.util.List;
@@ -26,7 +24,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
 @RestController
-@RequestMapping(value = "/user", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/user", produces = APPLICATION_JSON_VALUE)
 public class EmployeControllerImpl implements EmployeController {
     private final EmployeService employeService;
 
@@ -46,9 +44,9 @@ public class EmployeControllerImpl implements EmployeController {
     public ResponseEntity<?> save(@RequestBody EmployeView employe) {
         try{
             employeService.add(employe);
-            return new ResponseEntity<>(new Data((Object) new ResultResponse("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
         }catch(Exception ex){
-            return new ResponseEntity<>(new Error((Object)ex), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }
 
     }
@@ -62,9 +60,9 @@ public class EmployeControllerImpl implements EmployeController {
     @RequestMapping(value = "/employe", method = {GET})
     public ResponseEntity<?> employe() {
         try{
-            return new ResponseEntity<>(new Data((Object)employeService.employe()), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(employeService.employe()), HttpStatus.OK);
         }catch(Exception ex){
-            return new ResponseEntity<>(new Error((Object)ex), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -76,7 +74,7 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/list", method = {POST})
-    public List<EmployeListView> employe(@RequestBody Map<String,String> body) {
+    public List<EmployeView> employe(@RequestBody Map<String,String> body) {
         return employeService.employeFilter(body.get("firstname"), body.get("secondname"), body.get("middlename"),
                 body.get("position"), body.get("doc_code"), body.get("office_id"), body.get("country_code")) ;
     }

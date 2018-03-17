@@ -63,6 +63,12 @@ public class ApplicationCatalog {
         return sessionLocaleResolver;
     }
 
+    @Bean
+    public Docket postApi() {
+        return new Docket(DocumentationType.SWAGGER_2).groupName("persons").apiInfo(apiInfo()).
+                select().paths(regex("/api.*")).build();
+    }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Spring REST Sample")

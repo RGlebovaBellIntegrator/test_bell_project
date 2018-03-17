@@ -19,7 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
-@RequestMapping(value = "/organization", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/organization", produces = APPLICATION_JSON_VALUE)
 public class OrganizationControllerImpl implements OrganizationController {
     private final OrganizationService organizationService;
 

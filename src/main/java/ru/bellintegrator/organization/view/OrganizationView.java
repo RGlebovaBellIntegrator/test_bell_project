@@ -1,7 +1,9 @@
 package ru.bellintegrator.organization.view;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrganizationView {
     @ApiModelProperty(hidden = true)
     public String id;

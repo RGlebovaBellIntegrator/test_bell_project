@@ -2,7 +2,6 @@ package ru.bellintegrator.user.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
-import ru.bellintegrator.user.view.EmployeListView;
 import ru.bellintegrator.user.view.EmployeView;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public interface EmployeController {
      * @return JSON employe value
      */
 
-    List<EmployeListView> employe(Map<String,String> body);
+    List<EmployeView> employe(Map<String,String> body);
 
     void update(@RequestBody Map<String,String> body);
 

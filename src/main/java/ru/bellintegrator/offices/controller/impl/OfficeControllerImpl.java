@@ -19,7 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
-@RequestMapping(value = "/office", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/office", produces = APPLICATION_JSON_VALUE)
 public class OfficeControllerImpl implements OfficeController {
 
     private final OfficeService officeService;

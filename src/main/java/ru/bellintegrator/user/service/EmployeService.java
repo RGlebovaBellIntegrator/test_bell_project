@@ -1,6 +1,5 @@
 package ru.bellintegrator.user.service;
 
-import ru.bellintegrator.user.view.EmployeListView;
 import ru.bellintegrator.user.view.EmployeView;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public interface EmployeService {
      */
     List<EmployeView> employe();
 
-    List<EmployeListView> employeFilter(String firstname, String secondname, String middlename,
+    List<EmployeView> employeFilter(String firstname, String secondname, String middlename,
                                         String position, String doc_code, String office_id, String country_code);
 
     void update(Long id, String firstname, String secondname, String middlename,
