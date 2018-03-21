@@ -6,6 +6,7 @@ import ru.bellintegrator.offices.model.Office;
 import ru.bellintegrator.user.model.Employe;
 import ru.bellintegrator.user.model.User;
 
+import java.util.Date;
 import java.util.List;
 
 public interface EmployeDAO {
@@ -17,7 +18,7 @@ public interface EmployeDAO {
     List<Employe> all();
 
     List<Employe> filter(String firstname, String secondname, String middlename,
-                         String position, String doc_code, String office_id, String country_code);
+                         String position, String doc_code, Long office_id, String country_code);
 
     /**
      * Получить Employe по идентификатору
@@ -44,12 +45,12 @@ public interface EmployeDAO {
 
     void update(Long id, String firstname, String secondname, String middlename,
                 String position, String phone, String doc_name, String doc_number,
-                String doc_date, String country_name, String country_code, Boolean isIdentified);
+                Date doc_date, String country_name, String country_code, Boolean isIdentified);
 
     void delete(Long id);
 
-    Doc findDocId(Integer code);
-    Country findCountryId(Integer code);
+    Doc findDocId(String code);
+    Country findCountryId(String code);
 
     Office findOfficeById(Long id);
 }

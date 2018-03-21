@@ -17,11 +17,10 @@ public interface OrganizationService {
      */
     List<OrganizationView> organization();
 
-    List<OrganizationView> list(String name,String inn, Boolean isActive);
+    List<OrganizationView> list(OrganizationView organizationView);
 
 
-    void update(Long id, String name, String fullName, String inn,
-                String kpp, String address, String phone, Boolean isActive);
+    void update(OrganizationView organizationView);
 
     void delete(Long id);
 }

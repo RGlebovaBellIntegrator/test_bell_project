@@ -26,9 +26,9 @@ public interface EmployeController {
      * @return JSON employe value
      */
 
-    List<EmployeView> employe(Map<String,String> body);
+    ResponseEntity<?>  employe(EmployeView employeView);
 
-    void update(@RequestBody Map<String,String> body);
+    ResponseEntity<?>  update(@RequestBody EmployeView body);
 
-    void delete(@RequestBody Map<String,String> body);
+    ResponseEntity<?>  delete(@RequestBody EmployeView body);
 }

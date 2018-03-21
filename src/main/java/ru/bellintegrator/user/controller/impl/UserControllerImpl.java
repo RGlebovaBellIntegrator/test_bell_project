@@ -5,9 +5,12 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.bellintegrator.optional.Data;
+import ru.bellintegrator.optional.ResultResponse;
 import ru.bellintegrator.user.controller.UserController;
 import ru.bellintegrator.user.service.UserService;
 import ru.bellintegrator.user.view.UserView;
@@ -38,8 +41,13 @@ public class UserControllerImpl implements UserController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/register", method = {POST})
-    public void user(@RequestBody UserView user) {
-        userService.add(user);
+    public ResponseEntity<?> user(@RequestBody UserView user) {
+        try {
+            userService.add(user);
+            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
@@ -56,7 +64,14 @@ public class UserControllerImpl implements UserController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/login", method = {POST})
-    public boolean login(@RequestBody Map<String,String> body) {
-        return userService.login(body.get("login"),body.get("password"));
+    public ResponseEntity<?> login(@RequestBody Map<String,String> body) {
+        try {
+            if(userService.login(body.get("login"),body.get("password")))
+                return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+            else
+                return new ResponseEntity<>(new Data("login/password не найдены"), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 }

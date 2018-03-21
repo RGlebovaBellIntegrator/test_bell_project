@@ -48,7 +48,6 @@ public class EmployeControllerImpl implements EmployeController {
         }catch(Exception ex){
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @Override
@@ -57,7 +56,7 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 200, message = "Success"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @RequestMapping(value = "/employe", method = {GET})
+    @RequestMapping(value = "/all", method = {GET})
     public ResponseEntity<?> employe() {
         try{
             return new ResponseEntity<>(new Data(employeService.employe()), HttpStatus.OK);
@@ -74,9 +73,13 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/list", method = {POST})
-    public List<EmployeView> employe(@RequestBody Map<String,String> body) {
-        return employeService.employeFilter(body.get("firstname"), body.get("secondname"), body.get("middlename"),
-                body.get("position"), body.get("doc_code"), body.get("office_id"), body.get("country_code")) ;
+    public ResponseEntity<?> employe(@RequestBody EmployeView employeView) {
+        try{
+            return new ResponseEntity<>(new Data(employeService.employeFilter(employeView)), HttpStatus.OK);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
@@ -86,19 +89,13 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/update", method = {POST})
-    public void update(@RequestBody Map<String,String> body) {
-        employeService.update( Long.parseLong(body.get("id")),
-                body.get("firstname"),
-                body.get("secondname"),
-                body.get("middlename"),
-                body.get("position"),
-                body.get("phone"),
-                body.get("doc_name"),
-                body.get("doc_number"),
-                body.get("doc_date"),
-                body.get("country_name"),
-                body.get("country_code"),
-                Boolean.parseBoolean(body.get("isIdentified")));
+    public ResponseEntity<?>  update(@RequestBody EmployeView employeView) {
+        try {
+            employeService.update(employeView);
+            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
@@ -108,7 +105,12 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/delete", method = {POST})
-    public void delete(@RequestBody Map<String,String> body) {
-        employeService.delete( Long.parseLong(body.get("id")));
+    public ResponseEntity<?>  delete(@RequestBody EmployeView body) {
+        try {
+            employeService.delete(body.id);
+            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package ru.bellintegrator.offices.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.bellintegrator.offices.view.OfficeView;
 import ru.bellintegrator.organization.view.OrganizationView;
@@ -12,17 +13,17 @@ public interface OfficeController {
      * Add office
      * @param office
      */
-    void office(@RequestBody OfficeView office);
+    ResponseEntity<?> office(@RequestBody OfficeView office);
 
     /**
      * Get all offices
      * @return JSON offices value
      */
-    List<OfficeView> office();
+    ResponseEntity<?> office();
 
-    List<OfficeView> list(Map<String,String> body);
+    ResponseEntity<?> list(OfficeView office);
 
-    void update(@RequestBody Map<String,String> body);
+    ResponseEntity<?> update(@RequestBody OfficeView office);
 
-    void delete(@RequestBody Map<String,String> body);
+    ResponseEntity<?> delete(@RequestBody OfficeView office);
 }

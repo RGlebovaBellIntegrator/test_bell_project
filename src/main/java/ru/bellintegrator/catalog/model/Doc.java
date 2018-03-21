@@ -26,7 +26,7 @@ public class Doc {
 
     @Basic(optional = false)
     @Column(name = "code")
-    private Integer code;
+    private String code;
     /**
      * Иия
      */
@@ -41,7 +41,7 @@ public class Doc {
 
     }
 
-    public Doc(Integer code, String name){
+    public Doc(String code, String name){
         this.code=code;
         this.name=name;
     }
@@ -52,7 +52,7 @@ public class Doc {
     public String getName() {
         return name;
     }
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 

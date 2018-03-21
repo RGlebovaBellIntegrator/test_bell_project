@@ -1,6 +1,8 @@
 package ru.bellintegrator.organization.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import ru.bellintegrator.organization.model.Organization;
 import ru.bellintegrator.organization.view.OrganizationView;
 
 import java.util.List;
@@ -11,17 +13,20 @@ public interface OrganizationController {
      * Add organization
      * @param organization
      */
-    void save(@RequestBody OrganizationView organization);
+    ResponseEntity<?> save(@RequestBody OrganizationView organization);
 
     /**
      * Get all organization
      * @return JSON organization value
      */
-    List<OrganizationView> organization();
+    ResponseEntity<?> organization();
 
-    List<OrganizationView> list(Map<String,String> body);
+    ResponseEntity<?> list(OrganizationView body);
 
-    void update(@RequestBody Map<String,String> body);
+    ResponseEntity<?> all();
 
-    void delete(@RequestBody Map<String,String> body);
+    ResponseEntity<?> update(@RequestBody OrganizationView body);
+
+    ResponseEntity<?> delete(@RequestBody OrganizationView body);
+
 }

@@ -18,9 +18,9 @@ public interface OfficeService {
      */
     List<OfficeView> office();
 
-    List<OfficeView> list(Long orgId, String name,String phone, Boolean isActive);
+    List<OfficeView> list(OfficeView office);
 
-    void update(Long id, String name, String address, String phone, Boolean isActive);
+    void update(OfficeView office);
 
     void delete(Long id);
 }

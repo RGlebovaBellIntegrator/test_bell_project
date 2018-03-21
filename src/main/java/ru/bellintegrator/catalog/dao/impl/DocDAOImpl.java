@@ -30,7 +30,7 @@ public class DocDAOImpl implements DocDAO {
     }
 
     @Override
-    public Doc loadByCode(Integer code) {
+    public Doc loadByCode(String code) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Doc> criteria = builder.createQuery(Doc.class);
 

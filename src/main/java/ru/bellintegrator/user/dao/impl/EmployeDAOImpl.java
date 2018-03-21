@@ -22,6 +22,7 @@ import ru.bellintegrator.user.view.UserView;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
@@ -45,7 +46,7 @@ public class EmployeDAOImpl implements EmployeDAO {
 
     @Override
     public List<Employe> filter(String firstname, String secondname, String middlename,
-                                String position, String doc_code, String office_id, String country_code) {
+                                String position, String doc_code, Long office_id, String country_code) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Employe> criteria = builder.createQuery(Employe.class);
 
@@ -128,7 +129,7 @@ public class EmployeDAOImpl implements EmployeDAO {
     @Override
     public void update(Long id, String firstname, String secondname, String middlename,
                        String position, String phone, String doc_name, String doc_number,
-                       String doc_date, String country_name, String country_code, Boolean isIdentified) {
+                       Date doc_date, String country_name, String country_code, Boolean isIdentified) {
         Employe employe = loadById(id);
         if (employe==null) {
             save(employe);
@@ -177,7 +178,7 @@ public class EmployeDAOImpl implements EmployeDAO {
             }
 
             if (doc_date != null) {
-                employe.setPhone(doc_date);
+                employe.setDocDate(doc_date);
             }
 
             if (country_name != null) {
@@ -217,20 +218,6 @@ public class EmployeDAOImpl implements EmployeDAO {
             if (isIdentified != null) {
                 employe.setIsIdentified(isIdentified);
             }
-            /*CriteriaBuilder builder = em.getCriteriaBuilder();
-            CriteriaQuery<Employe> criteria = builder.createQuery(Employe.class);
-
-            Root<Employe> r = criteria.from(Employe.class);
-
-            Predicate predicate = builder.conjunction();
-            if (employe.getFirstName() != null) {
-                Predicate p = builder.equal(r.get("firstname"), employe.getFirstName());
-                predicate = builder.and(predicate, p);
-            }
-
-            criteria.where(predicate);
-            TypedQuery<Employe> query = em.createQuery(criteria);*/
-
         };
     }
 
@@ -245,7 +232,7 @@ public class EmployeDAOImpl implements EmployeDAO {
     }
 
     @Override
-    public Doc findDocId(Integer code) {
+    public Doc findDocId(String code) {
         DocDAO d = new DocDAOImpl(em);
         Doc doc = d.loadByCode(code);
         return doc;
@@ -253,7 +240,7 @@ public class EmployeDAOImpl implements EmployeDAO {
 
 
     @Override
-    public Country findCountryId(Integer code) {
+    public Country findCountryId(String code) {
         CountryDAO d = new CountrieDAOImpl(em);
         Country c = d.loadByCode(code);
         return c;

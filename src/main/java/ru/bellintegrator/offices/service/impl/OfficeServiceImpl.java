@@ -1,5 +1,7 @@
 package ru.bellintegrator.offices.service.impl;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import org.hibernate.service.spi.InjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,10 @@ import ru.bellintegrator.offices.dao.OfficeDAO;
 import ru.bellintegrator.offices.model.Office;
 import ru.bellintegrator.offices.service.OfficeService;
 import ru.bellintegrator.offices.view.OfficeView;
+import ru.bellintegrator.organization.dao.impl.OrganizationDAOImpl;
+import ru.bellintegrator.organization.model.Organization;
+import ru.bellintegrator.organization.service.OrganizationService;
+import ru.bellintegrator.organization.service.impl.OrganizationServiceImpl;
 
 import java.util.List;
 import java.util.function.Function;
@@ -31,7 +37,8 @@ public class OfficeServiceImpl implements OfficeService{
     @Override
     @Transactional
     public void add(OfficeView view) {
-        Office office = new Office(view.name, view.address, view.phone, view.isActive);
+
+        Office office = new Office(view.name, view.address, view.phone, dao.findOrgById(view.orgId), view.isActive);
         dao.save(office);
     }
 
@@ -42,7 +49,7 @@ public class OfficeServiceImpl implements OfficeService{
 
         Function<Office, OfficeView> mapOffices = p -> {
             OfficeView view = new OfficeView();
-            view.id = String.valueOf(p.getId());
+            view.id = p.getId();
             view.name = p.getName();
             view.phone = p.getPhone();
             view.address = p.getAddress();
@@ -58,17 +65,15 @@ public class OfficeServiceImpl implements OfficeService{
                 .collect(Collectors.toList());
     }
 
-
-
     @Override
     @Transactional(readOnly = true)
-    public List<OfficeView> list(Long orgId, String name,String phone, Boolean isActive) {
+    public List<OfficeView> list(OfficeView office) {
 
-        List<Office> all = dao.filter(orgId, name, phone,isActive);
+        List<Office> all = dao.filter(office.orgId, office.name, office.phone,office.isActive);
 
         Function<Office, OfficeView> mapEmploye = p -> {
             OfficeView view = new OfficeView();
-            view.id = String.valueOf(p.getId());
+            view.id = p.getId();
             view.name = p.getName();
             view.isActive = p.getIsActive();
 
@@ -84,8 +89,8 @@ public class OfficeServiceImpl implements OfficeService{
 
     @Override
     @Transactional
-    public void update(Long id, String name, String address, String phone, Boolean isActive) {
-        dao.update(id, name, address, phone, isActive);
+    public void update(OfficeView office) {
+        dao.update(office.id, office.name, office.address, office.phone, office.isActive);
     }
 
     @Override

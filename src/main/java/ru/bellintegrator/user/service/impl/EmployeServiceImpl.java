@@ -13,6 +13,7 @@ import ru.bellintegrator.user.model.Employe;
 import ru.bellintegrator.user.service.EmployeService;
 import ru.bellintegrator.user.view.EmployeView;
 
+import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class EmployeServiceImpl implements EmployeService {
         employe.setDoc(dao.findDocId(view.docCode));
         employe.setDocDate(view.docDate);
         employe.setDocNumber(view.docNumber);
-        employe.setCountry(dao.findCountryId(view.countryCode));
+        employe.setCountry(dao.findCountryId(view.citizenshipCode));
         employe.setOffice(dao.findOfficeById(view.officeId));
         dao.save(employe);
     }
@@ -49,14 +50,14 @@ public class EmployeServiceImpl implements EmployeService {
 
         Function<Employe, EmployeView> mapEmploye = p -> {
             EmployeView view = new EmployeView();
-            view.id = String.valueOf(p.getId());
+            view.id = p.getId();
             view.firstName = p.getFirstName();
             view.secondName = p.getSecondName();
             view.middleName = p.getMiddlename();
             view.position = p.getStatement();
             view.phone = p.getPhone();
             view.docCode = p.getDoc().getCode();
-            view.countryCode = p.getCountry().getCode();
+            view.citizenshipCode = p.getCountry().getCode();
 
             log.info(view.toString());
 
@@ -70,14 +71,14 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EmployeView> employeFilter(String firstname, String secondname, String middlename,
-                                               String position, String doc_code, String office_id, String country_code) {
+    public List<EmployeView> employeFilter(EmployeView employeView) {
 
-        List<Employe> all = dao.filter(firstname,secondname,middlename,position,doc_code,office_id,country_code);
+        List<Employe> all = dao.filter(employeView.firstName,employeView.secondName,employeView.middleName,employeView.position,
+                employeView.docCode,employeView.officeId,employeView.citizenshipCode);
 
         Function<Employe, EmployeView> mapEmploye = p -> {
             EmployeView view = new EmployeView();
-            view.id = String.valueOf(p.getId());
+            view.id = p.getId();
             view.firstName = p.getFirstName();
             view.secondName = p.getSecondName();
             view.middleName = p.getMiddlename();
@@ -95,10 +96,10 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     @Transactional
-    public void update(Long id, String firstname, String secondname, String middlename,
-                       String position, String phone, String doc_name, String doc_number,
-                       String doc_date, String country_name, String country_code, Boolean isIdentified) {
-        dao.update(id, firstname,secondname,middlename,position, phone, doc_name, doc_number,doc_date,country_name,country_code,isIdentified);
+    public void update(EmployeView employeView) {
+        dao.update(employeView.id, employeView.firstName,employeView.secondName,employeView.middleName,employeView.position,
+                employeView.phone, employeView.docName, employeView.docNumber,employeView.docDate,
+                employeView.citizenshipName,employeView.citizenshipCode,employeView.isIdentified);
     }
 
     @Override

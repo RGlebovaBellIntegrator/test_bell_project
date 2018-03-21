@@ -29,7 +29,7 @@ public class CountrieDAOImpl implements CountryDAO {
     }
 
     @Override
-    public Country loadByCode(Integer code) {
+    public Country loadByCode(String code) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Country> criteria = builder.createQuery(Country.class);
 

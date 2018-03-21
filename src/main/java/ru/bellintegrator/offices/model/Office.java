@@ -58,11 +58,12 @@ public class Office {
 
     }
 
-    public Office(String name, String address, String phone, boolean isActive) {
+    public Office(String name, String address, String phone, Organization organization, boolean isActive) {
         this.name=name;
         this.address=address;
         this.phone = phone;
         this.isActive = isActive;
+        this.organization = organization;
     }
 
     public Long getId() {

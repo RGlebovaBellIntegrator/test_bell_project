@@ -21,7 +21,7 @@ public interface DocDAO {
      * @param code
      * @return
      */
-    Doc loadByCode(Integer code);
+    Doc loadByCode(String code);
     /**
      * Сохранить Doc
      *

@@ -4,12 +4,16 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.offices.controller.OfficeController;
 import ru.bellintegrator.offices.service.OfficeService;
 import ru.bellintegrator.offices.view.OfficeView;
+import ru.bellintegrator.optional.Data;
+import ru.bellintegrator.optional.ResultResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -36,15 +40,25 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/save", method = {POST})
-    public void office(@RequestBody OfficeView office) {
-        officeService.add(office);
+    public ResponseEntity<?> office(@RequestBody OfficeView office) {
+        try {
+            officeService.add(office);
+            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+        }
+        catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
     @ApiOperation(value = "getOffice", nickname = "getOffice", httpMethod = "GET")
-    @RequestMapping(value = "/office", method = {GET})
-    public List<OfficeView> office() {
-        return officeService.office();
+    @RequestMapping(value = "/all", method = {GET})
+    public ResponseEntity<?> office() {
+        try {
+            return new ResponseEntity<>(new Data(officeService.office()), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
@@ -54,8 +68,12 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/list", method = {POST})
-    public List<OfficeView> list(@RequestBody Map<String,String> body) {
-        return officeService.list(Long.parseLong(body.get("orgId")),body.get("name"), body.get("inn"), Boolean.parseBoolean(body.get("isActive")));
+    public ResponseEntity<?> list(@RequestBody OfficeView office) {
+        try {
+            return new ResponseEntity<>(new Data(officeService.list(office)), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -66,12 +84,13 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/update", method = {POST})
-    public void update(@RequestBody Map<String,String> body) {
-        officeService.update( Long.parseLong(body.get("id")),
-                body.get("name"),
-                body.get("address"),
-                body.get("phone"),
-                Boolean.parseBoolean(body.get("isActive")));
+    public ResponseEntity<?> update(@RequestBody OfficeView office) {
+        try {
+            officeService.update(office);
+            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -82,7 +101,12 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/delete", method = {POST})
-    public void delete(@RequestBody Map<String,String> body) {
-        officeService.delete( Long.parseLong(body.get("id")));
+    public ResponseEntity<?> delete(@RequestBody OfficeView office) {
+        try {
+            officeService.delete(office.id);
+            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 }

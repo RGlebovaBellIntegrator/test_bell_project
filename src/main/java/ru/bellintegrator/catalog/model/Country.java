@@ -26,7 +26,7 @@ public class Country {
 
     @Basic(optional = false)
     @Column(name = "code")
-    private Integer code;
+    private String code;
     /**
      * Иия
      */
@@ -41,7 +41,7 @@ public class Country {
 
     }
 
-    public Country(Integer code, String name){
+    public Country(String code, String name){
         this.code=code;
         this.name=name;
     }
@@ -52,7 +52,7 @@ public class Country {
     public String getName() {
         return name;
     }
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 

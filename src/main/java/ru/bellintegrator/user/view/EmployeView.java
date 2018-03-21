@@ -8,7 +8,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EmployeView {
     @ApiModelProperty(hidden = true)
-    public String id;
+    public Long id;
 
     public String firstName;
 
@@ -19,10 +19,12 @@ public class EmployeView {
 
 
     public String phone;
-    public int docCode;
+    public String docCode;
+    public String docName;
     public String docNumber;
     public Date docDate;
-    public int countryCode;
+    public String citizenshipCode;
+    public String citizenshipName;
 
     public Long officeId;
 
@@ -44,6 +46,5 @@ public class EmployeView {
         this.officeId = officeId;
         this.isIdentified = isIdentified;
     }
-
 
 }

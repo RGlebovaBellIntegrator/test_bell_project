@@ -31,7 +31,8 @@ public class OrganizationServiceImpl implements OrganizationService{
     @Override
     @Transactional
     public void add(OrganizationView organization) {
-        Organization organizations = new Organization(organization.name, organization.fullname, organization.inn, organization.kpp, organization.address, organization.phone, organization.isActive);
+        Organization organizations =
+                new Organization(organization.name, organization.fullName, organization.inn, organization.kpp, organization.address, organization.phone, organization.isActive);
         dao.save(organizations);
     }
 
@@ -42,8 +43,14 @@ public class OrganizationServiceImpl implements OrganizationService{
 
         Function<Organization, OrganizationView> mapOrganizations = p -> {
             OrganizationView view = new OrganizationView();
-            view.id = String.valueOf(p.getId());
+            view.id = p.getId();
             view.name = p.getName();
+            view.inn = p.getInn();
+            view.kpp = p.getKpp();
+            view.fullName = p.getFullname();
+            view.address = p.getAddress();
+            view.phone = p.getPhone();
+            view.isActive = p.getIsActive();
 
             log.info(view.toString());
 
@@ -57,13 +64,13 @@ public class OrganizationServiceImpl implements OrganizationService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<OrganizationView> list(String name,String inn, Boolean isActive) {
+    public List<OrganizationView> list(OrganizationView organizationView) {
 
-        List<Organization> all = dao.filter(name,inn,isActive);
+        List<Organization> all = dao.filter(organizationView.name,organizationView.inn,organizationView.isActive);
 
         Function<Organization, OrganizationView> mapEmploye = p -> {
             OrganizationView view = new OrganizationView();
-            view.id = String.valueOf(p.getId());
+            view.id = p.getId();
             view.name = p.getName();
             view.isActive = p.getIsActive();
 
@@ -79,9 +86,10 @@ public class OrganizationServiceImpl implements OrganizationService{
 
     @Override
     @Transactional
-    public void update(Long id, String name, String fullName, String inn,
-                       String kpp, String address, String phone, Boolean isActive) {
-        dao.update(id, name, fullName, inn, kpp, address, phone, isActive);
+    public void update(OrganizationView organizationView) {
+        dao.update(organizationView.id, organizationView.name, organizationView.fullName,
+                organizationView.inn, organizationView.kpp, organizationView.address,
+                organizationView.phone, organizationView.isActive);
     }
 
     @Override

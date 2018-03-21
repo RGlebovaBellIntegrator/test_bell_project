@@ -32,6 +32,10 @@ public class User {
     @Basic
     private String name;
 
+    @Basic(optional = false)
+    @Column(name = "is_active")
+    private boolean isActive;
+
 
     public User(){
 
@@ -60,5 +64,10 @@ public class User {
         return name;
     }
     public void  setName(String name) {this.name = name;}
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+    public void  setIsActiv(boolean isActive) {this.isActive = isActive;}
 
 }

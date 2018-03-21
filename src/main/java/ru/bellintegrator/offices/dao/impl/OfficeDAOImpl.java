@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.offices.dao.OfficeDAO;
 import ru.bellintegrator.offices.model.Office;
+import ru.bellintegrator.organization.dao.OrganizationDAO;
+import ru.bellintegrator.organization.dao.impl.OrganizationDAOImpl;
+import ru.bellintegrator.organization.model.Organization;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -134,5 +137,13 @@ public class OfficeDAOImpl implements OfficeDAO {
         }
         else
             throw new NullPointerException("Нет такого id");
+    }
+
+    @Override
+    public Organization findOrgById(Long id)
+    {
+        OrganizationDAO d = new OrganizationDAOImpl(em);
+        Organization o = d.loadById(id);
+        return o;
     }
 }

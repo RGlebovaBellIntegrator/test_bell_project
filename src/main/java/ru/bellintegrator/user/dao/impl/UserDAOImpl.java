@@ -64,7 +64,14 @@ public class UserDAOImpl implements UserDAO {
         criteria.where(builder.equal(users.get("login"), login), builder.equal(users.get("password"), password));
 
         TypedQuery<User> query = em.createQuery(criteria);
-        return query.getSingleResult();
+
+        try {
+            return query.getSingleResult();
+        }
+        catch (Exception ex) {
+            //запись в лог нужна
+            return null;
+        }
     }
 
     /**

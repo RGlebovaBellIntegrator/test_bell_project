@@ -1,6 +1,7 @@
 package ru.bellintegrator.offices.dao;
 
 import ru.bellintegrator.offices.model.Office;
+import ru.bellintegrator.organization.model.Organization;
 
 import java.util.List;
 
@@ -40,4 +41,6 @@ public interface OfficeDAO {
     void update(Long id, String name, String address, String phone, Boolean isActive);
 
     void delete(Long id);
+
+    Organization findOrgById(Long id);
 }

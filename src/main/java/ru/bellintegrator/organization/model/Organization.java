@@ -30,7 +30,7 @@ public class Organization {
      * Полное иия
      */
     @Basic(optional = false)
-    //@Column(name = "fullname")
+    //@Column(name = "fullName")
     private String fullname;
 
     /**

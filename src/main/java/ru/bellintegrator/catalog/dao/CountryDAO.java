@@ -21,7 +21,7 @@ public interface CountryDAO {
      * @param code
      * @return
      */
-    Country loadByCode(Integer code);
+    Country loadByCode(String code);
 
     /**
      * Сохранить Country

@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OfficeView {
     @ApiModelProperty(hidden = true)
-    public String id;
+    public Long id;
 
     public String name;
 
@@ -16,14 +16,17 @@ public class OfficeView {
 
     public boolean isActive;
 
+    public Long orgId;
+
     public OfficeView() {
 
     }
 
-    public OfficeView(String name, String address, String phone, boolean isActive) {
+    public OfficeView(String name, String address, String phone, Long orgId, boolean isActive) {
         this.name=name;
         this.address=address;
         this.phone = phone;
         this.isActive = isActive;
+        this.orgId = orgId;
     }
 }

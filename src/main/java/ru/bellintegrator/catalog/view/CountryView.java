@@ -10,7 +10,7 @@ public class CountryView {
     @ApiModelProperty(hidden = true)
     public int id;
 
-    public int code;
+    public String code;
 
     public String name;
 
@@ -18,7 +18,7 @@ public class CountryView {
 
     }
 
-    public CountryView(int code, String name) {
+    public CountryView(String code, String name) {
         this.code = code;
         this.name = name;
     }

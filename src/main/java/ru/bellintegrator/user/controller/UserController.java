@@ -1,6 +1,7 @@
 package ru.bellintegrator.user.controller;
 
 import org.eclipse.jetty.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.bellintegrator.user.view.UserView;
 
@@ -12,7 +13,7 @@ public interface UserController {
      * Add user
      * @param users
      */
-    void user(@RequestBody UserView users);
+    ResponseEntity<?> user(@RequestBody UserView users);
 
     /**
      * Get all user
@@ -22,5 +23,5 @@ public interface UserController {
 
     //boolean login(@RequestBody String login, String password);
 
-    boolean login(@RequestBody Map<String,String> body);
+    ResponseEntity<?> login(@RequestBody Map<String,String> body);
 }

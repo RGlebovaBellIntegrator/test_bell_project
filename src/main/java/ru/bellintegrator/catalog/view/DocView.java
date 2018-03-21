@@ -10,7 +10,7 @@ public class DocView {
     @ApiModelProperty(hidden = true)
     public int id;
 
-    public int code;
+    public String code;
 
     public String name;
 
@@ -18,7 +18,7 @@ public class DocView {
 
     }
 
-    public DocView(int code, String name) {
+    public DocView(String code, String name) {
         this.code = code;
         this.name = name;
     }

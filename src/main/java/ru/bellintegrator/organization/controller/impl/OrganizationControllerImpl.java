@@ -4,9 +4,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.bellintegrator.optional.Data;
+import ru.bellintegrator.optional.ResultResponse;
 import ru.bellintegrator.organization.controller.OrganizationController;
 import ru.bellintegrator.organization.service.OrganizationService;
 import ru.bellintegrator.organization.view.OrganizationView;
@@ -36,8 +40,25 @@ public class OrganizationControllerImpl implements OrganizationController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/save", method = {POST})
-    public void save(@RequestBody OrganizationView organization) {
-        organizationService.add(organization);
+    public ResponseEntity<?> save(@RequestBody OrganizationView organization) {
+        try {
+            organizationService.add(organization);
+            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+        }
+        catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    @ApiOperation(value = "getList", nickname = "getList", httpMethod = "GET")
+    @RequestMapping(value = "/all", method = {GET})
+    public ResponseEntity<?> all() {
+        try {
+            return new ResponseEntity<>(new Data(organizationService.organization()), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
@@ -47,15 +68,23 @@ public class OrganizationControllerImpl implements OrganizationController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/list", method = {POST})
-    public List<OrganizationView> list(@RequestBody Map<String,String> body) {
-        return organizationService.list(body.get("name"), body.get("inn"), Boolean.parseBoolean(body.get("isActive")));
+    public ResponseEntity<?> list(@RequestBody OrganizationView organizationView) {
+        try {
+            return new ResponseEntity<>(new Data(organizationService.list(organizationView)), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
     @ApiOperation(value = "getOrganization", nickname = "getOrganization", httpMethod = "GET")
     @RequestMapping(value = "/organization", method = {GET})
-    public List<OrganizationView> organization() {
-        return organizationService.organization();
+    public ResponseEntity<?> organization() {
+        try {
+            return new ResponseEntity<>(new Data(organizationService.organization()), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -66,15 +95,13 @@ public class OrganizationControllerImpl implements OrganizationController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/update", method = {POST})
-    public void update(@RequestBody Map<String,String> body) {
-        organizationService.update( Long.parseLong(body.get("id")),
-                body.get("name"),
-                body.get("fullName"),
-                body.get("inn"),
-                body.get("kpp"),
-                body.get("address"),
-                body.get("phone"),
-                Boolean.parseBoolean(body.get("isActive")));
+    public ResponseEntity<?> update(@RequestBody OrganizationView organizationView) {
+        try {
+            organizationService.update(organizationView);
+            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -85,7 +112,12 @@ public class OrganizationControllerImpl implements OrganizationController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/delete", method = {POST})
-    public void delete(@RequestBody Map<String,String> body) {
-        organizationService.delete( Long.parseLong(body.get("id")));
+    public ResponseEntity<?> delete(@RequestBody OrganizationView organizationView) {
+        try {
+            organizationService.delete(organizationView.id);
+            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 }
