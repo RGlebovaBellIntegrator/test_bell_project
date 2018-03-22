@@ -1,5 +1,6 @@
 package ru.bellintegrator.catalog.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.bellintegrator.catalog.view.CountryView;
 import ru.bellintegrator.catalog.view.DocView;
@@ -12,23 +13,23 @@ public interface CatalogController {
      * Add doc
      * @param doc
      */
-    void doc(@RequestBody DocView doc);
+    ResponseEntity<?> doc(@RequestBody DocView doc);
 
     /**
      * Add country
      * @param country
      */
-    void country(@RequestBody CountryView country);
+    ResponseEntity<?> country(@RequestBody CountryView country);
 
     /**
      * Get all doc
      * @return JSON doc value
      */
-    List<DocView> doc();
+    ResponseEntity<?> doc();
 
     /**
      * Get all country
      * @return JSON country value
      */
-    List<CountryView> country();
+    ResponseEntity<?> country();
 }

@@ -1,5 +1,6 @@
 package ru.bellintegrator.organization.service;
 
+import ru.bellintegrator.organization.model.Organization;
 import ru.bellintegrator.organization.view.OrganizationView;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface OrganizationService {
      *
      * @param organization
      */
-    void add(OrganizationView organization);
+    OrganizationView add(OrganizationView organization);
 
     /**
      * Organization service method
@@ -23,4 +24,6 @@ public interface OrganizationService {
     void update(OrganizationView organizationView);
 
     void delete(Long id);
+
+    OrganizationView find(Long id);
 }

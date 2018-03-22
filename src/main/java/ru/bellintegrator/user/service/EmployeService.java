@@ -11,7 +11,7 @@ public interface EmployeService {
      *
      * @param employe
      */
-    void add(EmployeView employe);
+    EmployeView add(EmployeView employe);
 
     /**
      * User service method
@@ -24,4 +24,6 @@ public interface EmployeService {
     void update(EmployeView employeView);
 
     void delete(Long id);
+
+    EmployeView find(Long id);
 }

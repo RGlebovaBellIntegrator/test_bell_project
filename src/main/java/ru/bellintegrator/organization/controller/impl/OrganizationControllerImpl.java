@@ -6,12 +6,11 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.optional.Data;
 import ru.bellintegrator.optional.ResultResponse;
 import ru.bellintegrator.organization.controller.OrganizationController;
+import ru.bellintegrator.organization.model.Organization;
 import ru.bellintegrator.organization.service.OrganizationService;
 import ru.bellintegrator.organization.view.OrganizationView;
 
@@ -39,11 +38,10 @@ public class OrganizationControllerImpl implements OrganizationController {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @RequestMapping(value = "/save", method = {POST})
+    @RequestMapping(value = "/create", method = {POST})
     public ResponseEntity<?> save(@RequestBody OrganizationView organization) {
         try {
-            organizationService.add(organization);
-            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(organizationService.add(organization)), HttpStatus.OK);
         }
         catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
@@ -78,10 +76,14 @@ public class OrganizationControllerImpl implements OrganizationController {
 
     @Override
     @ApiOperation(value = "getOrganization", nickname = "getOrganization", httpMethod = "GET")
-    @RequestMapping(value = "/organization", method = {GET})
-    public ResponseEntity<?> organization() {
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = Data.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @RequestMapping(value = "/{id}", method = {GET})
+    public ResponseEntity<?> organization(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(new Data(organizationService.organization()), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(organizationService.find(id)), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }

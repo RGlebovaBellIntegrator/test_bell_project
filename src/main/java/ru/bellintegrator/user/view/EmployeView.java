@@ -10,6 +10,8 @@ public class EmployeView {
     @ApiModelProperty(hidden = true)
     public Long id;
 
+    public String fullName;
+
     public String firstName;
 
     public String secondName;
@@ -27,6 +29,8 @@ public class EmployeView {
     public String citizenshipName;
 
     public Long officeId;
+
+    public String officeName;
 
     public Boolean isIdentified;
 

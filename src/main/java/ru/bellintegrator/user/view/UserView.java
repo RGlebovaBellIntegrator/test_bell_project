@@ -16,13 +16,20 @@ public class UserView {
 
     public String name;
 
+    public String email;
+
+    public String code;
+
+    public boolean isActive;
+
     public UserView() {
 
     }
 
-    public UserView(String login, String password, String name) {
+    public UserView(String login, String password, String name, boolean isActive) {
         this.login=login;
         this.password=password;
         this.name=name;
+        this.isActive = isActive;
     }
 }

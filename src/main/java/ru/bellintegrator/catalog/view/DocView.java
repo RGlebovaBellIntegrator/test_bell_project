@@ -8,7 +8,7 @@ import javax.print.Doc;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DocView {
     @ApiModelProperty(hidden = true)
-    public int id;
+    public Long id;
 
     public String code;
 

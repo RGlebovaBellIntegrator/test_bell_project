@@ -1,6 +1,7 @@
 package ru.bellintegrator.organization.dao;
 
 import ru.bellintegrator.organization.model.Organization;
+import ru.bellintegrator.organization.view.OrganizationView;
 
 import java.util.List;
 
@@ -35,10 +36,9 @@ public interface OrganizationDAO {
      *
      * @param organization
      */
-    void save(Organization organization);
+    Long save(Organization organization);
 
-    void update(Long id, String name, String fullName, String inn,
-                String kpp, String address, String phone, Boolean isActive);
+    void update(OrganizationView organizationView);
 
     void delete(Long id);
 }

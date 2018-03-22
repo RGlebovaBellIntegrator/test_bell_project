@@ -57,9 +57,11 @@ CREATE TABLE IF NOT EXISTS Office (
 
 CREATE TABLE IF NOT EXISTS User (
     id         INTEGER PRIMARY KEY AUTO_INCREMENT,
-    login      VARCHAR(50) NOT NULL,
+    login      VARCHAR(50) NOT NULL UNIQUE,
     password   VARCHAR(50) NOT NULL,
     name      VARCHAR(50) NOT NULL,
+    email    VARCHAR(150) NOT NULL UNIQUE,
+    code  VARCHAR(50),
     version  INTEGER NOT NULL DEFAULT 0,
     is_active   BIT NOT NULL DEFAULT 0
 );

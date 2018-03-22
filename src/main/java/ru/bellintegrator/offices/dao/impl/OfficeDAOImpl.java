@@ -99,8 +99,9 @@ public class OfficeDAOImpl implements OfficeDAO {
      * {@inheritDoc}
      */
     @Override
-    public void save(Office office) {
+    public Long save(Office office) {
         em.persist(office);
+        return office.getId();
     }
 
 

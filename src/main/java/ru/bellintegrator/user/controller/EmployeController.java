@@ -1,6 +1,7 @@
 package ru.bellintegrator.user.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.bellintegrator.user.view.EmployeView;
 
@@ -19,7 +20,9 @@ public interface EmployeController {
      * @return JSON employe value
      */
     //List<EmployeView> employe();
-    ResponseEntity<?> employe();
+    ResponseEntity<?> employe(@PathVariable Long id);
+
+    ResponseEntity<?> all();
 
     /**
      * Get all employe

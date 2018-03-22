@@ -30,11 +30,11 @@ INSERT INTO Office (org_id, name, phone, address) VALUES (1, 'Офис 30', '44-
 INSERT INTO Office (org_id, name, phone, address) VALUES (2, 'Офис 3', '77-13-50', 'ул.Савушкина, д.112, 3 этаж');
 INSERT INTO Office (org_id, name, phone, address) VALUES (2, 'Офис 4', NULL, 'ул.Савушкина, д.112, 3 этаж');
 
-INSERT INTO User (login, password, name) VALUES ('John', 'Constantine', 'Константин');
-INSERT INTO User (login, password, name) VALUES ('Anna', 'qwerty123', 'Анна1');
-INSERT INTO User (login, password, name) VALUES ('Anna_123', 'qwerty123', 'Анна');
-INSERT INTO User (login, password, name) VALUES ('John_1', 'Constantine_1', 'Константин1');
-INSERT INTO User (login, password, name) VALUES ('John_2', 'Constantine_1', 'Константин2');
+INSERT INTO User (login, password, name, email) VALUES ('John', 'Constantine', 'Константин', '122@mai.ru');
+INSERT INTO User (login, password, name, email) VALUES ('Anna', 'qwerty123', 'Анна1', '124@mai.ru');
+INSERT INTO User (login, password, name, email) VALUES ('Anna_123', 'qwerty123', 'Анна', '123@mai.ru');
+INSERT INTO User (login, password, name, email) VALUES ('John_1', 'Constantine_1', 'Константин1', '125@mai.ru');
+INSERT INTO User (login, password, name, email) VALUES ('John_2', 'Constantine_1', 'Константин2', '126@mai.ru');
 
 
 INSERT INTO Employe (firstName, secondName, middleName, position_statement, phone, office_id, doc_id,

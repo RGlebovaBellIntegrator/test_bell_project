@@ -1,6 +1,9 @@
 package ru.bellintegrator.user.model;
 
+import org.hibernate.id.GUIDGenerator;
+
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "User")
@@ -32,19 +35,27 @@ public class User {
     @Basic
     private String name;
 
+    @Basic
+    private String email;
+
     @Basic(optional = false)
     @Column(name = "is_active")
     private boolean isActive;
 
+    @Basic(optional = false)
+    @Column(name = "code")
+    private String code;
 
     public User(){
-
+        setCode();
     }
 
-    public User(String login, String password, String name) {
+    public User(String login, String password, String name, String email) {
         this.login=login;
         this.password=password;
         this.name=name;
+        this.email=email;
+        setCode();
     }
 
     public Long getId() {
@@ -65,9 +76,19 @@ public class User {
     }
     public void  setName(String name) {this.name = name;}
 
+
+    public String getEmail() {
+        return email;
+    }
+    public void  setEmail(String email) {this.email = email;}
+
     public boolean getIsActive() {
         return isActive;
     }
-    public void  setIsActiv(boolean isActive) {this.isActive = isActive;}
+    public void setIsActive(boolean isActive) {this.isActive = isActive;}
+
+
+    public String getCode() {return code;}
+    public void  setCode() {this.code = UUID.randomUUID().toString();}
 
 }

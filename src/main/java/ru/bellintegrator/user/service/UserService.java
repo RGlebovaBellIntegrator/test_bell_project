@@ -19,4 +19,6 @@ public interface UserService {
     List<UserView> user();
 
     boolean login(String login, String password);
+
+    boolean activation(String code);
 }

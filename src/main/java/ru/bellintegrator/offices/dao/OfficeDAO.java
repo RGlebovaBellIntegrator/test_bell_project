@@ -36,7 +36,7 @@ public interface OfficeDAO {
      *
      * @param office
      */
-    void save(Office office);
+    Long save(Office office);
 
     void update(Long id, String name, String address, String phone, Boolean isActive);
 

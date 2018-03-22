@@ -3,6 +3,7 @@ package ru.bellintegrator.user.controller;
 import org.eclipse.jetty.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.bellintegrator.user.view.UserView;
 
 import java.util.List;
@@ -19,9 +20,11 @@ public interface UserController {
      * Get all user
      * @return JSON user value
      */
-    List<UserView> user();
+    ResponseEntity<?> user();
 
     //boolean login(@RequestBody String login, String password);
 
     ResponseEntity<?> login(@RequestBody Map<String,String> body);
+
+    ResponseEntity<?> activation(@RequestParam("code") String code);
 }

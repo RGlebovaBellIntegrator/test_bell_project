@@ -36,10 +36,14 @@ public interface UserDAO {
      */
     User loadByLogin(String login, String password);
 
+    User loadByCode(String code);
+
     /**
      * Сохранить User
      *
      * @param user
      */
     void save(User user);
+
+    Boolean updateCode(String code);
 }

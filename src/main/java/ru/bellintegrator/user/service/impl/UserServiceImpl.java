@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void add(UserView view) {
-        User user = new User(view.login, view.password, view.name);
+        User user = new User(view.login, view.password, view.name, view.email);
         dao.save(user);
     }
 
@@ -45,6 +45,9 @@ public class UserServiceImpl implements UserService {
             view.id = String.valueOf(p.getId());
             view.login = p.getLogin();
             view.name = p.getName();
+            view.email = p.getEmail();
+            view.code = p.getCode();
+            view.isActive = p.getIsActive();
 
             log.info(view.toString());
 
@@ -67,4 +70,11 @@ public class UserServiceImpl implements UserService {
         };
         return false;
     }
+
+    @Override
+    @Transactional
+    public boolean activation(String code) {
+       return dao.updateCode(code);
+    }
+
 }

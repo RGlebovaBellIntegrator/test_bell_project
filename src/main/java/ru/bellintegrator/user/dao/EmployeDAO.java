@@ -5,6 +5,7 @@ import ru.bellintegrator.catalog.model.Doc;
 import ru.bellintegrator.offices.model.Office;
 import ru.bellintegrator.user.model.Employe;
 import ru.bellintegrator.user.model.User;
+import ru.bellintegrator.user.view.EmployeView;
 
 import java.util.Date;
 import java.util.List;
@@ -17,8 +18,7 @@ public interface EmployeDAO {
      */
     List<Employe> all();
 
-    List<Employe> filter(String firstname, String secondname, String middlename,
-                         String position, String doc_code, Long office_id, String country_code);
+    List<Employe> filter(EmployeView employeView);
 
     /**
      * Получить Employe по идентификатору
@@ -41,11 +41,9 @@ public interface EmployeDAO {
      *
      * @param employe
      */
-    void save(Employe employe);
+    Long save(Employe employe);
 
-    void update(Long id, String firstname, String secondname, String middlename,
-                String position, String phone, String doc_name, String doc_number,
-                Date doc_date, String country_name, String country_code, Boolean isIdentified);
+    void update(EmployeView employeView);
 
     void delete(Long id);
 

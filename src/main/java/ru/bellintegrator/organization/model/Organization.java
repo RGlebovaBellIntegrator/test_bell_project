@@ -47,6 +47,7 @@ public class Organization {
     //@Column(name = "kpp")
     private String kpp;
 
+
     /**
      * Адрес
      */
@@ -65,7 +66,7 @@ public class Organization {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     private List<Office> offices;
 
     public Organization(){

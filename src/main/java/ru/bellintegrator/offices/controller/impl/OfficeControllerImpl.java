@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,11 +40,10 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @RequestMapping(value = "/save", method = {POST})
+    @RequestMapping(value = "/create", method = {POST})
     public ResponseEntity<?> office(@RequestBody OfficeView office) {
         try {
-            officeService.add(office);
-            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(officeService.add(office)), HttpStatus.OK);
         }
         catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
@@ -53,9 +53,24 @@ public class OfficeControllerImpl implements OfficeController {
     @Override
     @ApiOperation(value = "getOffice", nickname = "getOffice", httpMethod = "GET")
     @RequestMapping(value = "/all", method = {GET})
-    public ResponseEntity<?> office() {
+    public ResponseEntity<?> all() {
         try {
             return new ResponseEntity<>(new Data(officeService.office()), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    @ApiOperation(value = "getOrganization", nickname = "getOrganization", httpMethod = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = Data.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @RequestMapping(value = "/{id}", method = {GET})
+    public ResponseEntity<?> office(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(new Data(officeService.find(id)), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }

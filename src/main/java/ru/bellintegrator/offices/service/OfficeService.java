@@ -10,7 +10,7 @@ public interface OfficeService {
      *
      * @param office
      */
-    void add(OfficeView office);
+    OfficeView add(OfficeView office);
 
     /**
      * Office service method
@@ -19,6 +19,8 @@ public interface OfficeService {
     List<OfficeView> office();
 
     List<OfficeView> list(OfficeView office);
+
+    OfficeView find(Long id);
 
     void update(OfficeView office);
 

@@ -20,6 +20,12 @@ public class OrganizationView {
 
     public Boolean isActive;
 
+    public Integer officesCount;
+
+    public String countryCode;
+
+    public String countryName;
+
     public OrganizationView() {
 
     }

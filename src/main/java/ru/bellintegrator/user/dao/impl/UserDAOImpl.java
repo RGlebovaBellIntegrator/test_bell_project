@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.user.dao.UserDAO;
 import ru.bellintegrator.user.model.User;
-import ru.bellintegrator.user.service.UserService;
 
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -71,6 +70,32 @@ public class UserDAOImpl implements UserDAO {
         catch (Exception ex) {
             //запись в лог нужна
             return null;
+        }
+    }
+
+    @Override
+    public User loadByCode(String activateCode) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+
+        Root<User> users = criteria.from(User.class);
+        criteria.where(builder.equal(users.get("code"), activateCode));
+
+        TypedQuery<User> query = em.createQuery(criteria);
+
+        return query.getSingleResult();
+    }
+
+    @Override
+    public Boolean updateCode(String code)
+    {
+        try {
+            loadByCode(code).setIsActive(true);
+            return true;
+        }
+        catch (Exception ex) {
+            //запись в лог нужна
+            return false;
         }
     }
 

@@ -30,10 +30,13 @@ public class OrganizationServiceImpl implements OrganizationService{
 
     @Override
     @Transactional
-    public void add(OrganizationView organization) {
+    public OrganizationView add(OrganizationView organization) {
         Organization organizations =
                 new Organization(organization.name, organization.fullName, organization.inn, organization.kpp, organization.address, organization.phone, organization.isActive);
-        dao.save(organizations);
+        OrganizationView view = new OrganizationView();
+        view.id = dao.save(organizations);
+
+        return view;
     }
 
     @Override
@@ -73,6 +76,7 @@ public class OrganizationServiceImpl implements OrganizationService{
             view.id = p.getId();
             view.name = p.getName();
             view.isActive = p.getIsActive();
+            view.officesCount = p.getOffices().size();
 
             log.info(view.toString());
 
@@ -87,14 +91,30 @@ public class OrganizationServiceImpl implements OrganizationService{
     @Override
     @Transactional
     public void update(OrganizationView organizationView) {
-        dao.update(organizationView.id, organizationView.name, organizationView.fullName,
-                organizationView.inn, organizationView.kpp, organizationView.address,
-                organizationView.phone, organizationView.isActive);
+        dao.update(organizationView);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
         dao.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public OrganizationView find(Long id) {
+        Organization o = dao.loadById(id);
+
+        OrganizationView view = new OrganizationView();
+        view.id = o.getId();
+        view.name = o.getName();
+        view.fullName = o.getFullname();
+        view.isActive = o.getIsActive();
+        view.inn = o.getInn();
+        view.kpp = o.getKpp();
+        view.address = o.getAddress();
+        view.phone = o.getPhone();
+        //view.officesCount = o.getOffices().size();
+        return  view;
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.organization.dao.OrganizationDAO;
 import ru.bellintegrator.organization.model.Organization;
+import ru.bellintegrator.organization.view.OrganizationView;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -88,44 +89,44 @@ public class OrganizationDAOImpl implements OrganizationDAO {
      * {@inheritDoc}
      */
     @Override
-    public void save(Organization organization) {
+    public Long save(Organization organization) {
         em.persist(organization);
+        return organization.getId();
     }
 
     @Override
-    public void update(Long id, String name, String fullName, String inn,
-                       String kpp, String address, String phone, Boolean isActive) {
-        Organization organization = loadById(id);
+    public void update(OrganizationView organizationView) {
+        Organization organization = loadById(organizationView.id);
         if (organization==null) {
             save(organization);
         }
         else {
-            if (name != null) {
-                organization.setName(name);
+            if (organizationView.name != null) {
+                organization.setName(organizationView.name);
             }
 
-            if (fullName != null) {
-                organization.setFullname(fullName);
+            if (organizationView.fullName != null) {
+                organization.setFullname(organizationView.fullName);
             }
 
-            if (inn != null) {
-                organization.setInn(inn);
+            if (organizationView.inn != null) {
+                organization.setInn(organizationView.inn);
             }
 
-            if (kpp != null) {
-                organization.setKpp(kpp);
+            if (organizationView.kpp != null) {
+                organization.setKpp(organizationView.kpp);
             }
 
-            if (address != null) {
-                organization.setAddress(address);
+            if (organizationView.address != null) {
+                organization.setAddress(organizationView.address);
             }
 
-            if (phone != null) {
-                organization.setPhone(phone);
+            if (organizationView.phone != null) {
+                organization.setPhone(organizationView.phone);
             }
 
-            if (isActive != null) {
-                organization.setIsActive(isActive);
+            if (organizationView.isActive != null) {
+                organization.setIsActive(organizationView.isActive);
             }
         };
     }

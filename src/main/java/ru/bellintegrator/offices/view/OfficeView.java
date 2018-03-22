@@ -14,15 +14,16 @@ public class OfficeView {
     public String address;
     public String phone;
 
-    public boolean isActive;
+    public Boolean isActive;
 
     public Long orgId;
+    public String organizationName;
 
     public OfficeView() {
 
     }
 
-    public OfficeView(String name, String address, String phone, Long orgId, boolean isActive) {
+    public OfficeView(String name, String address, String phone, Long orgId, Boolean isActive) {
         this.name=name;
         this.address=address;
         this.phone = phone;

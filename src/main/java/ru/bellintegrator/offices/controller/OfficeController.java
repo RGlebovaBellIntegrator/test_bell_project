@@ -1,6 +1,7 @@
 package ru.bellintegrator.offices.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.bellintegrator.offices.view.OfficeView;
 import ru.bellintegrator.organization.view.OrganizationView;
@@ -19,7 +20,8 @@ public interface OfficeController {
      * Get all offices
      * @return JSON offices value
      */
-    ResponseEntity<?> office();
+    ResponseEntity<?> office(@PathVariable Long id);
+    ResponseEntity<?> all();
 
     ResponseEntity<?> list(OfficeView office);
 

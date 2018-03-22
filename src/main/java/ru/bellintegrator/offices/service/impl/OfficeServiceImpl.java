@@ -17,6 +17,7 @@ import ru.bellintegrator.organization.dao.impl.OrganizationDAOImpl;
 import ru.bellintegrator.organization.model.Organization;
 import ru.bellintegrator.organization.service.OrganizationService;
 import ru.bellintegrator.organization.service.impl.OrganizationServiceImpl;
+import ru.bellintegrator.organization.view.OrganizationView;
 
 import java.util.List;
 import java.util.function.Function;
@@ -36,10 +37,11 @@ public class OfficeServiceImpl implements OfficeService{
 
     @Override
     @Transactional
-    public void add(OfficeView view) {
-
+    public OfficeView add(OfficeView view) {
         Office office = new Office(view.name, view.address, view.phone, dao.findOrgById(view.orgId), view.isActive);
-        dao.save(office);
+        OfficeView o = new OfficeView();
+        o.id = dao.save(office);
+        return o;
     }
 
     @Override
@@ -66,6 +68,22 @@ public class OfficeServiceImpl implements OfficeService{
     }
 
     @Override
+    @Transactional
+    public OfficeView find(Long id) {
+        Office o = dao.loadById(id);
+
+        OfficeView view = new OfficeView();
+        view.id = o.getId();
+        view.name = o.getName();
+        view.isActive = o.getIsActive();
+        view.address = o.getAddress();
+        view.phone = o.getPhone();
+        view.orgId = o.getOrganization().getId();
+        view.organizationName = o.getOrganization().getName();
+        return view;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<OfficeView> list(OfficeView office) {
 
@@ -75,6 +93,7 @@ public class OfficeServiceImpl implements OfficeService{
             OfficeView view = new OfficeView();
             view.id = p.getId();
             view.name = p.getName();
+            view.organizationName = p.getOrganization().getName();
             view.isActive = p.getIsActive();
 
             log.info(view.toString());

@@ -1,5 +1,6 @@
 package ru.bellintegrator.user.service.impl;
 
+import org.hibernate.service.spi.InjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bellintegrator.offices.service.OfficeService;
 import ru.bellintegrator.user.dao.EmployeDAO;
 
 import ru.bellintegrator.user.model.Employe;
@@ -32,7 +34,7 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     @Transactional
-    public void add(EmployeView view) {
+    public EmployeView add(EmployeView view) {
         Employe employe = new Employe(view.firstName, view.secondName, view.middleName, view.position, view.phone,
                 view.isIdentified);
         employe.setDoc(dao.findDocId(view.docCode));
@@ -40,7 +42,10 @@ public class EmployeServiceImpl implements EmployeService {
         employe.setDocNumber(view.docNumber);
         employe.setCountry(dao.findCountryId(view.citizenshipCode));
         employe.setOffice(dao.findOfficeById(view.officeId));
-        dao.save(employe);
+
+        EmployeView e = new EmployeView();
+        e.id = dao.save(employe);
+        return e;
     }
 
     @Override
@@ -73,16 +78,14 @@ public class EmployeServiceImpl implements EmployeService {
     @Transactional(readOnly = true)
     public List<EmployeView> employeFilter(EmployeView employeView) {
 
-        List<Employe> all = dao.filter(employeView.firstName,employeView.secondName,employeView.middleName,employeView.position,
-                employeView.docCode,employeView.officeId,employeView.citizenshipCode);
+        List<Employe> all = dao.filter(employeView);
 
         Function<Employe, EmployeView> mapEmploye = p -> {
             EmployeView view = new EmployeView();
             view.id = p.getId();
-            view.firstName = p.getFirstName();
-            view.secondName = p.getSecondName();
-            view.middleName = p.getMiddlename();
+            view.fullName = p.getFirstName() + " " + p.getSecondName() + " " + p.getMiddlename();
             view.position = p.getStatement();
+            view.officeName = p.getOffice().getName();
 
             log.info(view.toString());
 
@@ -97,14 +100,35 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     @Transactional
     public void update(EmployeView employeView) {
-        dao.update(employeView.id, employeView.firstName,employeView.secondName,employeView.middleName,employeView.position,
-                employeView.phone, employeView.docName, employeView.docNumber,employeView.docDate,
-                employeView.citizenshipName,employeView.citizenshipCode,employeView.isIdentified);
+        dao.update(employeView);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
         dao.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public EmployeView find(Long id) {
+        Employe p = dao.loadById(id);
+
+        EmployeView view = new EmployeView();
+        view.id = p.getId();
+        view.firstName = p.getFirstName();
+        view.secondName = p.getSecondName();
+        view.middleName = p.getMiddlename();
+        view.position = p.getStatement();
+        view.phone = p.getPhone();
+        view.docCode = p.getDoc().getCode();
+        view.docName = p.getDoc().getName();
+        view.docNumber = p.getDocNumber();
+        view.docDate = p.getDocDate();
+        view.citizenshipCode = p.getCountry().getCode();
+        view.citizenshipName = p.getCountry().getName();
+        view.officeId = p.getOffice().getId();
+
+        return  view;
     }
 }

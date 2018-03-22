@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
 @RestController
-@RequestMapping(value = "api/user", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/employe", produces = APPLICATION_JSON_VALUE)
 public class EmployeControllerImpl implements EmployeController {
     private final EmployeService employeService;
 
@@ -40,11 +41,10 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 200, message = "Success"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @RequestMapping(value = "/save", method = {POST})
+    @RequestMapping(value = "/create", method = {POST})
     public ResponseEntity<?> save(@RequestBody EmployeView employe) {
         try{
-            employeService.add(employe);
-            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(employeService.add(employe)), HttpStatus.OK);
         }catch(Exception ex){
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }
@@ -57,10 +57,25 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/all", method = {GET})
-    public ResponseEntity<?> employe() {
+    public ResponseEntity<?> all() {
         try{
             return new ResponseEntity<>(new Data(employeService.employe()), HttpStatus.OK);
         }catch(Exception ex){
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    @ApiOperation(value = "getOrganization", nickname = "getOrganization", httpMethod = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = Data.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @RequestMapping(value = "/{id}", method = {GET})
+    public ResponseEntity<?> employe(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(new Data(employeService.find(id)), HttpStatus.OK);
+        } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }
     }

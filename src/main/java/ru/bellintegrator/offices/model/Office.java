@@ -50,7 +50,7 @@ public class Office {
     @JoinColumn(name = "org_id")
     private Organization organization;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "office", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "office", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     private List<Employe> employe;
 
 

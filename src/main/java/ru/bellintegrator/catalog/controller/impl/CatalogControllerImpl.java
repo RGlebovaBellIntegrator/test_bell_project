@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +13,8 @@ import ru.bellintegrator.catalog.controller.CatalogController;
 import ru.bellintegrator.catalog.service.CatalogService;
 import ru.bellintegrator.catalog.view.DocView;
 import ru.bellintegrator.catalog.view.CountryView;
+import ru.bellintegrator.optional.Data;
+import ru.bellintegrator.optional.ResultResponse;
 
 import java.util.List;
 
@@ -30,15 +34,22 @@ public class CatalogControllerImpl implements CatalogController {
     }
 
 
-   @Override
+    @Override
     @ApiOperation(value = "addCountry", nickname = "addCountry", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/countries", method = {POST})
-    public void country(@RequestBody CountryView country) {
-        catalogService.add(country);
+    public ResponseEntity<?> country(@RequestBody CountryView country) {
+
+       try {
+           catalogService.add(country);
+           return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+       }
+       catch (Exception ex) {
+           return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+       }
     }
 
     @Override
@@ -48,21 +59,34 @@ public class CatalogControllerImpl implements CatalogController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/docs", method = {POST})
-    public void doc(@RequestBody DocView doc) {
-        catalogService.add(doc);
-    }/* */
+    public ResponseEntity<?> doc(@RequestBody DocView doc) {
+        try {
+            catalogService.add(doc);
+            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @Override
     @ApiOperation(value = "getDoc", nickname = "getDoc", httpMethod = "GET")
     @RequestMapping(value = "/docs", method = {GET})
-    public List<DocView> doc() {
-        return catalogService.docs();
+    public ResponseEntity<?> doc() {
+        try {
+            return new ResponseEntity<>(new Data(catalogService.docs()), HttpStatus.OK);
+    } catch (Exception ex) {
+        return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+    }
     }
 
     @Override
     @ApiOperation(value = "getCountry", nickname = "getCountry", httpMethod = "GET")
     @RequestMapping(value = "/countries", method = {GET})
-    public List<CountryView> country() {
-        return catalogService.country();
+    public ResponseEntity<?> country() {
+        try {
+            return new ResponseEntity<>(new Data(catalogService.country()), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+        }
     }
 }

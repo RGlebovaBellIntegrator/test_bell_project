@@ -45,46 +45,45 @@ public class EmployeDAOImpl implements EmployeDAO {
     }
 
     @Override
-    public List<Employe> filter(String firstname, String secondname, String middlename,
-                                String position, String doc_code, Long office_id, String country_code) {
+    public List<Employe> filter(EmployeView employeView) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Employe> criteria = builder.createQuery(Employe.class);
 
         Root<Employe> employe = criteria.from(Employe.class);
 
         Predicate predicate = builder.conjunction();
-        if (firstname != null) {
-            Predicate p = builder.equal(employe.get("firstname"), firstname);
+        if (employeView.fullName != null) {
+            Predicate p = builder.equal(employe.get("firstname"), employeView.fullName);
             predicate = builder.and(predicate, p);
         }
 
-        if (secondname != null) {
-            Predicate p = builder.equal(employe.get("secondname"), secondname);
+        if (employeView.secondName != null) {
+            Predicate p = builder.equal(employe.get("secondname"), employeView.secondName);
             predicate = builder.and(predicate, p);
         }
 
-        if (middlename != null) {
-            Predicate p = builder.equal(employe.get("middlename"), middlename);
+        if (employeView.middleName != null) {
+            Predicate p = builder.equal(employe.get("middlename"), employeView.middleName);
             predicate = builder.and(predicate, p);
         }
 
-        if (position != null) {
-            Predicate p = builder.equal(employe.get("position"), position);
+        if (employeView.position != null) {
+            Predicate p = builder.equal(employe.get("position"), employeView.position);
             predicate = builder.and(predicate, p);
         }
 
-        if (doc_code != null) {
-            Predicate p = builder.equal(employe.get("doc").get("code"), doc_code);
+        if (employeView.docCode != null) {
+            Predicate p = builder.equal(employe.get("doc").get("code"), employeView.docCode);
             predicate = builder.and(predicate, p);
         }
 
-        if (country_code != null) {
-            Predicate p = builder.equal(employe.get("country").get("code"), country_code);
+        if (employeView.citizenshipCode != null) {
+            Predicate p = builder.equal(employe.get("country").get("code"), employeView.citizenshipCode);
             predicate = builder.and(predicate, p);
         }
 
-        if (office_id != null) {
-            Predicate p = builder.equal(employe.get("office").get("id"), office_id);
+        if (employeView.officeId != null) {
+            Predicate p = builder.equal(employe.get("office").get("id"), employeView.officeId);
             predicate = builder.and(predicate, p);
         }
         else throw new NullPointerException("office_id не инициализирован");;
@@ -122,71 +121,69 @@ public class EmployeDAOImpl implements EmployeDAO {
      * {@inheritDoc}
      */
     @Override
-    public void save(Employe employe) {
+    public Long save(Employe employe) {
         em.persist(employe);
+        return  employe.getId();
     }
 
     @Override
-    public void update(Long id, String firstname, String secondname, String middlename,
-                       String position, String phone, String doc_name, String doc_number,
-                       Date doc_date, String country_name, String country_code, Boolean isIdentified) {
-        Employe employe = loadById(id);
+    public void update(EmployeView employeView) {
+        Employe employe = loadById(employeView.id);
         if (employe==null) {
             save(employe);
         }
         else {
-            if (firstname != null) {
-                employe.setFirstname(firstname);
+            if (employeView.firstName != null) {
+                employe.setFirstname(employeView.firstName);
             }
 
-            if (secondname != null) {
-                employe.setSecondname(secondname);
+            if (employeView.secondName != null) {
+                employe.setSecondname(employeView.secondName);
             }
 
-            if (middlename != null) {
-                employe.setMiddlename(middlename);
+            if (employeView.middleName != null) {
+                employe.setMiddlename(employeView.middleName);
             }
 
-            if (position != null) {
-                employe.setStatement(position);
+            if (employeView.position != null) {
+                employe.setStatement(employeView.position);
             }
 
-            if (phone != null) {
-                employe.setPhone(phone);
+            if (employeView.phone != null) {
+                employe.setPhone(employeView.phone);
             }
 
 
-            if (doc_name != null) {
+            if (employeView.docName != null) {
                 CriteriaBuilder builder = em.getCriteriaBuilder();
                 CriteriaQuery<Doc> criteria = builder.createQuery(Doc.class);
 
                 Root<Doc> person = criteria.from(Doc.class);
-                criteria.where(builder.equal(person.get("name"), doc_name));
+                criteria.where(builder.equal(person.get("name"), employeView.docName));
 
                 TypedQuery<Doc> query = em.createQuery(criteria);
 
                 Doc doc_temp = query.getSingleResult();
-
                 if (doc_temp!=null) {
                     employe.setDoc(doc_temp);
                 }
                 else System.out.println("Нет документа");
             }
 
-            if (doc_number != null) {
-                employe.setStatement(doc_number);
+            if (employeView.docNumber != null) {
+                employe.setStatement(employeView.docNumber);
             }
 
-            if (doc_date != null) {
-                employe.setDocDate(doc_date);
+            if (employeView.docDate != null) {
+                employe.setDocDate(employeView.docDate);
             }
 
-            if (country_name != null) {
+            if (employeView.citizenshipName != null) {
                 CriteriaBuilder builder = em.getCriteriaBuilder();
                 CriteriaQuery<Country> criteria = builder.createQuery(Country.class);
 
                 Root<Country> person = criteria.from(Country.class);
-                criteria.where(builder.equal(person.get("name"), country_name));
+                criteria.where(builder.equal(person.get("name"), employeView.citizenshipName));
 
                 TypedQuery<Country> query = em.createQuery(criteria);
 
@@ -198,12 +195,12 @@ public class EmployeDAOImpl implements EmployeDAO {
                 else System.out.println("Нет документа");;
             }
 
-            if (country_code != null) {
+            if (employeView.citizenshipCode != null) {
                 CriteriaBuilder builder = em.getCriteriaBuilder();
                 CriteriaQuery<Country> criteria = builder.createQuery(Country.class);
 
                 Root<Country> person = criteria.from(Country.class);
-                criteria.where(builder.equal(person.get("code"), country_code));
+                criteria.where(builder.equal(person.get("code"), employeView.citizenshipCode));
 
                 TypedQuery<Country> query = em.createQuery(criteria);
 
@@ -215,8 +212,8 @@ public class EmployeDAOImpl implements EmployeDAO {
                 else System.out.println("Нет страны");;
             }
 
-            if (isIdentified != null) {
-                employe.setIsIdentified(isIdentified);
+            if (employeView.isIdentified != null) {
+                employe.setIsIdentified(employeView.isIdentified);
             }
         };
     }
