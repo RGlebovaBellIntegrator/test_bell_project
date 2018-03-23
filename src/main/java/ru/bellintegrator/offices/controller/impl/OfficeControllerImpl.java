@@ -14,7 +14,6 @@ import ru.bellintegrator.offices.controller.OfficeController;
 import ru.bellintegrator.offices.service.OfficeService;
 import ru.bellintegrator.offices.view.OfficeView;
 import ru.bellintegrator.optional.Data;
-import ru.bellintegrator.optional.Result;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -99,7 +98,7 @@ public class OfficeControllerImpl implements OfficeController {
     public ResponseEntity<?> update(@RequestBody OfficeView office) {
         try {
             officeService.update(office);
-            return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }
@@ -116,7 +115,7 @@ public class OfficeControllerImpl implements OfficeController {
     public ResponseEntity<?> delete(@RequestBody OfficeView office) {
         try {
             officeService.delete(office.id);
-            return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.optional.Data;
-import ru.bellintegrator.optional.Result;
 import ru.bellintegrator.user.controller.UserController;
 import ru.bellintegrator.user.service.UserService;
 import ru.bellintegrator.user.view.UserView;
@@ -41,7 +40,7 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<?> user(@RequestBody UserView user) {
         try {
             userService.add(user);
-            return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }
@@ -66,8 +65,9 @@ public class UserControllerImpl implements UserController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/login", method = {POST})
-    public Boolean login(@RequestBody UserView userView) {
-            return userService.login(userView);
+    public ResponseEntity<?> login(@RequestBody UserView userView) {
+            userService.login(userView);
+            return new ResponseEntity<>(new Data(), HttpStatus.OK);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<?> activation(@RequestParam("code") String code) {
         try {
             if (userService.activation(code))
-                return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
+                return new ResponseEntity<>(new Data(), HttpStatus.OK);
             else
                 return new ResponseEntity<>(new Data("Не найден код"), HttpStatus.BAD_REQUEST);
         }

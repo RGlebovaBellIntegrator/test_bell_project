@@ -9,6 +9,10 @@ public class Data {
 
     private String error;
 
+    public Data(){
+        setSuccess();
+    }
+
     public  Data(String error){
         this.error=error;
     }
@@ -28,5 +32,27 @@ public class Data {
 
     public void setError(String error) {
         this.error=error;
+    }
+
+    private void setSuccess()
+    {
+        data = new Result("success");
+    }
+
+    private static class Result {
+
+        private String result;
+
+        public Result(String result){
+            this.result = result;
+        }
+
+        public String getResult(){
+            return result;
+        }
+
+        public void setResult(String result){
+            this.result = result;
+        }
     }
 }

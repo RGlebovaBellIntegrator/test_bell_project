@@ -4,6 +4,7 @@ import org.eclipse.jetty.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.bellintegrator.optional.Data;
 import ru.bellintegrator.user.view.UserView;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface UserController {
      */
     ResponseEntity<?> user();
 
-    Boolean login(@RequestBody UserView userView);
+    ResponseEntity<?> login(@RequestBody UserView userView);
 
     ResponseEntity<?> activation(@RequestParam("code") String code);
 }

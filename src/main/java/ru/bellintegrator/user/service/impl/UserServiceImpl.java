@@ -60,14 +60,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public Boolean login(UserView userView) {
+    public void login(UserView userView) {
         User user = dao.loadByLogin(userView.login, userView.password);
 
         if (user==null){
             throw new ServiceException("Сочетание login/password не найдены");
         };
 
-        return true;
     }
 
     @Override
