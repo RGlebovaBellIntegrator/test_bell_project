@@ -78,6 +78,7 @@ public class OrganizationDAOImpl implements OrganizationDAO {
             Predicate p = builder.equal(organizationRoot.get("isActive"), isActive);
             predicate = builder.and(predicate, p);
         }
+        else throw new NullPointerException("isActive не инициализирован");;
 
         criteria.where(predicate);
 

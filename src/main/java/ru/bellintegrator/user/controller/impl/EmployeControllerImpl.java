@@ -51,7 +51,7 @@ public class EmployeControllerImpl implements EmployeController {
     }
 
     @Override
-    @ApiOperation(value = "getEmploye", nickname = "getEmploye", httpMethod = "GET")
+    @ApiOperation(value = "getAll", nickname = "getAll", httpMethod = "GET")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
             @ApiResponse(code = 404, message = "Not Found"),
@@ -66,7 +66,7 @@ public class EmployeControllerImpl implements EmployeController {
     }
 
     @Override
-    @ApiOperation(value = "getOrganization", nickname = "getOrganization", httpMethod = "GET")
+    @ApiOperation(value = "getEmploye", nickname = "getEmploye", httpMethod = "GET")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = Data.class),
             @ApiResponse(code = 404, message = "Not Found"),

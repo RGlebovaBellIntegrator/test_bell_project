@@ -51,7 +51,7 @@ public class OfficeControllerImpl implements OfficeController {
     }
 
     @Override
-    @ApiOperation(value = "getOffice", nickname = "getOffice", httpMethod = "GET")
+    @ApiOperation(value = "getAll", nickname = "getAll", httpMethod = "GET")
     @RequestMapping(value = "/all", method = {GET})
     public ResponseEntity<?> all() {
         try {
@@ -62,7 +62,7 @@ public class OfficeControllerImpl implements OfficeController {
     }
 
     @Override
-    @ApiOperation(value = "getOrganization", nickname = "getOrganization", httpMethod = "GET")
+    @ApiOperation(value = "getOffice", nickname = "getOffice", httpMethod = "GET")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = Data.class),
             @ApiResponse(code = 404, message = "Not Found"),

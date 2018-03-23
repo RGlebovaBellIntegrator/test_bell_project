@@ -77,7 +77,6 @@ public class OfficeDAOImpl implements OfficeDAO {
             Predicate p = builder.equal(officeRoot.get("name"), name);
             predicate = builder.and(predicate, p);
         }
-        else throw new NullPointerException("name не инициализирован");
 
         if (phone != null) {
             Predicate p = builder.equal(officeRoot.get("phone"), phone);

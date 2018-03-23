@@ -49,7 +49,7 @@ public class OrganizationControllerImpl implements OrganizationController {
     }
 
     @Override
-    @ApiOperation(value = "getList", nickname = "getList", httpMethod = "GET")
+    @ApiOperation(value = "getAll", nickname = "getAll", httpMethod = "GET")
     @RequestMapping(value = "/all", method = {GET})
     public ResponseEntity<?> all() {
         try {
