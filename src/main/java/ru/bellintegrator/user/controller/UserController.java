@@ -24,7 +24,7 @@ public interface UserController {
 
     //boolean login(@RequestBody String login, String password);
 
-    ResponseEntity<?> login(@RequestBody Map<String,String> body);
+    Boolean login(@RequestBody UserView userView);
 
     ResponseEntity<?> activation(@RequestParam("code") String code);
 }

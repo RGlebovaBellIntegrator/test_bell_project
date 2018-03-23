@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bellintegrator.optional.TestUserException;
 import ru.bellintegrator.user.dao.UserDAO;
 import ru.bellintegrator.user.model.User;
 import ru.bellintegrator.user.service.UserService;
@@ -61,18 +62,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public boolean login(String login, String password) {
-        User user = dao.loadByLogin(login, password);
+    public Boolean login(UserView userView) {
+        User user = dao.loadByLogin(userView.login, userView.password);
 
-        if (user!=null){
-            return true;
+        if (user==null){
+            throw new TestUserException();
         };
-        return false;
+
+        return true;
     }
 
     @Override
     @Transactional
-    public boolean activation(String code) {
+    public Boolean activation(String code) {
        return dao.updateCode(code);
     }
 

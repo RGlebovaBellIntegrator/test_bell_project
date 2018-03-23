@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.optional.Data;
 import ru.bellintegrator.optional.Result;
+import ru.bellintegrator.optional.TestUserException;
 import ru.bellintegrator.user.controller.UserController;
 import ru.bellintegrator.user.service.UserService;
 import ru.bellintegrator.user.view.UserView;
@@ -68,15 +69,8 @@ public class UserControllerImpl implements UserController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/login", method = {POST})
-    public ResponseEntity<?> login(@RequestBody Map<String,String> body) {
-        try {
-            if(userService.login(body.get("login"),body.get("password")))
-                return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
-            else
-                return new ResponseEntity<>(new Data("login/password не найдены"), HttpStatus.BAD_REQUEST);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Boolean login(@RequestBody UserView userView) {
+            return userService.login(userView);
     }
 
     @Override
