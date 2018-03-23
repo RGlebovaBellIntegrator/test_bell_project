@@ -17,7 +17,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@Scope(proxyMode = ScopedProxyMode.INTERFACES)
 public class OrganizationServiceImpl implements OrganizationService{
     private final Logger log = LoggerFactory.getLogger(OrganizationServiceImpl.class);
 

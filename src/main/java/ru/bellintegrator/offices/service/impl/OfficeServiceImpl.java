@@ -24,7 +24,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@Scope(proxyMode = ScopedProxyMode.INTERFACES)
 public class OfficeServiceImpl implements OfficeService{
     private final Logger log = LoggerFactory.getLogger(OfficeServiceImpl.class);
 

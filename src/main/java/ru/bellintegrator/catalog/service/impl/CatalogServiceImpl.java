@@ -20,7 +20,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@Scope(proxyMode = ScopedProxyMode.INTERFACES)
 public class CatalogServiceImpl implements CatalogService{
     private final Logger log = LoggerFactory.getLogger(CatalogServiceImpl.class);
 
