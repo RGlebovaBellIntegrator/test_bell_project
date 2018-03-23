@@ -3,8 +3,6 @@ package ru.bellintegrator.user.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.optional.TestUserException;
@@ -66,7 +64,7 @@ public class UserServiceImpl implements UserService {
         User user = dao.loadByLogin(userView.login, userView.password);
 
         if (user==null){
-            throw new TestUserException();
+            throw new TestUserException("Сочетание login/password не найдены");
         };
 
         return true;
