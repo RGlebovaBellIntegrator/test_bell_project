@@ -8,14 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.optional.Data;
-import ru.bellintegrator.optional.ResultResponse;
+import ru.bellintegrator.optional.Result;
 import ru.bellintegrator.organization.controller.OrganizationController;
-import ru.bellintegrator.organization.model.Organization;
 import ru.bellintegrator.organization.service.OrganizationService;
 import ru.bellintegrator.organization.view.OrganizationView;
-
-import java.util.List;
-import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -100,7 +96,7 @@ public class OrganizationControllerImpl implements OrganizationController {
     public ResponseEntity<?> update(@RequestBody OrganizationView organizationView) {
         try {
             organizationService.update(organizationView);
-            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }
@@ -117,7 +113,7 @@ public class OrganizationControllerImpl implements OrganizationController {
     public ResponseEntity<?> delete(@RequestBody OrganizationView organizationView) {
         try {
             organizationService.delete(organizationView.id);
-            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }

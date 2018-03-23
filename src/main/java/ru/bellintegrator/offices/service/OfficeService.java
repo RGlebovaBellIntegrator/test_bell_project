@@ -1,5 +1,6 @@
 package ru.bellintegrator.offices.service;
 
+import ru.bellintegrator.offices.model.Office;
 import ru.bellintegrator.offices.view.OfficeView;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface OfficeService {
 
     List<OfficeView> list(OfficeView office);
 
-    OfficeView find(Long id);
+    Office find(Long id);
 
     void update(OfficeView office);
 

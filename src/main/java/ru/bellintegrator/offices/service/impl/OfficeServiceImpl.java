@@ -68,18 +68,8 @@ public class OfficeServiceImpl implements OfficeService{
 
     @Override
     @Transactional
-    public OfficeView find(Long id) {
-        Office o = dao.loadById(id);
-
-        OfficeView view = new OfficeView();
-        view.id = o.getId();
-        view.name = o.getName();
-        view.isActive = o.getIsActive();
-        view.address = o.getAddress();
-        view.phone = o.getPhone();
-        view.orgId = o.getOrganization().getId();
-        view.organizationName = o.getOrganization().getName();
-        return view;
+    public Office find(Long id) {
+        return dao.loadById(id);
     }
 
     @Override

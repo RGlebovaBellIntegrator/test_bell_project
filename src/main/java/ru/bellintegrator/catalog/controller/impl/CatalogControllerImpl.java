@@ -14,9 +14,7 @@ import ru.bellintegrator.catalog.service.CatalogService;
 import ru.bellintegrator.catalog.view.DocView;
 import ru.bellintegrator.catalog.view.CountryView;
 import ru.bellintegrator.optional.Data;
-import ru.bellintegrator.optional.ResultResponse;
-
-import java.util.List;
+import ru.bellintegrator.optional.Result;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -45,7 +43,7 @@ public class CatalogControllerImpl implements CatalogController {
 
        try {
            catalogService.add(country);
-           return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+           return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
        }
        catch (Exception ex) {
            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
@@ -62,7 +60,7 @@ public class CatalogControllerImpl implements CatalogController {
     public ResponseEntity<?> doc(@RequestBody DocView doc) {
         try {
             catalogService.add(doc);
-            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }

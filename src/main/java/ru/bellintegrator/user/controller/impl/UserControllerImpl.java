@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.optional.Data;
-import ru.bellintegrator.optional.ResultResponse;
+import ru.bellintegrator.optional.Result;
 import ru.bellintegrator.user.controller.UserController;
 import ru.bellintegrator.user.service.UserService;
 import ru.bellintegrator.user.view.UserView;
 
-import java.util.Dictionary;
-import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -45,7 +43,7 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<?> user(@RequestBody UserView user) {
         try {
             userService.add(user);
-            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }
@@ -73,7 +71,7 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<?> login(@RequestBody Map<String,String> body) {
         try {
             if(userService.login(body.get("login"),body.get("password")))
-                return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+                return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
             else
                 return new ResponseEntity<>(new Data("login/password не найдены"), HttpStatus.BAD_REQUEST);
         } catch (Exception ex) {
@@ -87,7 +85,7 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<?> activation(@RequestParam("code") String code) {
         try {
             if (userService.activation(code))
-                return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+                return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
             else
                 return new ResponseEntity<>(new Data("Не найден код"), HttpStatus.BAD_REQUEST);
         }

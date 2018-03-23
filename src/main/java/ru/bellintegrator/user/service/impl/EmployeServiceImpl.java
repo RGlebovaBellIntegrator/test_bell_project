@@ -1,11 +1,8 @@
 package ru.bellintegrator.user.service.impl;
 
-import org.hibernate.service.spi.InjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.offices.service.OfficeService;
@@ -15,7 +12,6 @@ import ru.bellintegrator.user.model.Employe;
 import ru.bellintegrator.user.service.EmployeService;
 import ru.bellintegrator.user.view.EmployeView;
 
-import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -25,10 +21,12 @@ public class EmployeServiceImpl implements EmployeService {
     private final Logger log = LoggerFactory.getLogger(EmployeServiceImpl.class);
 
     private final EmployeDAO dao;
+    private final OfficeService officeService;
 
     @Autowired
-    public EmployeServiceImpl(EmployeDAO dao) {
+    public EmployeServiceImpl(EmployeDAO dao, OfficeService officeService) {
         this.dao = dao;
+        this.officeService = officeService;
     }
 
     @Override
@@ -40,7 +38,7 @@ public class EmployeServiceImpl implements EmployeService {
         employe.setDocDate(view.docDate);
         employe.setDocNumber(view.docNumber);
         employe.setCountry(dao.findCountryId(view.citizenshipCode));
-        employe.setOffice(dao.findOfficeById(view.officeId));
+        employe.setOffice(officeService.find(view.officeId));
 
         EmployeView e = new EmployeView();
         e.id = dao.save(employe);

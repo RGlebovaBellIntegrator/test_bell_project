@@ -11,13 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.optional.Data;
-import ru.bellintegrator.optional.ResultResponse;
+import ru.bellintegrator.optional.Result;
 import ru.bellintegrator.user.controller.EmployeController;
 import ru.bellintegrator.user.service.EmployeService;
 import ru.bellintegrator.user.view.EmployeView;
-
-import java.util.List;
-import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -107,7 +104,7 @@ public class EmployeControllerImpl implements EmployeController {
     public ResponseEntity<?>  update(@RequestBody EmployeView employeView) {
         try {
             employeService.update(employeView);
-            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }
@@ -123,7 +120,7 @@ public class EmployeControllerImpl implements EmployeController {
     public ResponseEntity<?>  delete(@RequestBody EmployeView body) {
         try {
             employeService.delete(body.id);
-            return new ResponseEntity<>(new Data(new ResultResponse("success")), HttpStatus.OK);
+            return new ResponseEntity<>(new Data(new Result("success")), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
         }
