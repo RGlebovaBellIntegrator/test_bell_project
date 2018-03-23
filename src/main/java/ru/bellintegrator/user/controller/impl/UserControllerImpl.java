@@ -12,12 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.optional.Data;
 import ru.bellintegrator.optional.Result;
-import ru.bellintegrator.optional.TestUserException;
 import ru.bellintegrator.user.controller.UserController;
 import ru.bellintegrator.user.service.UserService;
 import ru.bellintegrator.user.view.UserView;
-
-import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;

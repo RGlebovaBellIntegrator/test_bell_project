@@ -1,13 +1,13 @@
 package ru.bellintegrator.optional;
 
-public class TestUserException extends RuntimeException {
+public class ServiceException extends RuntimeException {
 
     private String message;
 
-    TestUserException(){
+    ServiceException(){
     }
 
-    public TestUserException(String message){
+    public ServiceException(String message){
         this.message=message;
     }
 
