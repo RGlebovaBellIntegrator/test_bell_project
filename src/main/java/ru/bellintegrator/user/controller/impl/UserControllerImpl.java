@@ -31,57 +31,48 @@ public class UserControllerImpl implements UserController {
 
 
     @Override
-    @ApiOperation(value = "addUser", nickname = "addUser", httpMethod = "POST")
+    @ApiOperation(value = "getRegister", nickname = "getRegister", httpMethod = "POST")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 200, message = "Success", response = Data.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/register", method = {POST})
-    public ResponseEntity<?> user(@RequestBody UserView user) {
-        try {
+    public Data register(@RequestBody UserView user) {
+
             userService.add(user);
-            return new ResponseEntity<>(new Data(), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+            return new Data();
+
     }
 
     @Override
-    @ApiOperation(value = "getUser", nickname = "getUser", httpMethod = "GET")
+    @ApiOperation(value = "getAll", nickname = "getAll", httpMethod = "GET")
     @RequestMapping(value = "/all", method = {GET})
-    public ResponseEntity<?> user() {
+    public Data all() {
         try {
-            return new ResponseEntity<>(new Data(userService.user()), HttpStatus.OK);
+            return new Data(userService.user());
         }
         catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
+            return new Data(ex.toString());
         }
     }
 
     @Override
     @ApiOperation(value = "getLogin", nickname = "getLogin", httpMethod = "POST")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 200, message = "Success", response = Data.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/login", method = {POST})
-    public ResponseEntity<?> login(@RequestBody UserView userView) {
+    public Data login(@RequestBody UserView userView) {
             userService.login(userView);
-            return new ResponseEntity<>(new Data(), HttpStatus.OK);
+            return new Data();
     }
 
     @Override
-    @ApiOperation(value = "getUser", nickname = "getUser", httpMethod = "GET")
+    @ApiOperation(value = "getActivation", nickname = "getActivation", httpMethod = "GET")
     @RequestMapping(value = "/activation", method = {GET})
-    public ResponseEntity<?> activation(@RequestParam("code") String code) {
-        try {
-            if (userService.activation(code))
-                return new ResponseEntity<>(new Data(), HttpStatus.OK);
-            else
-                return new ResponseEntity<>(new Data("Не найден код"), HttpStatus.BAD_REQUEST);
-        }
-        catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data activation(@RequestParam("code") String code) {
+        userService.activation(code);
+        return new Data();
     }
 }

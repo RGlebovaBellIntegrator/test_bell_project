@@ -44,6 +44,4 @@ public interface UserDAO {
      * @param user
      */
     void save(User user);
-
-    Boolean updateCode(String code);
 }

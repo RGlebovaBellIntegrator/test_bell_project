@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.bellintegrator.optional.ServiceException;
+import ru.bellintegrator.optional.NoFoundException;
 import ru.bellintegrator.user.dao.UserDAO;
 import ru.bellintegrator.user.model.User;
 import ru.bellintegrator.user.service.UserService;
@@ -62,17 +62,12 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public void login(UserView userView) {
         User user = dao.loadByLogin(userView.login, userView.password);
-
-        if (user==null){
-            throw new ServiceException("Сочетание login/password не найдены");
-        };
-
     }
 
     @Override
     @Transactional
-    public Boolean activation(String code) {
-       return dao.updateCode(code);
+    public User activation(String code) {
+       return dao.loadByCode(code);
     }
 
 }

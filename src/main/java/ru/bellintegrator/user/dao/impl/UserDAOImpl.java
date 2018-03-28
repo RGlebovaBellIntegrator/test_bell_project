@@ -2,10 +2,11 @@ package ru.bellintegrator.user.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.bellintegrator.optional.NoFoundException;
+import ru.bellintegrator.optional.PersistException;
 import ru.bellintegrator.user.dao.UserDAO;
 import ru.bellintegrator.user.model.User;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -36,7 +37,12 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public User loadById(Long id) {
-        return em.find(User.class, id);
+        try {
+            return em.find(User.class, id);
+        }
+        catch (Exception ex) {
+            throw new NoFoundException("Пользователь не найден", ex);
+        }
     }
 
     /**
@@ -51,11 +57,21 @@ public class UserDAOImpl implements UserDAO {
         criteria.where(builder.equal(users.get("name"), name));
 
         TypedQuery<User> query = em.createQuery(criteria);
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        }
+        catch (Exception ex) {
+            throw new NoFoundException("Пользователь не найден", ex);
+        }
     }
 
     @Override
     public User loadByLogin(String login, String password) {
+        if (login==null||login.isEmpty())
+            throw new NoFoundException("Не задан login");
+        if (password==null||password.isEmpty())
+            throw new NoFoundException("Не задан password");
+
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
 
@@ -68,13 +84,14 @@ public class UserDAOImpl implements UserDAO {
             return query.getSingleResult();
         }
         catch (Exception ex) {
-            //запись в лог нужна
-            return null;
+            throw new NoFoundException("Сочетание login/password не найдены", ex);
         }
     }
 
     @Override
     public User loadByCode(String activateCode) {
+        if (activateCode==null||activateCode.isEmpty())
+            throw new NoFoundException("Не задан activateCode");
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
 
@@ -83,19 +100,11 @@ public class UserDAOImpl implements UserDAO {
 
         TypedQuery<User> query = em.createQuery(criteria);
 
-        return query.getSingleResult();
-    }
-
-    @Override
-    public Boolean updateCode(String code)
-    {
         try {
-            loadByCode(code).setIsActive(true);
-            return true;
+            return query.getSingleResult();
         }
         catch (Exception ex) {
-            //запись в лог нужна
-            return false;
+            throw new NoFoundException("Не найден указанный код.", ex);
         }
     }
 
@@ -104,6 +113,11 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public void save(User user) {
-        em.persist(user);
+        try {
+            em.persist(user);
+        }
+        catch (Exception ex) {
+            throw new PersistException("Не удалось сохранить пользователя", ex);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package ru.bellintegrator.user.service;
 
+import ru.bellintegrator.user.model.User;
 import ru.bellintegrator.user.view.UserView;
 
 import java.util.List;
@@ -20,5 +21,5 @@ public interface UserService {
 
     void login(UserView userView);
 
-    Boolean activation(String code);
+    User activation(String code);
 }

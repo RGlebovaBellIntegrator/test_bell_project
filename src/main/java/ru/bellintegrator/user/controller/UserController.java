@@ -12,18 +12,18 @@ import java.util.Map;
 
 public interface UserController {
     /**
-     * Add user
+     * Add register
      * @param users
      */
-    ResponseEntity<?> user(@RequestBody UserView users);
+    Data register(@RequestBody UserView users);
 
     /**
-     * Get all user
-     * @return JSON user value
+     * Get all register
+     * @return JSON register value
      */
-    ResponseEntity<?> user();
+    Data all();
 
-    ResponseEntity<?> login(@RequestBody UserView userView);
+    Data login(@RequestBody UserView userView);
 
-    ResponseEntity<?> activation(@RequestParam("code") String code);
+    Data activation(@RequestParam("code") String code);
 }

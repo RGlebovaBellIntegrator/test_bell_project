@@ -21,12 +21,6 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 @ImportResource("spring_mvc_config.xml")
 @SpringBootApplication
-/*@ComponentScan(basePackageClasses = {
-        CatalogControllerImpl.class, CatalogServiceImpl.class, CountrieDAOImpl.class, DocDAOImpl.class,
-        UserControllerImpl.class, UserServiceImpl.class, UserDAOImpl.class,
-        OfficeControllerImpl.class, OfficeServiceImpl.class, OfficeDAOImpl.class,
-        OrganizationControllerImpl.class, OrganizationServiceImpl.class, OrganizationDAOImpl.class, ServiceExceptionHandler.class})*/
-
 public class ApplicationCatalog {
 
     public static void main(String[] args) {
