@@ -44,7 +44,7 @@ public class EmployeServiceImpl implements EmployeService {
             throw new NoFoundException("Не задан docNumber");
         if (view.docDate == null)
             throw new NoFoundException("Не задан docDate");
-        if (view.officeId != null)
+        if (view.officeId == null)
             throw new NoFoundException("Не задан officeId");
 
         Employe employe = new Employe(view.firstName, view.secondName, view.middleName, view.position, view.phone,

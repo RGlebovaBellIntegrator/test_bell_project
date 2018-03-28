@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.optional.NoFoundException;
 import ru.bellintegrator.user.dao.UserDAO;
 import ru.bellintegrator.user.model.User;
+import ru.bellintegrator.user.service.HashService;
 import ru.bellintegrator.user.service.UserService;
 import ru.bellintegrator.user.view.UserView;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -21,9 +23,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserDAO dao;
 
+    private final HashService hashService;
+
     @Autowired
-    public UserServiceImpl(UserDAO dao) {
+    public UserServiceImpl(UserDAO dao, HashService hashService) {
         this.dao = dao;
+        this.hashService = hashService;
     }
 
     @Override
@@ -31,6 +36,7 @@ public class UserServiceImpl implements UserService {
     public void add(UserView view) {
         User user = new User(view.login, view.password, view.name, view.email);
         dao.save(user);
+        user.setCode(hashService.getHashByCode(user.getEmail()));
     }
 
     @Override
@@ -44,7 +50,6 @@ public class UserServiceImpl implements UserService {
             view.login = p.getLogin();
             view.name = p.getName();
             view.email = p.getEmail();
-            view.code = p.getCode();
             view.isActive = p.getIsActive();
 
             log.info(view.toString());
@@ -66,8 +71,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User activation(String code) {
-       return dao.loadByCode(code);
+    public void activation(String code) {
+        User user = dao.loadByCode(code);
+        user.setIsActive(true);
+    }
+
+    @Override
+    @Transactional
+    public String getCode(Long id) {
+        User user = dao.loadById(id);
+        return hashService.getHashByCode(user.getEmail());
     }
 
 }

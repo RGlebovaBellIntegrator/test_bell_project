@@ -2,6 +2,7 @@ package ru.bellintegrator.user.controller;
 
 import org.eclipse.jetty.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.bellintegrator.optional.Data;
@@ -26,4 +27,6 @@ public interface UserController {
     Data login(@RequestBody UserView userView);
 
     Data activation(@RequestParam("code") String code);
+
+    Data activation(@PathVariable Long id);
 }

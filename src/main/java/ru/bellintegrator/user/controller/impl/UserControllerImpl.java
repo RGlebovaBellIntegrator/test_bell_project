@@ -6,10 +6,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.optional.Data;
 import ru.bellintegrator.user.controller.UserController;
 import ru.bellintegrator.user.service.UserService;
@@ -74,5 +71,12 @@ public class UserControllerImpl implements UserController {
     public Data activation(@RequestParam("code") String code) {
         userService.activation(code);
         return new Data();
+    }
+
+    @Override
+    @ApiOperation(value = "getActivation", nickname = "getActivation", httpMethod = "GET")
+    @RequestMapping(value = "/{id}", method = {GET})
+    public Data activation(@PathVariable Long id) {
+        return new Data(userService.getCode(id));
     }
 }

@@ -21,5 +21,7 @@ public interface UserService {
 
     void login(UserView userView);
 
-    User activation(String code);
+    void activation(String code);
+
+    String getCode(Long id);
 }

@@ -47,7 +47,7 @@ public class User {
     private String code;
 
     public User(){
-        setCode();
+
     }
 
     public User(String login, String password, String name, String email) {
@@ -55,7 +55,6 @@ public class User {
         this.password=password;
         this.name=name;
         this.email=email;
-        setCode();
     }
 
     public Long getId() {
@@ -89,6 +88,6 @@ public class User {
 
 
     public String getCode() {return code;}
-    public void  setCode() {this.code = UUID.randomUUID().toString();}
+    public void  setCode(String code) {this.code = code;}
 
 }
