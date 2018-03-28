@@ -11,7 +11,7 @@ public interface CountryDAO {
     /**
      * Получить все объекты Doc
      *
-     * @return
+     * @return List<Country>
      */
     List<Country> all();
 
@@ -19,9 +19,11 @@ public interface CountryDAO {
      * Получить Country по идентификатору
      *
      * @param code
-     * @return
+     * @return Country
      */
     Country loadByCode(String code);
+
+    Country loadByName(String name);
 
     /**
      * Сохранить Country

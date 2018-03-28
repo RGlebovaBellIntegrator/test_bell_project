@@ -32,18 +32,14 @@ public class EmployeControllerImpl implements EmployeController {
 
 
     @Override
-    @ApiOperation(value = "addEmploye", nickname = "addEmploye", httpMethod = "POST")
+    @ApiOperation(value = "createEmploye", nickname = "createEmploye", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/create", method = {POST})
-    public ResponseEntity<?> save(@RequestBody EmployeView employe) {
-        try{
-            return new ResponseEntity<>(new Data(employeService.add(employe)), HttpStatus.OK);
-        }catch(Exception ex){
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data save(@RequestBody EmployeView employe) {
+            return new Data(employeService.add(employe));
     }
 
     @Override
@@ -53,12 +49,8 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/all", method = {GET})
-    public ResponseEntity<?> all() {
-        try{
-            return new ResponseEntity<>(new Data(employeService.employe()), HttpStatus.OK);
-        }catch(Exception ex){
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data all() {
+        return new Data(employeService.employe());
     }
 
     @Override
@@ -68,29 +60,20 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/{id}", method = {GET})
-    public ResponseEntity<?> employe(@PathVariable Long id) {
-        try {
-            return new ResponseEntity<>(new Data(employeService.find(id)), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data employe(@PathVariable Long id) {
+        return new Data(employeService.find(id));
     }
 
 
     @Override
-    @ApiOperation(value = "getList", nickname = "getList", httpMethod = "GET")
+    @ApiOperation(value = "getList", nickname = "getList", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/list", method = {POST})
-    public ResponseEntity<?> employe(@RequestBody EmployeView employeView) {
-        try{
-            return new ResponseEntity<>(new Data(employeService.employeFilter(employeView)), HttpStatus.OK);
-        }
-        catch(Exception ex){
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data employe(@RequestBody EmployeView employeView) {
+        return new Data(employeService.employeFilter(employeView));
     }
 
     @Override
@@ -100,13 +83,9 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/update", method = {POST})
-    public ResponseEntity<?>  update(@RequestBody EmployeView employeView) {
-        try {
-            employeService.update(employeView);
-            return new ResponseEntity<>(new Data(), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data  update(@RequestBody EmployeView employeView) {
+        employeService.update(employeView);
+        return new Data();
     }
 
     @Override
@@ -116,12 +95,8 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/delete", method = {POST})
-    public ResponseEntity<?>  delete(@RequestBody EmployeView body) {
-        try {
-            employeService.delete(body.id);
-            return new ResponseEntity<>(new Data(), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data delete(@RequestBody EmployeView body) {
+        employeService.delete(body.id);
+        return new Data();
     }
 }

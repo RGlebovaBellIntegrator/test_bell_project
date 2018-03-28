@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.offices.dao.OfficeDAO;
 import ru.bellintegrator.offices.model.Office;
+import ru.bellintegrator.optional.NoFoundException;
+import ru.bellintegrator.optional.PersistException;
 import ru.bellintegrator.organization.dao.OrganizationDAO;
 import ru.bellintegrator.organization.dao.impl.OrganizationDAOImpl;
 import ru.bellintegrator.organization.model.Organization;
@@ -21,9 +23,12 @@ public class OfficeDAOImpl implements OfficeDAO {
 
     private final EntityManager em;
 
+    private final OrganizationDAO organizationDAO;
+
     @Autowired
-    public OfficeDAOImpl(EntityManager em) {
+    public OfficeDAOImpl(EntityManager em, OrganizationDAO organizationDAO) {
         this.em = em;
+        this.organizationDAO = organizationDAO;
     }
 
     /**
@@ -55,7 +60,11 @@ public class OfficeDAOImpl implements OfficeDAO {
         criteria.where(builder.equal(offices.get("name"), name));
 
         TypedQuery<Office> query = em.createQuery(criteria);
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        } catch (Exception ex) {
+            throw new NoFoundException("Офис не найден", ex);
+        }
     }
 
     @Override
@@ -71,7 +80,7 @@ public class OfficeDAOImpl implements OfficeDAO {
             Predicate p = builder.equal(officeRoot.get("organization").get("id"), orgId);
             predicate = builder.and(predicate, p);
         }
-        else throw new NullPointerException("orgId не инициализирован");
+        else throw new NoFoundException("Не задан orgId");
 
         if (name != null) {
             Predicate p = builder.equal(officeRoot.get("name"), name);
@@ -91,7 +100,11 @@ public class OfficeDAOImpl implements OfficeDAO {
         criteria.where(predicate);
 
         TypedQuery<Office> query = em.createQuery(criteria);
-        return query.getResultList();
+        try {
+            return query.getResultList();
+        } catch (Exception ex) {
+            throw new PersistException("Ошибка чтения данных", ex);
+        }
     }
 
     /**
@@ -99,51 +112,55 @@ public class OfficeDAOImpl implements OfficeDAO {
      */
     @Override
     public Long save(Office office) {
-        em.persist(office);
-        return office.getId();
+        try {
+            em.persist(office);
+            return office.getId();
+        } catch (Exception ex) {
+            throw new PersistException("Не удалось сохранить офис", ex);
+        }
     }
 
 
     @Override
     public void update(Long id, String name, String address, String phone, Boolean isActive) {
+        if (id == null)
+            throw new NoFoundException("Не задан id");
         Office office = loadById(id);
-        if (office==null) {
-            save(office);
+        if (office==null)
+            throw new NoFoundException("Офис с указанным id не найдена");
+
+        if (name != null) {
+            office.setName(name);
         }
-        else {
-            if (name != null) {
-                office.setName(name);
-            }
 
-            if (address != null) {
-                office.setAddress(address);
-            }
+        if (address != null) {
+            office.setAddress(address);
+        }
 
-            if (phone != null) {
-                office.setPhone(phone);
-            }
+        if (phone != null) {
+            office.setPhone(phone);
+        }
 
-            if (isActive != null) {
-                office.setIsActive(isActive);
-            }
-        };
+        if (isActive != null) {
+            office.setIsActive(isActive);
+        }
     }
 
     @Override
     public void delete(Long id) {
-        Office office = em.find(Office.class, id);
+        if (id == null)
+            throw new NoFoundException("Не задан id");
+        Office office = loadById(id);
         if (office!=null){
             em.remove(office);
         }
         else
-            throw new NullPointerException("Нет такого id");
+            throw new NoFoundException("Нет такого id");
     }
 
     @Override
     public Organization findOrgById(Long id)
     {
-        OrganizationDAO d = new OrganizationDAOImpl(em);
-        Organization o = d.loadById(id);
-        return o;
+        return organizationDAO.loadById(id);
     }
 }

@@ -13,6 +13,8 @@ import ru.bellintegrator.offices.dao.OfficeDAO;
 import ru.bellintegrator.offices.model.Office;
 import ru.bellintegrator.offices.service.OfficeService;
 import ru.bellintegrator.offices.view.OfficeView;
+import ru.bellintegrator.optional.NoFoundException;
+import ru.bellintegrator.optional.PersistException;
 import ru.bellintegrator.organization.dao.impl.OrganizationDAOImpl;
 import ru.bellintegrator.organization.model.Organization;
 import ru.bellintegrator.organization.service.OrganizationService;
@@ -37,6 +39,13 @@ public class OfficeServiceImpl implements OfficeService{
     @Override
     @Transactional
     public OfficeView add(OfficeView view) {
+        if (view.name == null)
+            throw new NoFoundException("Не задан name");
+        if (view.orgId == null)
+            throw new NoFoundException("Не задан orgId");
+        if (view.address == null)
+            throw new NoFoundException("Не задан address");
+
         Office office = new Office(view.name, view.address, view.phone, dao.findOrgById(view.orgId), view.isActive);
         OfficeView o = new OfficeView();
         o.id = dao.save(office);
@@ -68,8 +77,19 @@ public class OfficeServiceImpl implements OfficeService{
 
     @Override
     @Transactional
-    public Office find(Long id) {
-        return dao.loadById(id);
+    public OfficeView find(Long id) {
+        Office o = dao.loadById(id);
+        if (o==null)
+            throw new NoFoundException("Офис не найден");
+
+        OfficeView view = new OfficeView();
+        view.id = o.getId();
+        view.name = o.getName();
+        view.isActive = o.getIsActive();
+        view.address = o.getAddress();
+        view.phone = o.getPhone();
+        view.orgId = o.getOrganization().getId();
+        return view;
     }
 
     @Override

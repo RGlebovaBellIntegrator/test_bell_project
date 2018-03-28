@@ -49,6 +49,5 @@ public interface EmployeDAO {
 
     Doc findDocId(String code);
     Country findCountryId(String code);
-
-    Office findOfficeById(Long id);
+    Office findOfficeId(Long id);
 }

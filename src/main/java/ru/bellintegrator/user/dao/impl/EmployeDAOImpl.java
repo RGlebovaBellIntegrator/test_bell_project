@@ -1,23 +1,18 @@
 package ru.bellintegrator.user.dao.impl;
 
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.catalog.dao.CountryDAO;
 import ru.bellintegrator.catalog.dao.DocDAO;
-import ru.bellintegrator.catalog.dao.impl.CountrieDAOImpl;
-import ru.bellintegrator.catalog.dao.impl.DocDAOImpl;
 import ru.bellintegrator.catalog.model.Country;
 import ru.bellintegrator.catalog.model.Doc;
 import ru.bellintegrator.offices.dao.OfficeDAO;
-import ru.bellintegrator.offices.dao.impl.OfficeDAOImpl;
 import ru.bellintegrator.offices.model.Office;
+import ru.bellintegrator.optional.NoFoundException;
+import ru.bellintegrator.optional.PersistException;
 import ru.bellintegrator.user.dao.EmployeDAO;
-import ru.bellintegrator.user.dao.UserDAO;
 import ru.bellintegrator.user.model.Employe;
-import ru.bellintegrator.user.model.User;
 import ru.bellintegrator.user.view.EmployeView;
-import ru.bellintegrator.user.view.UserView;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -29,10 +24,16 @@ import java.util.function.Function;
 @Repository
 public class EmployeDAOImpl implements EmployeDAO {
     private final EntityManager em;
+    private final DocDAO doc;
+    private final CountryDAO country;
+    private final OfficeDAO office;
 
     @Autowired
-    public EmployeDAOImpl(EntityManager em) {
+    public EmployeDAOImpl(EntityManager em, DocDAO doc, CountryDAO country, OfficeDAO office) {
         this.em = em;
+        this.doc = doc;
+        this.country = country;
+        this.office = office;
     }
 
     /**
@@ -85,13 +86,17 @@ public class EmployeDAOImpl implements EmployeDAO {
         if (employeView.officeId != null) {
             Predicate p = builder.equal(employe.get("office").get("id"), employeView.officeId);
             predicate = builder.and(predicate, p);
-        }
-        else throw new NullPointerException("office_id не инициализирован");;
+        } else throw new NoFoundException("Не задан office_id");
+
 
         criteria.where(predicate);
 
         TypedQuery<Employe> query = em.createQuery(criteria);
-        return query.getResultList();
+        try {
+            return query.getResultList();
+        } catch (Exception ex) {
+            throw new PersistException("Ошибка чтения данных", ex);
+        }
     }
 
     /**
@@ -114,7 +119,11 @@ public class EmployeDAOImpl implements EmployeDAO {
         criteria.where(builder.equal(users.get("name"), name));
 
         TypedQuery<Employe> query = em.createQuery(criteria);
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        } catch (Exception ex) {
+            throw new NoFoundException("Сотрудник не найден", ex);
+        }
     }
 
     /**
@@ -122,131 +131,103 @@ public class EmployeDAOImpl implements EmployeDAO {
      */
     @Override
     public Long save(Employe employe) {
-        em.persist(employe);
-        return  employe.getId();
+        try {
+            em.persist(employe);
+            return employe.getId();
+        }
+        catch (Exception ex) {
+            throw new PersistException("Не удалось сохранить сотрудника", ex);
+        }
+
     }
 
     @Override
     public void update(EmployeView employeView) {
+        if (employeView.id == null)
+            throw new NoFoundException("Не задан id");
+
         Employe employe = loadById(employeView.id);
-        if (employe==null) {
-            save(employe);
+        if (employe==null)
+            throw new NoFoundException("Сотрудник с указанным id не найден");
+
+        if (employeView.firstName != null) {
+            employe.setFirstname(employeView.firstName);
         }
-        else {
-            if (employeView.firstName != null) {
-                employe.setFirstname(employeView.firstName);
-            }
 
-            if (employeView.secondName != null) {
-                employe.setSecondname(employeView.secondName);
-            }
+        if (employeView.secondName != null) {
+            employe.setSecondname(employeView.secondName);
+        }
 
-            if (employeView.middleName != null) {
-                employe.setMiddlename(employeView.middleName);
-            }
+        if (employeView.middleName != null) {
+            employe.setMiddlename(employeView.middleName);
+        }
 
-            if (employeView.position != null) {
-                employe.setStatement(employeView.position);
-            }
+        if (employeView.position != null) {
+            employe.setStatement(employeView.position);
+        }
 
-            if (employeView.phone != null) {
-                employe.setPhone(employeView.phone);
-            }
+        if (employeView.phone != null) {
+            employe.setPhone(employeView.phone);
+        }
 
+        if (employeView.docName != null) {
+            Doc doc_temp = doc.loadByName(employeView.docName);
+            if (doc_temp != null)
+                employe.setDoc(doc_temp);
+        }
 
-            if (employeView.docName != null) {
-                CriteriaBuilder builder = em.getCriteriaBuilder();
-                CriteriaQuery<Doc> criteria = builder.createQuery(Doc.class);
+        if (employeView.docNumber != null) {
+            employe.setStatement(employeView.docNumber);
+        }
 
-                Root<Doc> person = criteria.from(Doc.class);
-                criteria.where(builder.equal(person.get("name"), employeView.docName));
+        if (employeView.docDate != null) {
+            employe.setDocDate(employeView.docDate);
+        }
 
-                TypedQuery<Doc> query = em.createQuery(criteria);
+        if (employeView.citizenshipName != null) {
+            Country country_temp = country.loadByName(employeView.citizenshipName);
+            if (country_temp != null)
+                employe.setCountry(country_temp);
+        }
 
-                Doc doc_temp = query.getSingleResult();
-                if (doc_temp!=null) {
-                    employe.setDoc(doc_temp);
-                }
-                else System.out.println("Нет документа");
-            }
+        if (employeView.citizenshipCode != null) {
+            Country country_temp = country.loadByCode(employeView.citizenshipCode);
+            if (country_temp != null)
+                employe.setCountry(country_temp);
+        }
 
-            if (employeView.docNumber != null) {
-                employe.setStatement(employeView.docNumber);
-            }
+        if (employeView.isIdentified != null) {
+            employe.setIsIdentified(employeView.isIdentified);
+        }
 
-            if (employeView.docDate != null) {
-                employe.setDocDate(employeView.docDate);
-            }
-
-            if (employeView.citizenshipName != null) {
-                CriteriaBuilder builder = em.getCriteriaBuilder();
-                CriteriaQuery<Country> criteria = builder.createQuery(Country.class);
-
-                Root<Country> person = criteria.from(Country.class);
-                criteria.where(builder.equal(person.get("name"), employeView.citizenshipName));
-
-                TypedQuery<Country> query = em.createQuery(criteria);
-
-                Country country_temp = query.getSingleResult();
-
-                if (country_temp!=null) {
-                    employe.setCountry(country_temp);
-                }
-                else System.out.println("Нет документа");;
-            }
-
-            if (employeView.citizenshipCode != null) {
-                CriteriaBuilder builder = em.getCriteriaBuilder();
-                CriteriaQuery<Country> criteria = builder.createQuery(Country.class);
-
-                Root<Country> person = criteria.from(Country.class);
-                criteria.where(builder.equal(person.get("code"), employeView.citizenshipCode));
-
-                TypedQuery<Country> query = em.createQuery(criteria);
-
-                Country country_temp = query.getSingleResult();
-
-                if (country_temp!=null) {
-                    employe.setCountry(country_temp);
-                }
-                else System.out.println("Нет страны");;
-            }
-
-            if (employeView.isIdentified != null) {
-                employe.setIsIdentified(employeView.isIdentified);
-            }
-        };
     }
+
 
     @Override
     public void delete(Long id) {
-        Employe employe = em.find(Employe.class, id);
+        if (id == null)
+            throw new NoFoundException("Не задан id");
+        Employe employe = loadById(id);
         if (employe!=null){
             em.remove(employe);
         }
         else
-            throw new NullPointerException("Нет такого id");
+            throw new NoFoundException("Нет такого id");
     }
 
     @Override
     public Doc findDocId(String code) {
-        DocDAO d = new DocDAOImpl(em);
-        Doc doc = d.loadByCode(code);
-        return doc;
+        return doc.loadByCode(code);
     }
 
 
     @Override
     public Country findCountryId(String code) {
-        CountryDAO d = new CountrieDAOImpl(em);
-        Country c = d.loadByCode(code);
-        return c;
+        return country.loadByCode(code);
     }
 
     @Override
-    public Office findOfficeById(Long id) {
-        OfficeDAO d = new OfficeDAOImpl(em);
-        Office o = d.loadById(id);
-        return o;
+    public Office findOfficeId(Long id) {
+        return office.loadById(id);
     }
 }

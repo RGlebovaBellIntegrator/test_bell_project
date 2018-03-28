@@ -31,30 +31,21 @@ public class OfficeControllerImpl implements OfficeController {
     }
 
     @Override
-    @ApiOperation(value = "addOffice", nickname = "addOffice", httpMethod = "POST")
+    @ApiOperation(value = "createOffice", nickname = "createOffice", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/create", method = {POST})
-    public ResponseEntity<?> office(@RequestBody OfficeView office) {
-        try {
-            return new ResponseEntity<>(new Data(officeService.add(office)), HttpStatus.OK);
-        }
-        catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data office(@RequestBody OfficeView office) {
+        return new Data(officeService.add(office));
     }
 
     @Override
     @ApiOperation(value = "getAll", nickname = "getAll", httpMethod = "GET")
     @RequestMapping(value = "/all", method = {GET})
-    public ResponseEntity<?> all() {
-        try {
-            return new ResponseEntity<>(new Data(officeService.office()), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data all() {
+        return new Data(officeService.office());
     }
 
     @Override
@@ -64,27 +55,19 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/{id}", method = {GET})
-    public ResponseEntity<?> office(@PathVariable Long id) {
-        try {
-            return new ResponseEntity<>(new Data(officeService.find(id)), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data office(@PathVariable Long id) {
+        return new Data(officeService.find(id));
     }
 
     @Override
-    @ApiOperation(value = "getList", nickname = "getList", httpMethod = "GET")
+    @ApiOperation(value = "getList", nickname = "getList", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/list", method = {POST})
-    public ResponseEntity<?> list(@RequestBody OfficeView office) {
-        try {
-            return new ResponseEntity<>(new Data(officeService.list(office)), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data list(@RequestBody OfficeView office) {
+        return new Data(officeService.list(office));
     }
 
 
@@ -95,13 +78,9 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/update", method = {POST})
-    public ResponseEntity<?> update(@RequestBody OfficeView office) {
-        try {
-            officeService.update(office);
-            return new ResponseEntity<>(new Data(), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data update(@RequestBody OfficeView office) {
+        officeService.update(office);
+        return new Data();
     }
 
 
@@ -112,12 +91,8 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/delete", method = {POST})
-    public ResponseEntity<?> delete(@RequestBody OfficeView office) {
-        try {
-            officeService.delete(office.id);
-            return new ResponseEntity<>(new Data(), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data delete(@RequestBody OfficeView office) {
+        officeService.delete(office.id);
+        return new Data();
     }
 }

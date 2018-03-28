@@ -15,13 +15,13 @@ public interface OfficeService {
 
     /**
      * Office service method
-     * @return {@Office}
+     * @return List<OfficeView>
      */
     List<OfficeView> office();
 
     List<OfficeView> list(OfficeView office);
 
-    Office find(Long id);
+    OfficeView find(Long id);
 
     void update(OfficeView office);
 

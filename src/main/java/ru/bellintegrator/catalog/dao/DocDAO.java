@@ -11,7 +11,7 @@ public interface DocDAO {
     /**
      * Получить все объекты Doc
      *
-     * @return
+     * @return List<Doc>
      */
     List<Doc> all();
 
@@ -19,9 +19,11 @@ public interface DocDAO {
      * Получить Doc по идентификатору
      *
      * @param code
-     * @return
+     * @return Doc
      */
     Doc loadByCode(String code);
+
+    Doc loadByName(String name);
     /**
      * Сохранить Doc
      *

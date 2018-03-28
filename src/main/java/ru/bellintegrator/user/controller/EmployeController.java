@@ -3,6 +3,7 @@ package ru.bellintegrator.user.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import ru.bellintegrator.optional.Data;
 import ru.bellintegrator.user.view.EmployeView;
 
 import java.util.List;
@@ -13,25 +14,24 @@ public interface EmployeController {
      * Add employe
      * @param employe
      */
-    ResponseEntity<?> save(@RequestBody EmployeView employe);
+    Data save(@RequestBody EmployeView employe);
 
     /**
      * Get all employe
      * @return JSON employe value
      */
-    //List<EmployeView> employe();
-    ResponseEntity<?> employe(@PathVariable Long id);
+    Data employe(@PathVariable Long id);
 
-    ResponseEntity<?> all();
+    Data all();
 
     /**
      * Get all employe
      * @return JSON employe value
      */
 
-    ResponseEntity<?>  employe(EmployeView employeView);
+    Data  employe(EmployeView employeView);
 
-    ResponseEntity<?>  update(@RequestBody EmployeView body);
+    Data  update(@RequestBody EmployeView body);
 
-    ResponseEntity<?>  delete(@RequestBody EmployeView body);
+    Data  delete(@RequestBody EmployeView body);
 }

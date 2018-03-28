@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.offices.service.OfficeService;
+import ru.bellintegrator.optional.NoFoundException;
+import ru.bellintegrator.optional.PersistException;
 import ru.bellintegrator.user.dao.EmployeDAO;
 
 import ru.bellintegrator.user.model.Employe;
@@ -32,17 +34,35 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     @Transactional
     public EmployeView add(EmployeView view) {
+        if (view.firstName == null)
+            throw new NoFoundException("Не задан firstName");
+        if (view.secondName == null)
+            throw new NoFoundException("Не задан secondName");
+        if (view.docCode == null)
+            throw new NoFoundException("Не задан docCode");
+        if (view.docNumber == null)
+            throw new NoFoundException("Не задан docNumber");
+        if (view.docDate == null)
+            throw new NoFoundException("Не задан docDate");
+        if (view.officeId != null)
+            throw new NoFoundException("Не задан officeId");
+
         Employe employe = new Employe(view.firstName, view.secondName, view.middleName, view.position, view.phone,
                 view.isIdentified);
         employe.setDoc(dao.findDocId(view.docCode));
         employe.setDocDate(view.docDate);
         employe.setDocNumber(view.docNumber);
         employe.setCountry(dao.findCountryId(view.citizenshipCode));
-        employe.setOffice(officeService.find(view.officeId));
+        employe.setOffice(dao.findOfficeId(view.officeId));
 
         EmployeView e = new EmployeView();
-        e.id = dao.save(employe);
-        return e;
+        try {
+            e.id = dao.save(employe);
+            return e;
+        }
+        catch (Exception ex) {
+            throw new PersistException("Не удалось сохранить сотрудника", ex);
+        }
     }
 
     @Override
@@ -110,6 +130,8 @@ public class EmployeServiceImpl implements EmployeService {
     @Transactional
     public EmployeView find(Long id) {
         Employe p = dao.loadById(id);
+        if (p==null)
+            throw new NoFoundException("Сотрудник не найден");
 
         EmployeView view = new EmployeView();
         view.id = p.getId();
@@ -126,6 +148,6 @@ public class EmployeServiceImpl implements EmployeService {
         view.citizenshipName = p.getCountry().getName();
         view.officeId = p.getOffice().getId();
 
-        return  view;
+        return view;
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.bellintegrator.offices.view.OfficeView;
+import ru.bellintegrator.optional.Data;
 import ru.bellintegrator.organization.view.OrganizationView;
 
 import java.util.List;
@@ -14,18 +15,18 @@ public interface OfficeController {
      * Add office
      * @param office
      */
-    ResponseEntity<?> office(@RequestBody OfficeView office);
+    Data office(@RequestBody OfficeView office);
 
     /**
      * Get all offices
      * @return JSON offices value
      */
-    ResponseEntity<?> office(@PathVariable Long id);
-    ResponseEntity<?> all();
+    Data office(@PathVariable Long id);
+    Data all();
 
-    ResponseEntity<?> list(OfficeView office);
+    Data list(OfficeView office);
 
-    ResponseEntity<?> update(@RequestBody OfficeView office);
+    Data update(@RequestBody OfficeView office);
 
-    ResponseEntity<?> delete(@RequestBody OfficeView office);
+    Data delete(@RequestBody OfficeView office);
 }

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bellintegrator.optional.NoFoundException;
 import ru.bellintegrator.organization.dao.OrganizationDAO;
 import ru.bellintegrator.organization.model.Organization;
 import ru.bellintegrator.organization.service.OrganizationService;
@@ -30,6 +31,15 @@ public class OrganizationServiceImpl implements OrganizationService{
     @Override
     @Transactional
     public OrganizationView add(OrganizationView organization) {
+        if (organization.fullName == null)
+            throw new NoFoundException("Не задан fullName");
+        if (organization.inn == null)
+            throw new NoFoundException("Не задан inn");
+        if (organization.kpp == null)
+            throw new NoFoundException("Не задан kpp");
+        if (organization.address == null)
+            throw new NoFoundException("Не задан address");
+
         Organization organizations =
                 new Organization(organization.name, organization.fullName, organization.inn, organization.kpp, organization.address, organization.phone, organization.isActive);
         OrganizationView view = new OrganizationView();
@@ -103,6 +113,8 @@ public class OrganizationServiceImpl implements OrganizationService{
     @Transactional
     public OrganizationView find(Long id) {
         Organization o = dao.loadById(id);
+        if (o==null)
+            throw new NoFoundException("Организация не найдена");
 
         OrganizationView view = new OrganizationView();
         view.id = o.getId();
@@ -113,7 +125,6 @@ public class OrganizationServiceImpl implements OrganizationService{
         view.kpp = o.getKpp();
         view.address = o.getAddress();
         view.phone = o.getPhone();
-        //view.officesCount = o.getOffices().size();
         return  view;
     }
 }

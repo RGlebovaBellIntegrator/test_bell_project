@@ -2,6 +2,8 @@ package ru.bellintegrator.organization.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.bellintegrator.optional.NoFoundException;
+import ru.bellintegrator.optional.PersistException;
 import ru.bellintegrator.organization.dao.OrganizationDAO;
 import ru.bellintegrator.organization.model.Organization;
 import ru.bellintegrator.organization.view.OrganizationView;
@@ -52,7 +54,11 @@ public class OrganizationDAOImpl implements OrganizationDAO {
         criteria.where(builder.equal(organizations.get("name"), name));
 
         TypedQuery<Organization> query = em.createQuery(criteria);
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        } catch (Exception ex) {
+            throw new NoFoundException("Организация не найдена", ex);
+        }
     }
 
     @Override
@@ -67,7 +73,7 @@ public class OrganizationDAOImpl implements OrganizationDAO {
             Predicate p = builder.equal(organizationRoot.get("name"), name);
             predicate = builder.and(predicate, p);
         }
-        else throw new NullPointerException("name не инициализирован");;
+        else throw new NoFoundException("name не инициализирован");
 
         if (inn != null) {
             Predicate p = builder.equal(organizationRoot.get("inn"), inn);
@@ -78,12 +84,15 @@ public class OrganizationDAOImpl implements OrganizationDAO {
             Predicate p = builder.equal(organizationRoot.get("isActive"), isActive);
             predicate = builder.and(predicate, p);
         }
-        else throw new NullPointerException("isActive не инициализирован");;
 
         criteria.where(predicate);
 
         TypedQuery<Organization> query = em.createQuery(criteria);
-        return query.getResultList();
+        try {
+            return query.getResultList();
+        } catch (Exception ex) {
+            throw new PersistException("Ошибка чтения данных", ex);
+        }
     }
 
     /**
@@ -91,54 +100,61 @@ public class OrganizationDAOImpl implements OrganizationDAO {
      */
     @Override
     public Long save(Organization organization) {
-        em.persist(organization);
-        return organization.getId();
+        try {
+            em.persist(organization);
+            return organization.getId();
+        } catch (Exception ex) {
+            throw new PersistException("Не удалось сохранить организацию", ex);
+        }
     }
 
     @Override
     public void update(OrganizationView organizationView) {
+        if (organizationView.id == null)
+            throw new NoFoundException("Не задан id");
+
         Organization organization = loadById(organizationView.id);
-        if (organization==null) {
-            save(organization);
+        if (organization==null)
+            throw new NoFoundException("Организация с указанным id не найдена");
+
+        if (organizationView.name != null) {
+            organization.setName(organizationView.name);
         }
-        else {
-            if (organizationView.name != null) {
-                organization.setName(organizationView.name);
-            }
 
-            if (organizationView.fullName != null) {
-                organization.setFullname(organizationView.fullName);
-            }
+        if (organizationView.fullName != null) {
+            organization.setFullname(organizationView.fullName);
+        }
 
-            if (organizationView.inn != null) {
-                organization.setInn(organizationView.inn);
-            }
+        if (organizationView.inn != null) {
+            organization.setInn(organizationView.inn);
+        }
 
-            if (organizationView.kpp != null) {
-                organization.setKpp(organizationView.kpp);
-            }
+        if (organizationView.kpp != null) {
+            organization.setKpp(organizationView.kpp);
+        }
 
-            if (organizationView.address != null) {
-                organization.setAddress(organizationView.address);
-            }
+        if (organizationView.address != null) {
+            organization.setAddress(organizationView.address);
+        }
 
-            if (organizationView.phone != null) {
-                organization.setPhone(organizationView.phone);
-            }
+        if (organizationView.phone != null) {
+            organization.setPhone(organizationView.phone);
+        }
 
-            if (organizationView.isActive != null) {
-                organization.setIsActive(organizationView.isActive);
-            }
-        };
+        if (organizationView.isActive != null) {
+            organization.setIsActive(organizationView.isActive);
+        }
     }
 
     @Override
     public void delete(Long id) {
-        Organization organization = em.find(Organization.class, id);
+        if (id == null)
+            throw new NoFoundException("Не задан id");
+        Organization organization = loadById(id);
         if (organization!=null){
             em.remove(organization);
         }
         else
-            throw new NullPointerException("Нет такого id");
+            throw new NoFoundException("Нет такого id");
     }
 }

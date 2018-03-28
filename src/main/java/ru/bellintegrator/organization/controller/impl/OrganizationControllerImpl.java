@@ -34,39 +34,26 @@ public class OrganizationControllerImpl implements OrganizationController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/create", method = {POST})
-    public ResponseEntity<?> save(@RequestBody OrganizationView organization) {
-        try {
-            return new ResponseEntity<>(new Data(organizationService.add(organization)), HttpStatus.OK);
-        }
-        catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data save(@RequestBody OrganizationView organization) {
+        return new Data(organizationService.add(organization));
     }
 
     @Override
     @ApiOperation(value = "getAll", nickname = "getAll", httpMethod = "GET")
     @RequestMapping(value = "/all", method = {GET})
-    public ResponseEntity<?> all() {
-        try {
-            return new ResponseEntity<>(new Data(organizationService.organization()), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data all() {
+        return new Data(organizationService.organization());
     }
 
     @Override
-    @ApiOperation(value = "getList", nickname = "getList", httpMethod = "GET")
+    @ApiOperation(value = "getList", nickname = "getList", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/list", method = {POST})
-    public ResponseEntity<?> list(@RequestBody OrganizationView organizationView) {
-        try {
-            return new ResponseEntity<>(new Data(organizationService.list(organizationView)), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data list(@RequestBody OrganizationView organizationView) {
+        return new Data(organizationService.list(organizationView));
     }
 
     @Override
@@ -76,12 +63,8 @@ public class OrganizationControllerImpl implements OrganizationController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/{id}", method = {GET})
-    public ResponseEntity<?> organization(@PathVariable Long id) {
-        try {
-            return new ResponseEntity<>(new Data(organizationService.find(id)), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data organization(@PathVariable Long id) {
+        return new Data(organizationService.find(id));
     }
 
 
@@ -92,13 +75,9 @@ public class OrganizationControllerImpl implements OrganizationController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/update", method = {POST})
-    public ResponseEntity<?> update(@RequestBody OrganizationView organizationView) {
-        try {
-            organizationService.update(organizationView);
-            return new ResponseEntity<>(new Data(), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data update(@RequestBody OrganizationView organizationView) {
+        organizationService.update(organizationView);
+        return new Data();
     }
 
 
@@ -109,12 +88,8 @@ public class OrganizationControllerImpl implements OrganizationController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/delete", method = {POST})
-    public ResponseEntity<?> delete(@RequestBody OrganizationView organizationView) {
-        try {
-            organizationService.delete(organizationView.id);
-            return new ResponseEntity<>(new Data(), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(new Data(ex.toString()), HttpStatus.BAD_REQUEST);
-        }
+    public Data delete(@RequestBody OrganizationView organizationView) {
+        organizationService.delete(organizationView.id);
+        return new Data();
     }
 }
