@@ -94,7 +94,7 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     @Transactional(readOnly = true)
     public List<EmployeView> employeFilter(EmployeView employeView) {
-        if (employeView.officeId != null)
+        if (employeView.officeId == null)
             throw new NoFoundException("Не задан office_id");
 
         List<Employe> all = dao.filter(employeView);

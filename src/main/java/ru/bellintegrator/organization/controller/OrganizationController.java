@@ -15,20 +15,20 @@ public interface OrganizationController {
      * Add organization
      * @param organization
      */
-    Data save(@RequestBody OrganizationView organization);
+    OrganizationView save(@RequestBody OrganizationView organization);
 
     /**
      * Get all organization
      * @return JSON organization value
      */
-    Data organization(@RequestBody Long id);
+    OrganizationView organization(@RequestBody Long id);
 
-    Data list(OrganizationView body);
+    List<OrganizationView> list(OrganizationView body);
 
-    Data all();
+    List<OrganizationView> all();
 
-    Data update(@RequestBody OrganizationView body);
+    void update(@RequestBody OrganizationView body);
 
-    Data delete(@RequestBody OrganizationView body);
+    void delete(@RequestBody OrganizationView body);
 
 }

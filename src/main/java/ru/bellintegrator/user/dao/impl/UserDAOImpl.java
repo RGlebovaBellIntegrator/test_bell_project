@@ -37,12 +37,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public User loadById(Long id) {
-        try {
             return em.find(User.class, id);
-        }
-        catch (Exception ex) {
-            throw new NoFoundException("Пользователь не найден", ex);
-        }
     }
 
     /**

@@ -14,24 +14,24 @@ public interface EmployeController {
      * Add employe
      * @param employe
      */
-    Data save(@RequestBody EmployeView employe);
+    EmployeView save(@RequestBody EmployeView employe);
 
     /**
      * Get all employe
      * @return JSON employe value
      */
-    Data employe(@PathVariable Long id);
+    EmployeView employe(@PathVariable Long id);
 
-    Data all();
+    List<EmployeView> all();
 
     /**
      * Get all employe
      * @return JSON employe value
      */
 
-    Data  employe(EmployeView employeView);
+    List<EmployeView>  employe(EmployeView employeView);
 
-    Data  update(@RequestBody EmployeView body);
+    void  update(@RequestBody EmployeView body);
 
-    Data  delete(@RequestBody EmployeView body);
+    void  delete(@RequestBody EmployeView body);
 }

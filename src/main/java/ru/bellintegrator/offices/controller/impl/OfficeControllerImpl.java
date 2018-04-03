@@ -15,6 +15,8 @@ import ru.bellintegrator.offices.service.OfficeService;
 import ru.bellintegrator.offices.view.OfficeView;
 import ru.bellintegrator.optional.Data;
 
+import java.util.List;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -37,15 +39,15 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/create", method = {POST})
-    public Data office(@RequestBody OfficeView office) {
-        return new Data(officeService.add(office));
+    public OfficeView office(@RequestBody OfficeView office) {
+        return officeService.add(office);
     }
 
     @Override
     @ApiOperation(value = "getAll", nickname = "getAll", httpMethod = "GET")
     @RequestMapping(value = "/all", method = {GET})
-    public Data all() {
-        return new Data(officeService.office());
+    public List<OfficeView> all() {
+        return officeService.office();
     }
 
     @Override
@@ -55,8 +57,8 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/{id}", method = {GET})
-    public Data office(@PathVariable Long id) {
-        return new Data(officeService.find(id));
+    public OfficeView office(@PathVariable Long id) {
+        return officeService.find(id);
     }
 
     @Override
@@ -66,8 +68,8 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/list", method = {POST})
-    public Data list(@RequestBody OfficeView office) {
-        return new Data(officeService.list(office));
+    public List<OfficeView> list(@RequestBody OfficeView office) {
+        return officeService.list(office);
     }
 
 
@@ -78,9 +80,8 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/update", method = {POST})
-    public Data update(@RequestBody OfficeView office) {
+    public void update(@RequestBody OfficeView office) {
         officeService.update(office);
-        return new Data();
     }
 
 
@@ -91,8 +92,7 @@ public class OfficeControllerImpl implements OfficeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/delete", method = {POST})
-    public Data delete(@RequestBody OfficeView office) {
+    public void delete(@RequestBody OfficeView office) {
         officeService.delete(office.id);
-        return new Data();
     }
 }

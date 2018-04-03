@@ -86,9 +86,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public String getCode(Long id) {
-        User user = dao.loadById(id);
-        return hashService.getHashByCode(user.getEmail());
+    public UserView getCode(Long id) {
+        try {
+            User user = dao.loadById(id);
+            UserView u = new UserView();
+            u.code = hashService.getHashByCode(user.getEmail());
+            u.isActive = user.getIsActive();
+            return u;
+        } catch (NullPointerException ex) {
+            throw new NoFoundException("Пользователь не найден", ex);
+        }
     }
 
 }

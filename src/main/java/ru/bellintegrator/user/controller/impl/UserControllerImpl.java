@@ -12,6 +12,8 @@ import ru.bellintegrator.user.controller.UserController;
 import ru.bellintegrator.user.service.UserService;
 import ru.bellintegrator.user.view.UserView;
 
+import javax.xml.ws.Response;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -34,23 +36,15 @@ public class UserControllerImpl implements UserController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/register", method = {POST})
-    public Data register(@RequestBody UserView user) {
-
-            userService.add(user);
-            return new Data();
-
+    public void register(@RequestBody UserView user) {
+        userService.add(user);
     }
 
     @Override
     @ApiOperation(value = "getAll", nickname = "getAll", httpMethod = "GET")
     @RequestMapping(value = "/all", method = {GET})
-    public Data all() {
-        try {
-            return new Data(userService.user());
-        }
-        catch (Exception ex) {
-            return new Data(ex.toString());
-        }
+    public Object all() {
+        return userService.user();
     }
 
     @Override
@@ -60,23 +54,21 @@ public class UserControllerImpl implements UserController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/login", method = {POST})
-    public Data login(@RequestBody UserView userView) {
-            userService.login(userView);
-            return new Data();
+    public void login(@RequestBody UserView userView) {
+        userService.login(userView);
     }
 
     @Override
     @ApiOperation(value = "getActivation", nickname = "getActivation", httpMethod = "GET")
     @RequestMapping(value = "/activation", method = {GET})
-    public Data activation(@RequestParam("code") String code) {
+    public void activation(@RequestParam("code") String code) {
         userService.activation(code);
-        return new Data();
     }
 
     @Override
     @ApiOperation(value = "getActivation", nickname = "getActivation", httpMethod = "GET")
     @RequestMapping(value = "/{id}", method = {GET})
-    public Data activation(@PathVariable Long id) {
-        return new Data(userService.getCode(id));
+    public Object activation(@PathVariable Long id) {
+        return userService.getCode(id);
     }
 }

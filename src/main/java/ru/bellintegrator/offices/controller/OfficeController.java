@@ -15,18 +15,18 @@ public interface OfficeController {
      * Add office
      * @param office
      */
-    Data office(@RequestBody OfficeView office);
+    OfficeView office(@RequestBody OfficeView office);
 
     /**
      * Get all offices
      * @return JSON offices value
      */
-    Data office(@PathVariable Long id);
-    Data all();
+    OfficeView office(@PathVariable Long id);
+    List<OfficeView> all();
 
-    Data list(OfficeView office);
+    List<OfficeView> list(OfficeView office);
 
-    Data update(@RequestBody OfficeView office);
+    void update(@RequestBody OfficeView office);
 
-    Data delete(@RequestBody OfficeView office);
+    void delete(@RequestBody OfficeView office);
 }

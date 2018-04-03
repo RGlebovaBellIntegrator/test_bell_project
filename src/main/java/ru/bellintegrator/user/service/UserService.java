@@ -23,5 +23,5 @@ public interface UserService {
 
     void activation(String code);
 
-    String getCode(Long id);
+    UserView getCode(Long id);
 }

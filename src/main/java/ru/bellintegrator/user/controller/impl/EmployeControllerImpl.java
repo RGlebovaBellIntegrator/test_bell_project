@@ -15,6 +15,8 @@ import ru.bellintegrator.user.controller.EmployeController;
 import ru.bellintegrator.user.service.EmployeService;
 import ru.bellintegrator.user.view.EmployeView;
 
+import java.util.List;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -38,8 +40,8 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/create", method = {POST})
-    public Data save(@RequestBody EmployeView employe) {
-            return new Data(employeService.add(employe));
+    public EmployeView save(@RequestBody EmployeView employe) {
+        return employeService.add(employe);
     }
 
     @Override
@@ -49,8 +51,8 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/all", method = {GET})
-    public Data all() {
-        return new Data(employeService.employe());
+    public List<EmployeView> all() {
+        return employeService.employe();
     }
 
     @Override
@@ -60,8 +62,8 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/{id}", method = {GET})
-    public Data employe(@PathVariable Long id) {
-        return new Data(employeService.find(id));
+    public EmployeView employe(@PathVariable Long id) {
+        return employeService.find(id);
     }
 
 
@@ -72,8 +74,8 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/list", method = {POST})
-    public Data employe(@RequestBody EmployeView employeView) {
-        return new Data(employeService.employeFilter(employeView));
+    public List<EmployeView> employe(@RequestBody EmployeView employeView) {
+        return employeService.employeFilter(employeView);
     }
 
     @Override
@@ -83,9 +85,8 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/update", method = {POST})
-    public Data  update(@RequestBody EmployeView employeView) {
+    public void  update(@RequestBody EmployeView employeView) {
         employeService.update(employeView);
-        return new Data();
     }
 
     @Override
@@ -95,8 +96,7 @@ public class EmployeControllerImpl implements EmployeController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @RequestMapping(value = "/delete", method = {POST})
-    public Data delete(@RequestBody EmployeView body) {
+    public void delete(@RequestBody EmployeView body) {
         employeService.delete(body.id);
-        return new Data();
     }
 }

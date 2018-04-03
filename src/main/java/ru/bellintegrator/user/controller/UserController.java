@@ -5,9 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.bellintegrator.optional.Data;
 import ru.bellintegrator.user.view.UserView;
 
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Map;
 
@@ -16,17 +18,17 @@ public interface UserController {
      * Add register
      * @param users
      */
-    Data register(@RequestBody UserView users);
+    void register(@RequestBody UserView users);
 
     /**
      * Get all register
      * @return JSON register value
      */
-    Data all();
+    Object all();
 
-    Data login(@RequestBody UserView userView);
+    void login(@RequestBody UserView userView);
 
-    Data activation(@RequestParam("code") String code);
+    void activation(@RequestParam("code") String code);
 
-    Data activation(@PathVariable Long id);
+    Object  activation(@PathVariable Long id);
 }
