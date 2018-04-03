@@ -94,6 +94,8 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     @Transactional(readOnly = true)
     public List<EmployeView> employeFilter(EmployeView employeView) {
+        if (employeView.officeId != null)
+            throw new NoFoundException("Не задан office_id");
 
         List<Employe> all = dao.filter(employeView);
 
@@ -117,12 +119,16 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     @Transactional
     public void update(EmployeView employeView) {
+        if (employeView.id == null)
+            throw new NoFoundException("Не задан id");
         dao.update(employeView);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
+        if (id == null)
+            throw new NoFoundException("Не задан id");
         dao.delete(id);
     }
 

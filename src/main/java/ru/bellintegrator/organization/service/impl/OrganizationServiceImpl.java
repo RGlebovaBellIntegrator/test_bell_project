@@ -77,6 +77,8 @@ public class OrganizationServiceImpl implements OrganizationService{
     @Override
     @Transactional(readOnly = true)
     public List<OrganizationView> list(OrganizationView organizationView) {
+        if (organizationView.name == null)
+            throw new NoFoundException("name не инициализирован");
 
         List<Organization> all = dao.filter(organizationView.name,organizationView.inn,organizationView.isActive);
 
@@ -100,12 +102,16 @@ public class OrganizationServiceImpl implements OrganizationService{
     @Override
     @Transactional
     public void update(OrganizationView organizationView) {
+        if (organizationView.id == null)
+            throw new NoFoundException("Не задан id");
         dao.update(organizationView);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
+        if (id == null)
+            throw new NoFoundException("Не задан id");
         dao.delete(id);
     }
 

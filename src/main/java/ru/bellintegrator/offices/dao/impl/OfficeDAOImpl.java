@@ -80,7 +80,6 @@ public class OfficeDAOImpl implements OfficeDAO {
             Predicate p = builder.equal(officeRoot.get("organization").get("id"), orgId);
             predicate = builder.and(predicate, p);
         }
-        else throw new NoFoundException("Не задан orgId");
 
         if (name != null) {
             Predicate p = builder.equal(officeRoot.get("name"), name);
@@ -123,8 +122,6 @@ public class OfficeDAOImpl implements OfficeDAO {
 
     @Override
     public void update(Long id, String name, String address, String phone, Boolean isActive) {
-        if (id == null)
-            throw new NoFoundException("Не задан id");
         Office office = loadById(id);
         if (office==null)
             throw new NoFoundException("Офис с указанным id не найдена");
@@ -148,8 +145,6 @@ public class OfficeDAOImpl implements OfficeDAO {
 
     @Override
     public void delete(Long id) {
-        if (id == null)
-            throw new NoFoundException("Не задан id");
         Office office = loadById(id);
         if (office!=null){
             em.remove(office);

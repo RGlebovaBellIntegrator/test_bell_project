@@ -66,12 +66,20 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public void login(UserView userView) {
+        if (userView.login==null||userView.login.isEmpty())
+            throw new NoFoundException("Не задан login");
+        if (userView.password==null||userView.password.isEmpty())
+            throw new NoFoundException("Не задан password");
+
         User user = dao.loadByLogin(userView.login, userView.password);
     }
 
     @Override
     @Transactional
     public void activation(String code) {
+        if (code==null||code.isEmpty())
+            throw new NoFoundException("Не задан activateCode");
+
         User user = dao.loadByCode(code);
         user.setIsActive(true);
     }

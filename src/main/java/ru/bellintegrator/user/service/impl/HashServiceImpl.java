@@ -27,13 +27,4 @@ public class HashServiceImpl implements HashService {
         }
     }
 
-    @Override
-    public Boolean equalHash(String hash1, String hash2)
-    {
-        if (hash1==hash2)
-            return true;
-        else
-            return false;
-    }
-
 }

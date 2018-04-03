@@ -95,6 +95,8 @@ public class OfficeServiceImpl implements OfficeService{
     @Override
     @Transactional(readOnly = true)
     public List<OfficeView> list(OfficeView office) {
+        if (office.orgId == null)
+            throw new NoFoundException("Не задан orgId");
 
         List<Office> all = dao.filter(office.orgId, office.name, office.phone,office.isActive);
 
@@ -118,12 +120,16 @@ public class OfficeServiceImpl implements OfficeService{
     @Override
     @Transactional
     public void update(OfficeView office) {
+        if (office.id == null)
+            throw new NoFoundException("Не задан id");
         dao.update(office.id, office.name, office.address, office.phone, office.isActive);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
+        if (id == null)
+            throw new NoFoundException("Не задан id");
         dao.delete(id);
     }
 }

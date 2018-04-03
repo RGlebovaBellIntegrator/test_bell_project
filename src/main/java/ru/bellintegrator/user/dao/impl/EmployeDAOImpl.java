@@ -86,8 +86,7 @@ public class EmployeDAOImpl implements EmployeDAO {
         if (employeView.officeId != null) {
             Predicate p = builder.equal(employe.get("office").get("id"), employeView.officeId);
             predicate = builder.and(predicate, p);
-        } else throw new NoFoundException("Не задан office_id");
-
+        }
 
         criteria.where(predicate);
 
@@ -143,9 +142,6 @@ public class EmployeDAOImpl implements EmployeDAO {
 
     @Override
     public void update(EmployeView employeView) {
-        if (employeView.id == null)
-            throw new NoFoundException("Не задан id");
-
         Employe employe = loadById(employeView.id);
         if (employe==null)
             throw new NoFoundException("Сотрудник с указанным id не найден");
@@ -205,8 +201,6 @@ public class EmployeDAOImpl implements EmployeDAO {
 
     @Override
     public void delete(Long id) {
-        if (id == null)
-            throw new NoFoundException("Не задан id");
         Employe employe = loadById(id);
         if (employe!=null){
             em.remove(employe);

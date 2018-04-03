@@ -67,11 +67,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User loadByLogin(String login, String password) {
-        if (login==null||login.isEmpty())
-            throw new NoFoundException("Не задан login");
-        if (password==null||password.isEmpty())
-            throw new NoFoundException("Не задан password");
-
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
 
@@ -90,8 +85,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User loadByCode(String activateCode) {
-        if (activateCode==null||activateCode.isEmpty())
-            throw new NoFoundException("Не задан activateCode");
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
 

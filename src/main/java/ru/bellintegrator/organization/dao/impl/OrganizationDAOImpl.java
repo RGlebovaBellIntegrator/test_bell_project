@@ -73,7 +73,6 @@ public class OrganizationDAOImpl implements OrganizationDAO {
             Predicate p = builder.equal(organizationRoot.get("name"), name);
             predicate = builder.and(predicate, p);
         }
-        else throw new NoFoundException("name не инициализирован");
 
         if (inn != null) {
             Predicate p = builder.equal(organizationRoot.get("inn"), inn);
@@ -110,9 +109,6 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 
     @Override
     public void update(OrganizationView organizationView) {
-        if (organizationView.id == null)
-            throw new NoFoundException("Не задан id");
-
         Organization organization = loadById(organizationView.id);
         if (organization==null)
             throw new NoFoundException("Организация с указанным id не найдена");
@@ -148,8 +144,6 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 
     @Override
     public void delete(Long id) {
-        if (id == null)
-            throw new NoFoundException("Не задан id");
         Organization organization = loadById(id);
         if (organization!=null){
             em.remove(organization);
