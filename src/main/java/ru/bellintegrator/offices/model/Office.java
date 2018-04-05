@@ -50,7 +50,7 @@ public class Office {
     @JoinColumn(name = "org_id")
     private Organization organization;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "office", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "office", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Employe> employe;
 
 
@@ -106,5 +106,15 @@ public class Office {
 
     public void setEmploye(List<Employe> employe) {
         this.employe = employe;
+    }
+
+    public void addEmploye(Employe employe) {
+        getEmploye().add(employe);
+        employe.setOffice(this);
+    }
+
+    public void removeEmploye(Employe employe) {
+        getEmploye().remove(employe);
+        employe.setOffice(null);
     }
 }

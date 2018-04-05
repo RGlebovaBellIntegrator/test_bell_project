@@ -54,6 +54,7 @@ public class EmployeServiceImpl implements EmployeService {
         employe.setDocNumber(view.docNumber);
         employe.setCountry(dao.findCountryId(view.citizenshipCode));
         employe.setOffice(dao.findOfficeId(view.officeId));
+        dao.findOfficeId(view.officeId).addEmploye(employe);
 
         EmployeView e = new EmployeView();
         try {
@@ -80,6 +81,8 @@ public class EmployeServiceImpl implements EmployeService {
             view.phone = p.getPhone();
             view.docCode = p.getDoc().getCode();
             view.citizenshipCode = p.getCountry().getCode();
+            if (p.getOffice()!=null)
+                view.officeName = p.getOffice().getName();
 
             log.info(view.toString());
 
@@ -104,7 +107,8 @@ public class EmployeServiceImpl implements EmployeService {
             view.id = p.getId();
             view.fullName = p.getFirstName() + " " + p.getSecondName() + " " + p.getMiddlename();
             view.position = p.getStatement();
-            view.officeName = p.getOffice().getName();
+            if (p.getOffice()!=null)
+                view.officeName = p.getOffice().getName();
 
             log.info(view.toString());
 
@@ -152,7 +156,8 @@ public class EmployeServiceImpl implements EmployeService {
         view.docDate = p.getDocDate();
         view.citizenshipCode = p.getCountry().getCode();
         view.citizenshipName = p.getCountry().getName();
-        view.officeId = p.getOffice().getId();
+        if (p.getOffice()!=null)
+            view.officeId = p.getOffice().getId();
 
         return view;
     }

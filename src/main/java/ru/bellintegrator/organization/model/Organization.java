@@ -66,7 +66,7 @@ public class Organization {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Office> offices;
 
     public Organization(){
@@ -101,6 +101,16 @@ public class Organization {
 
     public void setOffices(List<Office> offices) {
         this.offices = offices;
+    }
+
+    public void addOffices(Office office) {
+        getOffices().add(office);
+        office.setOrganization(this);
+    }
+
+    public void removeOffice(Office office) {
+        getOffices().remove(office);
+        office.setOrganization(null);
     }
 
     public String getFullname() {

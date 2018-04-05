@@ -2,6 +2,7 @@ package ru.bellintegrator.organization.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.bellintegrator.offices.model.Office;
 import ru.bellintegrator.optional.NoFoundException;
 import ru.bellintegrator.optional.PersistException;
 import ru.bellintegrator.organization.dao.OrganizationDAO;
@@ -146,6 +147,9 @@ public class OrganizationDAOImpl implements OrganizationDAO {
     public void delete(Long id) {
         Organization organization = loadById(id);
         if (organization!=null){
+            for (Office office: organization.getOffices()) {
+                office.setOrganization(null);
+            }
             em.remove(organization);
         }
         else

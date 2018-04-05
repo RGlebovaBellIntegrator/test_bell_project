@@ -47,6 +47,7 @@ public class OfficeServiceImpl implements OfficeService{
             throw new NoFoundException("Не задан address");
 
         Office office = new Office(view.name, view.address, view.phone, dao.findOrgById(view.orgId), view.isActive);
+        dao.findOrgById(view.orgId).addOffices(office);
         OfficeView o = new OfficeView();
         o.id = dao.save(office);
         return o;
@@ -63,6 +64,8 @@ public class OfficeServiceImpl implements OfficeService{
             view.name = p.getName();
             view.phone = p.getPhone();
             view.address = p.getAddress();
+            if (p.getOrganization()!=null)
+                view.orgId = p.getOrganization().getId();
             view.isActive = p.getIsActive();
 
             log.info(view.toString());
@@ -88,7 +91,8 @@ public class OfficeServiceImpl implements OfficeService{
         view.isActive = o.getIsActive();
         view.address = o.getAddress();
         view.phone = o.getPhone();
-        view.orgId = o.getOrganization().getId();
+        if (o.getOrganization()!=null)
+            view.orgId = o.getOrganization().getId();
         return view;
     }
 
@@ -104,7 +108,8 @@ public class OfficeServiceImpl implements OfficeService{
             OfficeView view = new OfficeView();
             view.id = p.getId();
             view.name = p.getName();
-            view.organizationName = p.getOrganization().getName();
+            if (p.getOrganization()!=null)
+                view.organizationName = p.getOrganization().getName();
             view.isActive = p.getIsActive();
 
             log.info(view.toString());

@@ -203,6 +203,8 @@ public class EmployeDAOImpl implements EmployeDAO {
     public void delete(Long id) {
         Employe employe = loadById(id);
         if (employe!=null){
+            if ( employe.getOffice()!=null)
+                employe.getOffice().removeEmploye(employe);
             em.remove(employe);
         }
         else

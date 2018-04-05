@@ -21,7 +21,6 @@ import ru.bellintegrator.user.service.HashService;
 @WebAppConfiguration(value = "src/main/resources")
 @Transactional
 @DirtiesContext
-
 public class UserDAOTest {
     @Autowired
     private UserDAO dao;

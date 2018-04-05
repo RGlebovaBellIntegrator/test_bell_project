@@ -9,6 +9,7 @@ import ru.bellintegrator.optional.PersistException;
 import ru.bellintegrator.organization.dao.OrganizationDAO;
 import ru.bellintegrator.organization.dao.impl.OrganizationDAOImpl;
 import ru.bellintegrator.organization.model.Organization;
+import ru.bellintegrator.user.model.Employe;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -147,7 +148,14 @@ public class OfficeDAOImpl implements OfficeDAO {
     public void delete(Long id) {
         Office office = loadById(id);
         if (office!=null){
+            if (office.getOrganization()!=null)
+                office.getOrganization().removeOffice(office);
+
+            for (Employe employe: office.getEmploye()) {
+                employe.setOffice(null);
+            }
             em.remove(office);
+
         }
         else
             throw new NoFoundException("Нет такого id");
